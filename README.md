@@ -5,7 +5,7 @@ Aplicación móvil para descubrir rutas de senderismo en Canarias, con informaci
 ## 🚀 Tecnologías
 - **Frontend:** React Native  
 - **Backend:** Java  
-- **Base de datos:** (indicar más adelante si usas SQLite, PostgreSQL, Firebase, etc.)  
+- **Base de datos:** MySQL y MongoDB 
 
 ## 🔥 Características
 - Explora rutas de senderismo en Canarias con mapas interactivos.
