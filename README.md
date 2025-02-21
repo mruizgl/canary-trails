@@ -8,7 +8,7 @@ __Autores: Melissa Ruiz González y Pedro Martín Escuela__
 
 En este repositorio realizaremos nuestro __Proyecto Final__ del __CFGS de Desarrollo de Aplicaciones Multiplataforma__. 
 
-El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil__ para __descubrir rutas de senderismo__ en __Canarias__, con __información detallada__ de los __senderos y la flora__ presente en cada zona.
+El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil__ para __descubrir rutas de senderismo__ en __Canarias__, con __información detallada__ de los __senderos y la flora__ presente en cada zona. 
 
 ## 🚀 Tecnologías
 - **Frontend:** React Native  
