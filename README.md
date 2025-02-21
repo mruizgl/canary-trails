@@ -21,5 +21,5 @@ Aplicación móvil para descubrir rutas de senderismo en Canarias, con informaci
 
 ### Clonar el repositorio
 ```bash
-git clone https://github.com/tu-usuario/tu-repo.git
-cd tu-repo
+git clone https://github.com/mruizgl/canary-trails/
+cd canary-trails
