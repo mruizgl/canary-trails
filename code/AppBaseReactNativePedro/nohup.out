@@ -1,0 +1,160 @@
+INFO    | Storing crashdata in: /tmp/android-carlos/emu-crash-34.2.16.db, detection is enabled for process: 8416
+INFO    | Android emulator version 34.2.16.0 (build_id 12038310) (CL:N/A)
+INFO    | Found systemPath /home/carlos/Android/Sdk/system-images/android-34/google_apis_playstore/x86_64/
+INFO    | Storing crashdata in: /tmp/android-carlos/emu-crash-34.2.16.db, detection is enabled for process: 8416
+INFO    | Duplicate loglines will be removed, if you wish to see each individual line launch with the -log-nofilter flag.
+INFO    | Increasing RAM size to 3072MB
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_new_posture_requested(int) ((null):0, (null))
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_posture_selection_dialog() ((null):0, (null))
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_new_resizable_requested(PresetEmulatorSizeType) ((null):0, (null))
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_resizable_dialog() ((null):0, (null))
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_sleep_timer_done() ((null):0, (null))
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_unfold_timer_done() ((null):0, (null))
+library_mode host gpu mode host
+INFO    | Initializing hardware OpenGLES emulation support
+android_startOpenglesRenderer: gpu infoI1213 08:01:16.177046    8416 HealthMonitor.cpp:279] HealthMonitor disabled.
+cannot add library libvulkan.so: failed
+added library libvulkan.so.1
+createGlobalVkEmulation:995 Selecting Vulkan device: AMD Unknown (RADV RENOIR)
+initialize: Supports id properties, got a vulkan device UUID
+WARNING: could not open libX11.so, try libX11.so.6
+I1213 08:01:16.314067    8416 VkCommonOperations.cpp:1276] Initializing VkEmulation features:
+I1213 08:01:16.314098    8416 VkCommonOperations.cpp:1277]     glInteropSupported: true
+I1213 08:01:16.314104    8416 VkCommonOperations.cpp:1278]     useDeferredCommands: true
+I1213 08:01:16.314109    8416 VkCommonOperations.cpp:1280]     createResourceWithRequirements: true
+I1213 08:01:16.314113    8416 VkCommonOperations.cpp:1281]     useVulkanComposition: false
+I1213 08:01:16.314118    8416 VkCommonOperations.cpp:1282]     useVulkanNativeSwapchain: false
+I1213 08:01:16.314122    8416 VkCommonOperations.cpp:1283]     enable guestRenderDoc: false
+I1213 08:01:16.314127    8416 VkCommonOperations.cpp:1284]     ASTC LDR emulation mode: 2
+I1213 08:01:16.314131    8416 VkCommonOperations.cpp:1285]     enable ETC2 emulation: true
+I1213 08:01:16.314135    8416 VkCommonOperations.cpp:1286]     enable Ycbcr emulation: false
+I1213 08:01:16.314139    8416 VkCommonOperations.cpp:1287]     guestUsesAngle: false
+I1213 08:01:16.314144    8416 VkCommonOperations.cpp:1288]     useDedicatedAllocations: true
+I1213 08:01:16.314406    8416 FrameBuffer.cpp:506] Graphics Adapter Vendor Google (AMD)
+I1213 08:01:16.314420    8416 FrameBuffer.cpp:507] Graphics Adapter Android Emulator OpenGL ES Translator (RENOIR (renoir, LLVM 15.0.7, DRM 3.42, 5.15.0-126-generic))
+I1213 08:01:16.314425    8416 FrameBuffer.cpp:508] Graphics API Version OpenGL ES 3.0 (4.6 (Core Profile) Mesa 23.2.1-1ubuntu3.1~22.04.2)
+I1213 08:01:16.314430    8416 FrameBuffer.cpp:509] Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 
+I1213 08:01:16.314435    8416 FrameBuffer.cpp:510] Graphics Device Extensions N/A
+INFO    | OpenGL Vendor=[Google (AMD)]
+INFO    | OpenGL Renderer=[Android Emulator OpenGL ES Translator (RENOIR (renoir, LLVM 15.0.7, DRM 3.42, 5.15.0-126-generic))]
+INFO    | OpenGL Version=[OpenGL ES 3.0 (4.6 (Core Profile) Mesa 23.2.1-1ubuntu3.1~22.04.2)]
+INFO    | Enabled VulkanAllocateDeviceMemoryOnly feature for gpu vendor AMD on Linux
+INFO    | Sending adb public key [QAAAALMXO+eFkCjftRo3b670P/ZbZLc2jjxb0Fd2lPi1Ofv202mLRXx8/y/iNne0F4FSQuw1RR2siMfLLPQ1JlbchD7/JrBem9tES9dpCOitndL2iBc2HuTJqaBkr9dnj3Zc5ymevw+pW65m20tCbmyZ5CSJ5vY4wzBZgL8fUTQBpc45By4uivDUGqvHfDttFZeLyDQHAs6XWmKhITlduMOA2kDyjJrQFVDBq5o3FwI6idizFiucO8xZyx0VUYCfryg9U5yUbObGJWaI/ggND66b1Z7bE0S6l34vQycd3E8wPCkHB/bIDOSRHch9LbysCRzouDOiqlHyYrjCo/dKIDtZOYfE4/6e1YTfU+aQynw7VmL8WaA3hjfsRY2nRRct2tCefpKT2zy4kqYOvj84zXksQRSUzIwBC0wvxGN7KlOcz2GExog7Zhk3+q/QF31d44kMtCOv+oNBKNmf+Fg9bGN+0tRh0ldEW/YFxpYjLoD4MsfNehdeeVqB/0AIIR8Orchg7P+DH8OUlsg6cXNkJSCdZo+grakazKwxYOCLWxx7DVX0TBHVt5dsB9ot78jtUtXg8GVdQwHUl3Hj+9cE0KBLjaihUF5bLPrCJupLWCl1kTIqxaDWI0M4WjWFPDXNp8IQUlMC9+wsUF3FtYnL75CuBAID61mVEZXp6yL7RevwIrTgpIQUHAEAAQA= carlos@unknown]
+INFO    | Monitoring duration of emulator setup.
+WARNING | The emulator now requires a signed jwt token for gRPC access! Use the -grpc flag if you really want an open unprotected grpc port
+INFO    | Using security allow list from: /home/carlos/Android/Sdk/emulator/lib/emulator_access.json
+WARNING | *** Basic token auth should only be used by android-studio ***
+INFO    | The active JSON Web Key Sets can be found here: /run/user/1000/avd/running/8416/jwks/44fd053e-ce65-4309-9677-09561d0ce0a0/active.jwk
+INFO    | Scanning /run/user/1000/avd/running/8416/jwks/44fd053e-ce65-4309-9677-09561d0ce0a0 for jwk keys.
+INFO    | Started GRPC server at 127.0.0.1:8554, security: Local, auth: +token
+INFO    | Advertising in: /run/user/1000/avd/running/pid_8416.ini
+I1213 08:01:16.488408    8535 FrameBuffer.cpp:2853] setDisplayConfigs w 1440 h 3120 dpiX 560 dpiY 560
+I1213 08:01:16.488456    8535 FrameBuffer.cpp:2866] setDisplayActiveConfig 0
+ERROR   | Unable to connect to adb daemon on port: 5037
+ERROR   | Unable to connect to adb daemon on port: 5037
+INFO    | Activated packet streamer for bluetooth emulation
+INFO    | Loading snapshot 'default_boot'...
+INFO    | Successfully loaded snapshot 'default_boot'
+E1213 08:01:22.488714    8684 FrameBuffer.cpp:3544] Failed to find ColorBuffer:0
+E1213 08:01:24.646390    8686 FrameBuffer.cpp:3544] Failed to find ColorBuffer:0
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_rgbcSensorValueWidget_valueChanged() ((null):0, (null))
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_posture_valueChanged(int) ((null):0, (null))
+ERROR   | Error reading vhal json
+E1213 08:01:58.867119    8686 FrameBuffer.cpp:3544] Failed to find ColorBuffer:0
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+INFO    | Wait for emulator (pid 8416) 20 seconds to shutdown gracefully before kill;you can set environment variable ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL(in seconds) to change the default value (20 seconds)
+ICE default IO error handler doing an exit(), pid = 8416, errno = 0
+INFO    | Storing crashdata in: /tmp/android-carlos/emu-crash-34.2.16.db, detection is enabled for process: 132217
+INFO    | Android emulator version 34.2.16.0 (build_id 12038310) (CL:N/A)
+INFO    | Found systemPath /home/carlos/Android/Sdk/system-images/android-34/google_apis_playstore/x86_64/
+INFO    | Storing crashdata in: /tmp/android-carlos/emu-crash-34.2.16.db, detection is enabled for process: 132217
+INFO    | Duplicate loglines will be removed, if you wish to see each individual line launch with the -log-nofilter flag.
+INFO    | Increasing RAM size to 3072MB
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_new_posture_requested(int) ((null):0, (null))
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_posture_selection_dialog() ((null):0, (null))
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_new_resizable_requested(PresetEmulatorSizeType) ((null):0, (null))
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_dismiss_resizable_dialog() ((null):0, (null))
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_sleep_timer_done() ((null):0, (null))
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_unfold_timer_done() ((null):0, (null))
+library_mode host gpu mode host
+INFO    | Initializing hardware OpenGLES emulation support
+android_startOpenglesRenderer: gpu infoI1213 14:08:48.338144  132217 HealthMonitor.cpp:279] HealthMonitor disabled.
+cannot add library libvulkan.so: failed
+added library libvulkan.so.1
+createGlobalVkEmulation:995 Selecting Vulkan device: AMD Unknown (RADV RENOIR)
+initialize: Supports id properties, got a vulkan device UUID
+WARNING: could not open libX11.so, try libX11.so.6
+I1213 14:08:48.485487  132217 VkCommonOperations.cpp:1276] Initializing VkEmulation features:
+I1213 14:08:48.485511  132217 VkCommonOperations.cpp:1277]     glInteropSupported: true
+I1213 14:08:48.485515  132217 VkCommonOperations.cpp:1278]     useDeferredCommands: true
+I1213 14:08:48.485518  132217 VkCommonOperations.cpp:1280]     createResourceWithRequirements: true
+I1213 14:08:48.485521  132217 VkCommonOperations.cpp:1281]     useVulkanComposition: false
+I1213 14:08:48.485524  132217 VkCommonOperations.cpp:1282]     useVulkanNativeSwapchain: false
+I1213 14:08:48.485527  132217 VkCommonOperations.cpp:1283]     enable guestRenderDoc: false
+I1213 14:08:48.485539  132217 VkCommonOperations.cpp:1284]     ASTC LDR emulation mode: 2
+I1213 14:08:48.485542  132217 VkCommonOperations.cpp:1285]     enable ETC2 emulation: true
+I1213 14:08:48.485545  132217 VkCommonOperations.cpp:1286]     enable Ycbcr emulation: false
+I1213 14:08:48.485547  132217 VkCommonOperations.cpp:1287]     guestUsesAngle: false
+I1213 14:08:48.485550  132217 VkCommonOperations.cpp:1288]     useDedicatedAllocations: true
+I1213 14:08:48.485687  132217 FrameBuffer.cpp:506] Graphics Adapter Vendor Google (AMD)
+I1213 14:08:48.485693  132217 FrameBuffer.cpp:507] Graphics Adapter Android Emulator OpenGL ES Translator (RENOIR (renoir, LLVM 15.0.7, DRM 3.42, 5.15.0-126-generic))
+I1213 14:08:48.485696  132217 FrameBuffer.cpp:508] Graphics API Version OpenGL ES 3.0 (4.6 (Core Profile) Mesa 23.2.1-1ubuntu3.1~22.04.2)
+I1213 14:08:48.485699  132217 FrameBuffer.cpp:509] Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 
+I1213 14:08:48.485702  132217 FrameBuffer.cpp:510] Graphics Device Extensions N/A
+INFO    | OpenGL Vendor=[Google (AMD)]
+INFO    | OpenGL Renderer=[Android Emulator OpenGL ES Translator (RENOIR (renoir, LLVM 15.0.7, DRM 3.42, 5.15.0-126-generic))]
+INFO    | OpenGL Version=[OpenGL ES 3.0 (4.6 (Core Profile) Mesa 23.2.1-1ubuntu3.1~22.04.2)]
+INFO    | Enabled VulkanAllocateDeviceMemoryOnly feature for gpu vendor AMD on Linux
+INFO    | Sending adb public key [QAAAALMXO+eFkCjftRo3b670P/ZbZLc2jjxb0Fd2lPi1Ofv202mLRXx8/y/iNne0F4FSQuw1RR2siMfLLPQ1JlbchD7/JrBem9tES9dpCOitndL2iBc2HuTJqaBkr9dnj3Zc5ymevw+pW65m20tCbmyZ5CSJ5vY4wzBZgL8fUTQBpc45By4uivDUGqvHfDttFZeLyDQHAs6XWmKhITlduMOA2kDyjJrQFVDBq5o3FwI6idizFiucO8xZyx0VUYCfryg9U5yUbObGJWaI/ggND66b1Z7bE0S6l34vQycd3E8wPCkHB/bIDOSRHch9LbysCRzouDOiqlHyYrjCo/dKIDtZOYfE4/6e1YTfU+aQynw7VmL8WaA3hjfsRY2nRRct2tCefpKT2zy4kqYOvj84zXksQRSUzIwBC0wvxGN7KlOcz2GExog7Zhk3+q/QF31d44kMtCOv+oNBKNmf+Fg9bGN+0tRh0ldEW/YFxpYjLoD4MsfNehdeeVqB/0AIIR8Orchg7P+DH8OUlsg6cXNkJSCdZo+grakazKwxYOCLWxx7DVX0TBHVt5dsB9ot78jtUtXg8GVdQwHUl3Hj+9cE0KBLjaihUF5bLPrCJupLWCl1kTIqxaDWI0M4WjWFPDXNp8IQUlMC9+wsUF3FtYnL75CuBAID61mVEZXp6yL7RevwIrTgpIQUHAEAAQA= carlos@unknown]
+INFO    | Monitoring duration of emulator setup.
+WARNING | The emulator now requires a signed jwt token for gRPC access! Use the -grpc flag if you really want an open unprotected grpc port
+INFO    | Using security allow list from: /home/carlos/Android/Sdk/emulator/lib/emulator_access.json
+WARNING | *** Basic token auth should only be used by android-studio ***
+INFO    | The active JSON Web Key Sets can be found here: /run/user/1000/avd/running/132217/jwks/437fe909-544d-4585-a254-7e1e899969a6/active.jwk
+INFO    | Scanning /run/user/1000/avd/running/132217/jwks/437fe909-544d-4585-a254-7e1e899969a6 for jwk keys.
+INFO    | Started GRPC server at 127.0.0.1:8554, security: Local, auth: +token
+INFO    | Advertising in: /run/user/1000/avd/running/pid_132217.ini
+I1213 14:08:48.561361  132330 FrameBuffer.cpp:2853] setDisplayConfigs w 1440 h 3120 dpiX 560 dpiY 560
+I1213 14:08:48.561401  132330 FrameBuffer.cpp:2866] setDisplayActiveConfig 0
+INFO    | Loading snapshot 'default_boot'...
+WARNING | Device 'cache' does not have the requested snapshot 'default_boot'
+WARNING | Failed to load snapshot 'default_boot'
+INFO    | Activated packet streamer for bluetooth emulation
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_rgbcSensorValueWidget_valueChanged() ((null):0, (null))
+INFO    | Warning: QMetaObject::connectSlotsByName: No matching signal for on_posture_valueChanged(int) ((null):0, (null))
+ERROR   | Error reading vhal json
+INFO    | Boot completed in 18464 ms
+INFO    | Increasing screen off timeout, logcat buffer size to 2M.
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+/buildbot/src/android/emu-34-2-release/hardware/google/gfxstream/host/gl/glestranslator/GLES_V2/GLESv2Imp.cpp:glAttachShader:520 error 0x502
+ERROR   | adb protocol fault (couldn't read status length)
+INFO    | Wait for emulator (pid 132217) 20 seconds to shutdown gracefully before kill;you can set environment variable ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL(in seconds) to change the default value (20 seconds)

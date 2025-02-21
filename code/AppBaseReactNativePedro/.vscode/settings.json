@@ -1,0 +1,10 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "androidapp",
+            "database": "/home/carlos/Escritorio/estarvo.db"
+        }
+    ]
+}
