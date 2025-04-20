@@ -1,98 +1,165 @@
-DROP TABlE IF EXISTS usuarios;
-DROP TABlE IF EXISTS faunas;
-DROP TABLE IF EXISTS floras;
-DROP TABlE IF EXISTS fotos_usuarios;
-DROP TABlE IF EXISTS fotos_fauna;
-DROP TABlE IF EXISTS fotos_flora;
-DROP TABlE IF EXISTS fotos_rutas;
-DROP TABlE IF EXISTS ruta;
-DROP TABlE IF EXISTS rutas_favoritas;
-DROP TABLE IF EXISTS municipio;
-DROP TABLE IF EXISTS zona;
+-- Elimina las tablas intermedias primero para evitar errores de FK
+DROP TABLE IF EXISTS ruta_fauna;
+DROP TABLE IF EXISTS ruta_flora;
+DROP TABLE IF EXISTS usuario_flora;
+DROP TABLE IF EXISTS usuario_fauna;
+DROP TABLE IF EXISTS usuario_ruta_favorita;
 DROP TABLE IF EXISTS comentarios;
+DROP TABLE IF EXISTS coordenada_ruta;
+DROP TABLE IF EXISTS ruta_municipio;
+
+-- Elimina las tablas principales dependientes
+DROP TABLE IF EXISTS rutas;
+DROP TABLE IF EXISTS coordenadas;
+DROP TABLE IF EXISTS floras;
+DROP TABLE IF EXISTS faunas;
+DROP TABLE IF EXISTS usuarios;
+DROP TABLE IF EXISTS municipios;
+DROP TABLE IF EXISTS zonas;
 
 
+-- Tabla: zonas
+CREATE TABLE zonas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(20) NOT NULL
+);
+
+-- Tabla: municipios
+CREATE TABLE municipios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(200) NOT NULL,
+    altitud_media INT NOT NULL,
+    latitud_geografica DECIMAL(10, 6) NOT NULL, -- es decimal?
+    longitud_geografica DECIMAL(10, 6) NOT NULL,
+    zona_id INT NOT NULL,
+    FOREIGN KEY (zona_id) REFERENCES zonas(id)
+);
+
+-- Tabla: usuario
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     apellidos VARCHAR(100) NOT NULL,
-    correo VARCHAR(200) NOT NULL,
+    correo VARCHAR(200) UNIQUE NOT NULL,
+    contraseña VARCHAR(255) NOT NULL,
     verificado TINYINT(1) DEFAULT 0,
+    rol VARCHAR(20)
 );
 
-CREATE TABLE fotos_usuarios (
+-- Tabla: ruta
+CREATE TABLE rutas (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    -- id foreing key
-    url VARCHAR(200) NOT NULL,
+    nombre VARCHAR(200) NOT NULL,
+    dificultad VARCHAR(20) NOT NULL,
+    tiempo_duracion BIGINT NOT NULL, -- se guarda en tiempo...?
+    distancia_metros FLOAT NOT NULL,
+    desnivel FLOAT NOT NULL,
+    aprobada TINYINT(1) DEFAULT 0,
+    usuario_id INT NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
+-- Tabla intermedia: ruta_municipio
+CREATE TABLE ruta_municipio (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ruta_id INT NOT NULL,
+    municipio_id INT NOT NULL,
+    FOREIGN KEY (ruta_id) REFERENCES rutas(id),
+    FOREIGN KEY (municipio_id) REFERENCES municipios(id)
+);
+
+-- Tabla: coordenadas
+CREATE TABLE coordenadas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    latitud DECIMAL(10, 6) NOT NULL,
+    longitud DECIMAL(10, 6) NOT NULL
+);
+
+-- Tabla intermedia: coordenada_ruta
+CREATE TABLE coordenada_ruta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ruta_id INT NOT NULL,
+    coordenada_id INT NOT NULL,
+    FOREIGN KEY (ruta_id) REFERENCES rutas(id),
+    FOREIGN KEY (coordenada_id) REFERENCES coordenadas(id)
+);
+
+-- Tabla: faunas
 CREATE TABLE faunas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    aprobado TINYINT(1) DEFAULT 0,
-    estado VARCHAR(100) NOT NULL,
-    descripcion TEXT NOT NULL
+    descripcion TEXT NOT NULL,
+    aprobada TINYINT(1) DEFAULT 0
 );
 
-CREATE TABLE fotos_fauna (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    -- id foreing key
-    url VARCHAR(200) NOT NULL,
-);
-
+-- Tabla: floras
 CREATE TABLE floras (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    aprobado TINYINT(1) DEFAULT 0,
-    estado VARCHAR(100) NOT NULL,
-    descripcion TEXT NOT NULL
+    especie VARCHAR(100) NOT NULL,
+    tipo_hoja VARCHAR(50) NOT NULL,
+    salida_flor VARCHAR(20) NOT NULL,
+    caida_flor VARCHAR(20) NOT NULL,
+    descripcion TEXT NOT NULL,
+    aprobada TINYINT(1) DEFAULT 0
 );
 
-CREATE TABLE fotos_flora (
+-- Tabla: comentario
+CREATE TABLE comentarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    -- id foreing key
-    url VARCHAR(200) NOT NULL,
+    titulo VARCHAR(100) NOT NULL,
+    descripcion TEXT NOT NULL,
+    usuario_id INT NOT NULL,
+    ruta_id INT NOT NULL,
+    FOREIGN KEY (ruta_id) REFERENCES rutas(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
-CREATE TABLE zonas (
+-- Tabla: rutas_favoritas
+CREATE TABLE usuario_ruta_favorita (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(20) NOT NULL,
-    -- coordenadas
+    usuario_id INT NOT NULL,
+    ruta_id INT NOT NULL,
+    UNIQUE (usuario_id, ruta_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (ruta_id) REFERENCES rutas(id)
 );
 
-CREATE TABLE municipios (
+-- Tabla intermedia: usuario_fauna
+CREATE TABLE usuario_fauna (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(200) NOT NULL,
-    -- coordenadas
+    usuario_id INT NOT NULL,
+    fauna_id INT NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (fauna_id) REFERENCES faunas(id)
 );
 
-CREATE TABLE rutas (
+-- Tabla intermedia: usuario_flora
+CREATE TABLE usuario_flora (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    aprobado TINYINT(1) DEFAULT 0,
-    -- dificultad CHAR(3)/INT NOT NULL,
-    correo VARCHAR(200) NOT NULL,
-    -- distancia
-    -- tiempo
-    -- desnivel
-    -- coordenada_inicio
-    -- coordenada_fin
+    usuario_id INT NOT NULL,
+    flora_id INT NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (flora_id) REFERENCES floras(id)
 );
 
-CREATE TABLE fotos_rutas (
+-- Tabla intermedia: ruta_flora
+CREATE TABLE ruta_flora (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    -- id foreing key
-    url VARCHAR(200) NOT NULL,
+    ruta_id INT NOT NULL,
+    flora_id INT NOT NULL,
+    UNIQUE (ruta_id, flora_id),
+    FOREIGN KEY (ruta_id) REFERENCES rutas(id),
+    FOREIGN KEY (flora_id) REFERENCES floras(id)
 );
 
-CREATE TABLE rutas_favoritas (
+-- Tabla intermedia: ruta_fauna
+CREATE TABLE ruta_fauna (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    -- id_usuario
-    -- id_ruta
+    ruta_id INT NOT NULL,
+    fauna_id INT NOT NULL,
+    UNIQUE (ruta_id, fauna_id),
+    FOREIGN KEY (ruta_id) REFERENCES rutas(id),
+    FOREIGN KEY (fauna_id) REFERENCES faunas(id)
 );
 
-CREATE TABLE coordenadas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    contenido TEXT NOT NULL
-);
