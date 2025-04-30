@@ -40,8 +40,8 @@ CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     apellidos VARCHAR(100) NOT NULL,
-    correo VARCHAR(200) UNIQUE NOT NULL,
-    contraseña VARCHAR(255) NOT NULL,
+    correo VARCHAR(320) UNIQUE NOT NULL, -- tiene como máximo 320 caracteres
+    password VARCHAR(255) NOT NULL,
     verificado TINYINT(1) DEFAULT 0,
     rol VARCHAR(20)
 );
