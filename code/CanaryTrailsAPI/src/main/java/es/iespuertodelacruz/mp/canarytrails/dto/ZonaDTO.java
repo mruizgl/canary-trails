@@ -7,6 +7,11 @@ public class ZonaDTO {
     public ZonaDTO() {
     }
 
+    public ZonaDTO(Integer id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
     public Integer getId() {
         return id;
     }
