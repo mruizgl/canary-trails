@@ -1,5 +1,7 @@
 package es.iespuertodelacruz.mp.canarytrails.dto;
 
+import java.util.Objects;
+
 public class ZonaDTO {
     private Integer id;
     private String nombre;
@@ -26,5 +28,17 @@ public class ZonaDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ZonaDTO zonaDTO = (ZonaDTO) o;
+        return Objects.equals(id, zonaDTO.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
