@@ -1,4 +1,4 @@
-package es.iespuertodelacruz.mp.canarytrails.service;
+package es.iespuertodelacruz.mp.canarytrails.common;
 
 import java.util.List;
 

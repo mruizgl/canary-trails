@@ -1,5 +1,6 @@
 package es.iespuertodelacruz.mp.canarytrails.service;
 
+import es.iespuertodelacruz.mp.canarytrails.common.IServiceGeneric;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.exception.InvalidMailException;
 import es.iespuertodelacruz.mp.canarytrails.repository.UsuarioRepository;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class UsuarioService implements IServiceGeneric<Usuario, Integer>{
+public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
 
     @Autowired
     UsuarioRepository usuarioRepository;
