@@ -41,7 +41,7 @@ public class Usuario {
     /**
      * Contraseña del usuario.
      */
-    private String contrasenia;
+    private String password;
 
     /**
      * Indica si el usuario ha verificado su cuenta.
@@ -105,6 +105,34 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "flora_id")
     )
     private List<Flora> floras;
+
+    public Usuario() {
+    }
+
+    //Crear el usuario al registrar. El validado se establece en 0 por defecto y el rol se establece en el service
+    public Usuario(String nombre, String apellidos, String correo, String password) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.correo = correo;
+        this.password = password;
+    }
+
+    public Usuario(Integer id, String nombre, String apellidos, String correo, String password, Boolean verificado,
+                   String rol, List<Ruta> rutasCreadas, List<Comentario> comentarios, List<Ruta> rutasFavoritas,
+                   List<Fauna> faunas, List<Flora> floras) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.correo = correo;
+        this.password = password;
+        this.verificado = verificado;
+        this.rol = rol;
+        this.rutasCreadas = rutasCreadas;
+        this.comentarios = comentarios;
+        this.rutasFavoritas = rutasFavoritas;
+        this.faunas = faunas;
+        this.floras = floras;
+    }
 
     /**
      * Obtiene el identificador único del usuario.
@@ -174,16 +202,16 @@ public class Usuario {
      * Obtiene la contraseña del usuario.
      * @return la contraseña del usuario.
      */
-    public String getContrasenia() {
-        return contrasenia;
+    public String getPassword() {
+        return password;
     }
 
     /**
      * Establece la contraseña del usuario.
      * @param contraseña la contraseña a establecer.
      */
-    public void setContrasenia(String contraseña) {
-        this.contrasenia = contraseña;
+    public void setPassword(String contraseña) {
+        this.password = contraseña;
     }
 
     /**
@@ -331,7 +359,7 @@ public class Usuario {
                 ", nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +
                 ", correo='" + correo + '\'' +
-                ", contraseña='" + contrasenia + '\'' +
+                ", contraseña='" + password + '\'' +
                 ", verificado=" + verificado +
                 ", rol='" + rol + '\'' +
                 ", rutasCreadas=" + rutasCreadas +

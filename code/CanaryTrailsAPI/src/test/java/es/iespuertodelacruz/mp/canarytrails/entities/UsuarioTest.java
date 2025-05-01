@@ -69,7 +69,7 @@ public class UsuarioTest {
         usuario.setNombre("John");
         usuario.setApellidos("Doe");
         usuario.setCorreo("john.doe@example.com");
-        usuario.setContrasenia("password");
+        usuario.setPassword("password");
         usuario.setVerificado(true);
         usuario.setRol("ADMIN");
 
@@ -93,7 +93,7 @@ public class UsuarioTest {
         usuario.setNombre("John");
         usuario.setApellidos("Doe");
         usuario.setCorreo("john.doe@example.com");
-        usuario.setContrasenia("password");
+        usuario.setPassword("password");
         usuario.setVerificado(true);
         usuario.setRol("ADMIN");
 
@@ -101,7 +101,7 @@ public class UsuarioTest {
         assertEquals("John", usuario.getNombre());
         assertEquals("Doe", usuario.getApellidos());
         assertEquals("john.doe@example.com", usuario.getCorreo());
-        assertEquals("password", usuario.getContrasenia());
+        assertEquals("password", usuario.getPassword());
         assertTrue(usuario.getVerificado());
         assertEquals("ADMIN", usuario.getRol());
     }
@@ -113,7 +113,7 @@ public class UsuarioTest {
         usuario.setNombre(null);
         usuario.setApellidos(null);
         usuario.setCorreo(null);
-        usuario.setContrasenia(null);
+        usuario.setPassword(null);
         usuario.setVerificado(null);
         usuario.setRol(null);
 
@@ -121,7 +121,7 @@ public class UsuarioTest {
         assertNull(usuario.getNombre());
         assertNull(usuario.getApellidos());
         assertNull(usuario.getCorreo());
-        assertNull(usuario.getContrasenia());
+        assertNull(usuario.getPassword());
         assertNull(usuario.getVerificado());
         assertNull(usuario.getRol());
     }
