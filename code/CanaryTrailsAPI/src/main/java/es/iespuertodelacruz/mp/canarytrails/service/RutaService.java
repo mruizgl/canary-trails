@@ -5,8 +5,11 @@ import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.repository.RutaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,6 +29,7 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
     }
 
     @Override
+    @Transactional
     public Ruta save(Ruta object) {
 
         if(object.getNombre() == null){
@@ -59,6 +63,7 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
     }
 
     @Override
+    @Transactional
     public boolean update(Ruta object) {
 
         if(object != null && object.getId() != null) {
@@ -112,6 +117,7 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
     }
 
     @Override
+    @Transactional
     public boolean deleteById(Integer id) {
 
         //Relacion N:M con Fauna
@@ -131,4 +137,39 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
         int cantidad = rutaRepository.deleteRutaById(id);
         return cantidad >0;
     }
+
+    /**
+     * Metodo para obtener las rutas favoritas a partir de la id de usuario
+     * @param userId es la id del usuario que tiene esas rutas añadidas como favoritas
+     * @return la lista de rutas favoritas de ese usuario
+     */
+    public List<Ruta> findRutasFavoritasByUserId(Integer userId){
+
+        List<Integer> idsFavoritas = rutaRepository.findFavoritasByUserId(userId);
+        List<Ruta> rutasFavoritas = rutaRepository.findAllById(idsFavoritas);
+
+        // Verificación opcional de que no falte ninguna
+        if (rutasFavoritas.size() != idsFavoritas.size()) {
+            throw new RuntimeException("Alguna de las rutas favoritas no existe");
+        }
+
+        return rutasFavoritas;
+    }
+
+    @Transactional
+    public boolean aniadirRutaFavorita(Integer usuarioId, Integer rutaId){
+
+        int cantidad = rutaRepository.addFavoritaById(usuarioId, rutaId);
+
+        return cantidad >0;
+    }
+
+    @Transactional
+    public boolean deleteRutaFavorita(Integer usuarioId, Integer rutaId){
+
+        int cantidad = rutaRepository.deleteFavoritaById(usuarioId, rutaId);
+
+        return cantidad >0;
+    }
+
 }
