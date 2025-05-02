@@ -1,14 +1,11 @@
 package es.iespuertodelacruz.mp.canarytrails.controller;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.UsuarioRegisterDto;
-import es.iespuertodelacruz.mp.canarytrails.dto.UsuarioSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.stream.Collectors;
 
 /**
  * Controller para los endpoints de Usuario.
