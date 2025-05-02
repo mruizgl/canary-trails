@@ -92,21 +92,6 @@ public class FloraTest {
         assertTrue(flora.getAprobada());
     }
 
-    @Test
-    void usuariosGetterAndSetterShouldHandleNull() {
-        Flora flora = new Flora();
-        flora.setUsuarios(null);
-
-        assertNull(flora.getUsuarios());
-    }
-
-    @Test
-    void usuariosGetterAndSetterShouldHandleEmptyList() {
-        Flora flora = new Flora();
-        flora.setUsuarios(List.of());
-
-        assertTrue(flora.getUsuarios().isEmpty());
-    }
 
     @Test
     void rutasGetterAndSetterShouldHandleNull() {

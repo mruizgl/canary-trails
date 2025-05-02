@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class FaunaControllerAdmin {
     /**
 
-
+    
     @Autowired
     FaunaService faunaService;
     @Autowired
@@ -163,5 +163,7 @@ public class FaunaControllerAdmin {
         //logger.info("Llamada al find all get /api/alumnos");
         return ResponseEntity.ok(faunaService.deleteById(id));
     }
+
+     *
      */
 }

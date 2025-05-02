@@ -5,10 +5,12 @@ import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.repository.FaunaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
 public class FaunaService implements IServiceGeneric<Fauna, Integer> {
 
     @Autowired

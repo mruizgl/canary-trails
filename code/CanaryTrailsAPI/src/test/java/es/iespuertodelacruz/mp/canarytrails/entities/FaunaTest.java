@@ -6,59 +6,91 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
-
-
-class FaunaTest {
-
-    private Fauna fauna;
-    private Usuario usuario;
-    private Ruta ruta;
-
-    @BeforeEach
-    void setUp() {
-        fauna = new Fauna();
-        fauna.setId(1);
-        fauna.setNombre("Lagarto Gigante de El Hierro");
-        fauna.setDescripcion("Especie endémica de El Hierro");
-        fauna.setAprobada(true);
-
-        usuario = new Usuario();
-        usuario.setId(10);
-        fauna.setUsuario(usuario);
-
-        ruta = new Ruta();
-        ruta.setId(5);
-        fauna.setRutas(List.of(ruta));
-    }
+public class FaunaTest {
 
     @Test
-    void testGetters() {
-        assertEquals(1, fauna.getId());
-        assertEquals("Lagarto Gigante de El Hierro", fauna.getNombre());
-        assertEquals("Especie endémica de El Hierro", fauna.getDescripcion());
-        assertTrue(fauna.getAprobada());
-        assertEquals(usuario, fauna.getUsuario());
-        assertEquals(1, fauna.getRutas().size());
-    }
-
-    @Test
-    void testEqualsAndHashCode() {
+    void equalsShouldReturnTrueForSameId() {
+        Fauna fauna1 = new Fauna();
+        fauna1.setId(1);
         Fauna fauna2 = new Fauna();
         fauna2.setId(1);
 
-        assertEquals(fauna, fauna2);
-        assertEquals(fauna.hashCode(), fauna2.hashCode());
-
-        fauna2.setId(2);
-        assertNotEquals(fauna, fauna2);
+        assertEquals(fauna1, fauna2);
     }
 
     @Test
-    void testToString() {
-        String output = fauna.toString();
-        assertTrue(output.contains("Lagarto Gigante"));
-        assertTrue(output.contains("usuario="));
-        assertTrue(output.contains("rutas="));
+    void equalsShouldReturnFalseForDifferentId() {
+        Fauna fauna1 = new Fauna();
+        fauna1.setId(1);
+        Fauna fauna2 = new Fauna();
+        fauna2.setId(2);
+
+        assertNotEquals(fauna1, fauna2);
+    }
+
+    @Test
+    void equalsShouldReturnFalseForNull() {
+        Fauna fauna = new Fauna();
+        fauna.setId(1);
+
+        assertNotEquals(fauna, null);
+    }
+
+    @Test
+    void hashCodeShouldBeConsistentWithEquals() {
+        Fauna fauna1 = new Fauna();
+        fauna1.setId(1);
+        Fauna fauna2 = new Fauna();
+        fauna2.setId(1);
+
+        assertEquals(fauna1.hashCode(), fauna2.hashCode());
+    }
+
+    @Test
+    void toStringShouldIncludeAllAttributes() {
+        Fauna fauna = new Fauna();
+        fauna.setId(1);
+        fauna.setNombre("Fauna de prueba");
+        fauna.setDescripcion("Descripción de prueba");
+        fauna.setAprobada(true);
+
+        String result = fauna.toString();
+
+        assertTrue(result.contains("id=1"));
+        assertTrue(result.contains("nombre='Fauna de prueba'"));
+        assertTrue(result.contains("descripcion='Descripción de prueba'"));
+        assertTrue(result.contains("aprobada=true"));
+    }
+
+    @Test
+    void gettersAndSettersShouldWorkCorrectly() {
+        Fauna fauna = new Fauna();
+        fauna.setId(1);
+        fauna.setNombre("Fauna de prueba");
+        fauna.setDescripcion("Descripción de prueba");
+        fauna.setAprobada(true);
+
+        assertEquals(1, fauna.getId());
+        assertEquals("Fauna de prueba", fauna.getNombre());
+        assertEquals("Descripción de prueba", fauna.getDescripcion());
+        assertTrue(fauna.getAprobada());
+    }
+
+
+
+    @Test
+    void rutasGetterAndSetterShouldHandleNull() {
+        Fauna fauna = new Fauna();
+        fauna.setRutas(null);
+
+        assertNull(fauna.getRutas());
+    }
+
+    @Test
+    void rutasGetterAndSetterShouldHandleEmptyList() {
+        Fauna fauna = new Fauna();
+        fauna.setRutas(List.of());
+
+        assertTrue(fauna.getRutas().isEmpty());
     }
 }
