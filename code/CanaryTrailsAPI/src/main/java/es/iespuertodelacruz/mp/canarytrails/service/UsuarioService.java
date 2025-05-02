@@ -1,6 +1,7 @@
 package es.iespuertodelacruz.mp.canarytrails.service;
 
 import es.iespuertodelacruz.mp.canarytrails.common.IServiceGeneric;
+import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,8 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
         String regex = "^(?=.{6,320}$)([A-Za-z0-9._%+-]{1,64})@([A-Za-z0-9.-]{1,255})\\.[A-Za-z]{2,63}$";
 
         if(object.getCorreo() == null || !object.getCorreo().matches(regex)){
-            
+            throw new RuntimeException("El correo no cumple la validacion");
+
         }
 
         if(object.getNombre() == null){
@@ -127,4 +129,15 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
         //Si se ha borrado, sedevuelve true. Si no, false. No se da info por seguridad
         return cantidad > 0;
     }
+
+    /*public List<Ruta> obtenerFavoritas(int idUsuario){
+
+        List<Ruta> favoritas = usuarioRepository.getAllRutasFavoritasById(idUsuario);
+
+        if(favoritas.isEmpty()){
+            return null;
+        }
+
+        return favoritas;
+    }*/
 }
