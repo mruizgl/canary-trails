@@ -34,4 +34,8 @@ public class CoordenadaService implements ICrudService<Coordenada, Integer> {
     public void deleteById(Integer id) {
         coordenadaRepository.deleteById(id);
     }
+
+    public List<Coordenada> saveAll(List<Coordenada> coordenadas) {
+        return coordenadaRepository.saveAll(coordenadas);
+    }
 }

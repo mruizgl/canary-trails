@@ -51,4 +51,11 @@ public class CoordenadaController {
     public void delete(@PathVariable Integer id) {
         coordenadaService.deleteById(id);
     }
+
+    @PostMapping("/lote")
+    public List<CoordenadaDTO> createBatch(@RequestBody List<CoordenadaDTO> coordenadasDTO) {
+        List<Coordenada> coordenadas = coordenadaMapper.toEntityList(coordenadasDTO);
+        List<Coordenada> saved = coordenadaService.saveAll(coordenadas);
+        return coordenadaMapper.toDTOList(saved);
+    }
 }

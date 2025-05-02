@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -100,5 +101,22 @@ class CoordenadaControllerTest {
     void testDelete() throws Exception {
         mockMvc.perform(delete("/coordenadas/1"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void testCreateBatch() throws Exception {
+        List<CoordenadaDTO> dtoList = Collections.singletonList(coordenadaDTO);
+        List<Coordenada> entityList = Collections.singletonList(coordenada);
+
+        when(coordenadaMapper.toEntityList(dtoList)).thenReturn(entityList);
+        when(coordenadaService.saveAll(entityList)).thenReturn(entityList);
+        when(coordenadaMapper.toDTOList(entityList)).thenReturn(dtoList);
+
+        mockMvc.perform(post("/coordenadas/lote")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(dtoList)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].latitud").value("28.123456"))
+                .andExpect(jsonPath("$[0].longitud").value("-16.654321"));
     }
 }
