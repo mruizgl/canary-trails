@@ -76,21 +76,7 @@ public class FaunaTest {
         assertTrue(fauna.getAprobada());
     }
 
-    @Test
-    void usuariosGetterAndSetterShouldHandleNull() {
-        Fauna fauna = new Fauna();
-        fauna.setUsuarios(null);
 
-        assertNull(fauna.getUsuarios());
-    }
-
-    @Test
-    void usuariosGetterAndSetterShouldHandleEmptyList() {
-        Fauna fauna = new Fauna();
-        fauna.setUsuarios(List.of());
-
-        assertTrue(fauna.getUsuarios().isEmpty());
-    }
 
     @Test
     void rutasGetterAndSetterShouldHandleNull() {

@@ -69,7 +69,7 @@ public class Flora {
      * Relación de muchos a muchos mapeada por el atributo "floras" en la entidad Usuario.
      */
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     /**
@@ -257,11 +257,6 @@ public class Flora {
         return Objects.hashCode(id);
     }
 
-    /**
-     * Devuelve una representación en forma de cadena de la flora.
-     *
-     * @return una cadena que representa la flora, incluyendo sus atributos.
-     */
     @Override
     public String toString() {
         return "Flora{" +
