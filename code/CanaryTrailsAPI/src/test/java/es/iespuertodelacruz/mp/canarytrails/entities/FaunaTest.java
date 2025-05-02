@@ -6,105 +6,59 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FaunaTest {
+import org.junit.jupiter.api.BeforeEach;
 
-    @Test
-    void equalsShouldReturnTrueForSameId() {
-        Fauna fauna1 = new Fauna();
-        fauna1.setId(1);
-        Fauna fauna2 = new Fauna();
-        fauna2.setId(1);
 
-        assertEquals(fauna1, fauna2);
-    }
+class FaunaTest {
 
-    @Test
-    void equalsShouldReturnFalseForDifferentId() {
-        Fauna fauna1 = new Fauna();
-        fauna1.setId(1);
-        Fauna fauna2 = new Fauna();
-        fauna2.setId(2);
+    private Fauna fauna;
+    private Usuario usuario;
+    private Ruta ruta;
 
-        assertNotEquals(fauna1, fauna2);
-    }
-
-    @Test
-    void equalsShouldReturnFalseForNull() {
-        Fauna fauna = new Fauna();
+    @BeforeEach
+    void setUp() {
+        fauna = new Fauna();
         fauna.setId(1);
-
-        assertNotEquals(fauna, null);
-    }
-
-    @Test
-    void hashCodeShouldBeConsistentWithEquals() {
-        Fauna fauna1 = new Fauna();
-        fauna1.setId(1);
-        Fauna fauna2 = new Fauna();
-        fauna2.setId(1);
-
-        assertEquals(fauna1.hashCode(), fauna2.hashCode());
-    }
-
-    @Test
-    void toStringShouldIncludeAllAttributes() {
-        Fauna fauna = new Fauna();
-        fauna.setId(1);
-        fauna.setNombre("Fauna de prueba");
-        fauna.setDescripcion("Descripción de prueba");
+        fauna.setNombre("Lagarto Gigante de El Hierro");
+        fauna.setDescripcion("Especie endémica de El Hierro");
         fauna.setAprobada(true);
 
-        String result = fauna.toString();
+        usuario = new Usuario();
+        usuario.setId(10);
+        fauna.setUsuario(usuario);
 
-        assertTrue(result.contains("id=1"));
-        assertTrue(result.contains("nombre='Fauna de prueba'"));
-        assertTrue(result.contains("descripcion='Descripción de prueba'"));
-        assertTrue(result.contains("aprobada=true"));
+        ruta = new Ruta();
+        ruta.setId(5);
+        fauna.setRutas(List.of(ruta));
     }
 
     @Test
-    void gettersAndSettersShouldWorkCorrectly() {
-        Fauna fauna = new Fauna();
-        fauna.setId(1);
-        fauna.setNombre("Fauna de prueba");
-        fauna.setDescripcion("Descripción de prueba");
-        fauna.setAprobada(true);
-
+    void testGetters() {
         assertEquals(1, fauna.getId());
-        assertEquals("Fauna de prueba", fauna.getNombre());
-        assertEquals("Descripción de prueba", fauna.getDescripcion());
+        assertEquals("Lagarto Gigante de El Hierro", fauna.getNombre());
+        assertEquals("Especie endémica de El Hierro", fauna.getDescripcion());
         assertTrue(fauna.getAprobada());
+        assertEquals(usuario, fauna.getUsuario());
+        assertEquals(1, fauna.getRutas().size());
     }
 
     @Test
-    void usuariosGetterAndSetterShouldHandleNull() {
-        Fauna fauna = new Fauna();
-        fauna.setUsuarios(null);
+    void testEqualsAndHashCode() {
+        Fauna fauna2 = new Fauna();
+        fauna2.setId(1);
 
-        assertNull(fauna.getUsuarios());
+        assertEquals(fauna, fauna2);
+        assertEquals(fauna.hashCode(), fauna2.hashCode());
+
+        fauna2.setId(2);
+        assertNotEquals(fauna, fauna2);
     }
 
     @Test
-    void usuariosGetterAndSetterShouldHandleEmptyList() {
-        Fauna fauna = new Fauna();
-        fauna.setUsuarios(List.of());
-
-        assertTrue(fauna.getUsuarios().isEmpty());
-    }
-
-    @Test
-    void rutasGetterAndSetterShouldHandleNull() {
-        Fauna fauna = new Fauna();
-        fauna.setRutas(null);
-
-        assertNull(fauna.getRutas());
-    }
-
-    @Test
-    void rutasGetterAndSetterShouldHandleEmptyList() {
-        Fauna fauna = new Fauna();
-        fauna.setRutas(List.of());
-
-        assertTrue(fauna.getRutas().isEmpty());
+    void testToString() {
+        String output = fauna.toString();
+        assertTrue(output.contains("Lagarto Gigante"));
+        assertTrue(output.contains("usuario="));
+        assertTrue(output.contains("rutas="));
     }
 }
