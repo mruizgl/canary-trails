@@ -1,4 +1,4 @@
-package es.iespuertodelacruz.mp.canarytrails.dto;
+package es.iespuertodelacruz.mp.canarytrails.dto.fauna;
 
 import java.util.List;
 
