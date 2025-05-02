@@ -126,21 +126,21 @@ CREATE TABLE usuario_ruta_favorita (
 );
 
 -- Tabla intermedia: usuario_fauna
-CREATE TABLE usuario_fauna (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,
-    fauna_id INT NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-    FOREIGN KEY (fauna_id) REFERENCES faunas(id)
-);
+-- CREATE TABLE usuario_fauna (
+    -- id INT AUTO_INCREMENT PRIMARY KEY,
+    -- usuario_id INT NOT NULL,
+    -- fauna_id INT NOT NULL,
+    -- FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    -- FOREIGN KEY (fauna_id) REFERENCES faunas(id)
+-- );
 
 -- Tabla intermedia: usuario_flora
-CREATE TABLE usuario_flora (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,
-    flora_id INT NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-    FOREIGN KEY (flora_id) REFERENCES floras(id)
+-- CREATE TABLE usuario_flora (
+    -- id INT AUTO_INCREMENT PRIMARY KEY,
+    -- usuario_id INT NOT NULL,
+    -- flora_id INT NOT NULL,
+    -- FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    -- FOREIGN KEY (flora_id) REFERENCES floras(id)
 );
 
 -- Tabla intermedia: ruta_flora
