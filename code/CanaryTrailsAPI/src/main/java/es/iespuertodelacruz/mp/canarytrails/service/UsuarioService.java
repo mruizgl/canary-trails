@@ -2,7 +2,6 @@ package es.iespuertodelacruz.mp.canarytrails.service;
 
 import es.iespuertodelacruz.mp.canarytrails.common.IServiceGeneric;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
-import es.iespuertodelacruz.mp.canarytrails.exception.InvalidMailException;
 import es.iespuertodelacruz.mp.canarytrails.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,7 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
         String regex = "^(?=.{6,320}$)([A-Za-z0-9._%+-]{1,64})@([A-Za-z0-9.-]{1,255})\\.[A-Za-z]{2,63}$";
 
         if(object.getCorreo() == null || !object.getCorreo().matches(regex)){
-            throw new InvalidMailException("El correo del usuario no cumple la validacion");
+            //throw new InvalidMailException("El correo del usuario no cumple la validacion");
         }
 
         if(object.getNombre() == null){
