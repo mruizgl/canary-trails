@@ -46,8 +46,8 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
         String regex = "^(?=.{6,320}$)([A-Za-z0-9._%+-]{1,64})@([A-Za-z0-9.-]{1,255})\\.[A-Za-z]{2,63}$";
 
         if(object.getCorreo() == null || !object.getCorreo().matches(regex)){
-            //throw new InvalidMailException("El correo del usuario no cumple la validacion");
             throw new RuntimeException("El correo no cumple la validacion");
+
         }
 
         if(object.getNombre() == null){
