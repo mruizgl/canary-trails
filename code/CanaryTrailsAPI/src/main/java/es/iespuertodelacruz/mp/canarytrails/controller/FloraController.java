@@ -1,6 +1,8 @@
 package es.iespuertodelacruz.mp.canarytrails.controller;
 
+import es.iespuertodelacruz.mp.canarytrails.dto.FloraDTO;
 import es.iespuertodelacruz.mp.canarytrails.entities.Flora;
+import es.iespuertodelacruz.mp.canarytrails.mapper.FloraMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.FloraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,25 +18,31 @@ public class FloraController {
     @Autowired
     private FloraService floraService;
 
+    @Autowired
+    private FloraMapper floraMapper;
+
     @GetMapping
-    public List<Flora> getAll() {
-        return floraService.findAll();
+    public List<FloraDTO> getAll() {
+        return floraMapper.toDTOList(floraService.findAll());
     }
 
     @GetMapping("/{id}")
-    public Optional<Flora> getById(@PathVariable Integer id) {
-        return floraService.findById(id);
+    public Optional<FloraDTO> getById(@PathVariable Integer id) {
+        return floraService.findById(id)
+                .map(floraMapper::toDTO);
     }
 
     @PostMapping
-    public Flora create(@RequestBody Flora flora) {
-        return floraService.save(flora);
+    public FloraDTO create(@RequestBody FloraDTO dto) {
+        Flora flora = floraMapper.toEntity(dto);
+        return floraMapper.toDTO(floraService.save(flora));
     }
 
     @PutMapping("/{id}")
-    public Flora update(@PathVariable Integer id, @RequestBody Flora flora) {
+    public FloraDTO update(@PathVariable Integer id, @RequestBody FloraDTO dto) {
+        Flora flora = floraMapper.toEntity(dto);
         flora.setId(id);
-        return floraService.save(flora);
+        return floraMapper.toDTO(floraService.save(flora));
     }
 
     @DeleteMapping("/{id}")
@@ -42,3 +50,4 @@ public class FloraController {
         floraService.deleteById(id);
     }
 }
+
