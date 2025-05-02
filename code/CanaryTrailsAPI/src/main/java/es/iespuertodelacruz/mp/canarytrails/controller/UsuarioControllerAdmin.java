@@ -1,6 +1,6 @@
 package es.iespuertodelacruz.mp.canarytrails.controller;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.UsuarioRegisterDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioRegisterDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;

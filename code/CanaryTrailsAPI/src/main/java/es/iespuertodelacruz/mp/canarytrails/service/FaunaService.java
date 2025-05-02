@@ -2,7 +2,6 @@ package es.iespuertodelacruz.mp.canarytrails.service;
 
 import es.iespuertodelacruz.mp.canarytrails.common.IServiceGeneric;
 import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
-import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.repository.FaunaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,7 +96,7 @@ public class FaunaService implements IServiceGeneric<Fauna, Integer> {
     public boolean deleteById(Integer id) {
 
         faunaRepository.deleteRutaFaunaRelation(id);
-        int cantidad = faunaRepository.deleteFaunaBydId(id);
+        int cantidad = faunaRepository.deleteFaunaById(id);
         
         return cantidad > 0;
     }

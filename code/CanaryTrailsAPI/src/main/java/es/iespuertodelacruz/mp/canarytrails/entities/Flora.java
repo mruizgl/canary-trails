@@ -209,6 +209,13 @@ public class Flora {
         this.aprobada = aprobada;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     /**
      * Obtiene la lista de rutas asociadas a esta flora.
@@ -248,14 +255,6 @@ public class Flora {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     @Override

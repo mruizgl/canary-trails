@@ -1,22 +1,20 @@
 package es.iespuertodelacruz.mp.canarytrails.controller;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.FaunaEntradaDto;
-import es.iespuertodelacruz.mp.canarytrails.dto.FaunaSalidaDto;
-import es.iespuertodelacruz.mp.canarytrails.dto.UsuarioRegisterDto;
-import es.iespuertodelacruz.mp.canarytrails.dto.UsuarioSalidaDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaEntradaDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaSalidaDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioSalidaDtoV2;
 import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.service.FaunaService;
+import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -30,6 +28,8 @@ public class FaunaControllerAdmin {
     FaunaService faunaService;
     @Autowired
     UsuarioService usuarioService;
+    @Autowired
+    RutaService rutaService;
 
     @GetMapping
     public ResponseEntity<?> findAllFaunas(){
@@ -42,7 +42,7 @@ public class FaunaControllerAdmin {
                                         fauna.getNombre(),
                                         fauna.getDescripcion(),
                                         fauna.getAprobada(),
-                                        new UsuarioSalidaDto(
+                                        new UsuarioSalidaDtoV2(
                                                 fauna.getUsuario().getId(),
                                                 fauna.getUsuario().getNombre(),
                                                 fauna.getUsuario().getApellidos(),
@@ -71,7 +71,7 @@ public class FaunaControllerAdmin {
                                 fauna.getNombre(),
                                 fauna.getDescripcion(),
                                 fauna.getAprobada(),
-                                new UsuarioSalidaDto(
+                                new UsuarioSalidaDtoV2(
                                         fauna.getUsuario().getId(),
                                         fauna.getUsuario().getNombre(),
                                         fauna.getUsuario().getApellidos(),
@@ -113,7 +113,7 @@ public class FaunaControllerAdmin {
                 faunaGuardada.getNombre(),
                 faunaGuardada.getDescripcion(),
                 faunaGuardada.getAprobada(),
-                new UsuarioSalidaDto(
+                new UsuarioSalidaDtoV2(
                         faunaGuardada.getUsuario().getId(),
                         faunaGuardada.getUsuario().getNombre(),
                         faunaGuardada.getUsuario().getApellidos(),

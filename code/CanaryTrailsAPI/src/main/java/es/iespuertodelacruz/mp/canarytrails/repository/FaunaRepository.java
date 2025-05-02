@@ -12,7 +12,7 @@ public interface FaunaRepository extends JpaRepository<Fauna, Integer> {
             value="DELETE FROM faunas WHERE id = :id",
             nativeQuery = true
     ) //Native Query
-    int deleteFaunaBydId(@Param("id") int id);
+    int deleteFaunaById(@Param("id") int id);
 
     @Query(
             value= "DELETE FROM ruta_fauna WHERE fauna_id = :faunaId",
