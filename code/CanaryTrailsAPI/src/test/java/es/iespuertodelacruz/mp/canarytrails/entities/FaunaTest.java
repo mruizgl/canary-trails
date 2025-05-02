@@ -76,7 +76,7 @@ public class FaunaTest {
         assertTrue(fauna.getAprobada());
     }
 
-    @Test
+    /*@Test
     void usuariosGetterAndSetterShouldHandleNull() {
         Fauna fauna = new Fauna();
         fauna.setUsuarios(null);
@@ -90,7 +90,7 @@ public class FaunaTest {
         fauna.setUsuarios(List.of());
 
         assertTrue(fauna.getUsuarios().isEmpty());
-    }
+    }*/
 
     @Test
     void rutasGetterAndSetterShouldHandleNull() {

@@ -68,8 +68,9 @@ public class Flora {
      * Lista de usuarios asociados a esta flora.
      * Relación de muchos a muchos mapeada por el atributo "floras" en la entidad Usuario.
      */
-    @ManyToMany(mappedBy = "floras")
-    private List<Usuario> usuarios;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
     /**
      * Lista de rutas asociadas a esta flora.
@@ -208,20 +209,12 @@ public class Flora {
         this.aprobada = aprobada;
     }
 
-    /**
-     * Obtiene la lista de usuarios asociados a esta flora.
-     * @return la lista de usuarios.
-     */
-    public List<Usuario> getUsuarios() {
-        return usuarios;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    /**
-     * Establece la lista de usuarios asociados a esta flora.
-     * @param usuarios la lista de usuarios a establecer.
-     */
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     /**
@@ -280,7 +273,7 @@ public class Flora {
                 ", caidaFlor='" + caidaFlor + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", aprobada=" + aprobada +
-                ", usuarios=" + usuarios +
+                ", usuario=" + usuario +
                 ", rutas=" + rutas +
                 '}';
     }
