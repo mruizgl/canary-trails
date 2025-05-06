@@ -20,7 +20,8 @@ public class SecurityConfig {
                                 "/v3/api-docs.yaml",
                                 "/api-docs/**"
                         ).permitAll()
-                        .anyRequest().authenticated()
+                        //.anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .formLogin(); // o .httpBasic() si usas login básico
 
