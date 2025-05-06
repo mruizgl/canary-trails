@@ -23,9 +23,10 @@ public interface FaunaRepository extends JpaRepository<Fauna, Integer> {
             nativeQuery = true)
     int deleteRutaFaunaRelation(@Param("faunaId") int faunaId);
 
-    /*@Query(
+    @Modifying
+    @Query(
             value="INSERT INTO ruta_fauna (fauna_id, ruta_id) VALUES (:faunaId, :rutaId)",
             nativeQuery = true)
-    void addRutaFaunaRelation(@Param("faunaId") int faunaId, @Param("rutaId") int rutaId);*/
+    void addRutaFaunaRelation(@Param("faunaId") int faunaId, @Param("rutaId") int rutaId);
 
 }

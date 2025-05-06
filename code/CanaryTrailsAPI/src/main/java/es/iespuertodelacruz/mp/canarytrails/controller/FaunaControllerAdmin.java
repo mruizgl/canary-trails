@@ -1,7 +1,6 @@
 package es.iespuertodelacruz.mp.canarytrails.controller;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaEntradaDto;
-import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaSalidaDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.fauna.*;
 import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioSalidaDtoV2;
 import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
@@ -21,7 +20,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/admin/faunas")
 @CrossOrigin
 public class FaunaControllerAdmin {
-    /**
 
     
     @Autowired
@@ -31,9 +29,13 @@ public class FaunaControllerAdmin {
     @Autowired
     RutaService rutaService;
 
+    /**
+     * Endpoint para obtener todas las faunas
+     * @return una lista de todas las faunas con sus respectivas relaciones
+     */
     @GetMapping
     public ResponseEntity<?> findAllFaunas(){
-        System.out.println("holaaaaaa estoy aqui");
+        //System.out.println("holaaaaaa estoy aqui");
 
         return ResponseEntity.ok(faunaService.findAll()
                         .stream()
@@ -42,7 +44,7 @@ public class FaunaControllerAdmin {
                                         fauna.getNombre(),
                                         fauna.getDescripcion(),
                                         fauna.getAprobada(),
-                                        new UsuarioSalidaDtoV2(
+                                        new UsuarioSalidaFaunaDto(
                                                 fauna.getUsuario().getId(),
                                                 fauna.getUsuario().getNombre(),
                                                 fauna.getUsuario().getApellidos(),
@@ -50,13 +52,30 @@ public class FaunaControllerAdmin {
                                                 fauna.getUsuario().getPassword(),
                                                 fauna.getUsuario().getVerificado(),
                                                 fauna.getUsuario().getRol()
-                                        )
+                                        ),
+                                        fauna.getRutas()
+                                                .stream()
+                                                .map(ruta -> new RutaSalidaFaunaDto(
+                                                        ruta.getId(),
+                                                        ruta.getNombre(),
+                                                        ruta.getDificultad(),
+                                                        ruta.getTiempoDuracion(),
+                                                        ruta.getDistanciaMetros(),
+                                                        ruta.getDesnivel(),
+                                                        ruta.getAprobada()
+                                                )
+                                        ).toList()
                                 )
                         )
                 .collect(Collectors.toList())
         );
     }
 
+    /**
+     * Endpoint para obtener una fauna a partir de su id
+     * @param id de la fauna que se quiere obtener
+     * @return la fauna cuyo id coincide con el introducido
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> findFaunaById(@PathVariable Integer id){
 
@@ -67,27 +86,43 @@ public class FaunaControllerAdmin {
         }
 
         FaunaSalidaDto dto = new FaunaSalidaDto(
-                                fauna.getId(),
-                                fauna.getNombre(),
-                                fauna.getDescripcion(),
-                                fauna.getAprobada(),
-                                new UsuarioSalidaDtoV2(
-                                        fauna.getUsuario().getId(),
-                                        fauna.getUsuario().getNombre(),
-                                        fauna.getUsuario().getApellidos(),
-                                        fauna.getUsuario().getCorreo(),
-                                        fauna.getUsuario().getPassword(),
-                                        fauna.getUsuario().getVerificado(),
-                                        fauna.getUsuario().getRol()
-                                )
-
+                        fauna.getId(),
+                        fauna.getNombre(),
+                        fauna.getDescripcion(),
+                        fauna.getAprobada(),
+                        new UsuarioSalidaFaunaDto(
+                                fauna.getUsuario().getId(),
+                                fauna.getUsuario().getNombre(),
+                                fauna.getUsuario().getApellidos(),
+                                fauna.getUsuario().getCorreo(),
+                                fauna.getUsuario().getPassword(),
+                                fauna.getUsuario().getVerificado(),
+                                fauna.getUsuario().getRol()
+                        ),
+                        fauna.getRutas()
+                                .stream()
+                                .map(ruta -> new RutaSalidaFaunaDto(
+                                                ruta.getId(),
+                                                ruta.getNombre(),
+                                                ruta.getDificultad(),
+                                                ruta.getTiempoDuracion(),
+                                                ruta.getDistanciaMetros(),
+                                                ruta.getDesnivel(),
+                                                ruta.getAprobada()
+                                        )
+                                ).toList()
         );
 
         return ResponseEntity.ok(dto);
     }
 
+    /**
+     * Endpoint para añadir una fauna a la bbdd
+     * @param dto con los datos que se deben introducir para crear la fauna
+     * @return un JSON de la fauna creada
+     */
     @PostMapping("/add")
-    public ResponseEntity<?> createFauna(@RequestBody FaunaEntradaDto dto){
+    public ResponseEntity<?> createFauna(@RequestBody FaunaEntradaCreateDto dto){
         //Logger logger = Logger.getLogger("logger");
         //Logger logger = Logger.getLogger(Globals.LOGGER);
         //logger.info("Llamada al find all get /api/usuarios");
@@ -113,7 +148,7 @@ public class FaunaControllerAdmin {
                 faunaGuardada.getNombre(),
                 faunaGuardada.getDescripcion(),
                 faunaGuardada.getAprobada(),
-                new UsuarioSalidaDtoV2(
+                new UsuarioSalidaFaunaDto(
                         faunaGuardada.getUsuario().getId(),
                         faunaGuardada.getUsuario().getNombre(),
                         faunaGuardada.getUsuario().getApellidos(),
@@ -121,15 +156,26 @@ public class FaunaControllerAdmin {
                         faunaGuardada.getUsuario().getPassword(),
                         faunaGuardada.getUsuario().getVerificado(),
                         faunaGuardada.getUsuario().getRol()
-                )
-
+                ),
+                faunaGuardada.getRutas()
+                        .stream()
+                        .map(ruta -> new RutaSalidaFaunaDto(
+                                        ruta.getId(),
+                                        ruta.getNombre(),
+                                        ruta.getDificultad(),
+                                        ruta.getTiempoDuracion(),
+                                        ruta.getDistanciaMetros(),
+                                        ruta.getDesnivel(),
+                                        ruta.getAprobada()
+                                )
+                        ).toList()
         );
 
         return ResponseEntity.ok(dtoSalida);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateAlumno(@RequestBody FaunaEntradaDto dto){
+    public ResponseEntity<?> updateAlumno(@RequestBody FaunaEntradaUpdateDto dto){
         //Logger logger = Logger.getLogger("logger");
         //Logger logger = Logger.getLogger(Globals.LOGGER);
         //logger.info("Llamada al find all get /api/alumnos");
@@ -163,7 +209,4 @@ public class FaunaControllerAdmin {
         //logger.info("Llamada al find all get /api/alumnos");
         return ResponseEntity.ok(faunaService.deleteById(id));
     }
-
-     *
-     */
 }

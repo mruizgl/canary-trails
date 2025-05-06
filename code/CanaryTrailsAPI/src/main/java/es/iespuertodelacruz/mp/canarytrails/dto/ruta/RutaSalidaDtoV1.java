@@ -1,10 +1,5 @@
 package es.iespuertodelacruz.mp.canarytrails.dto.ruta;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaSalidaDto;
-import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioSalidaDtoV2;
-
-import java.util.List;
-
 /**
  * Dto de salida para las Rutas
  * V1: Muestra las relaciones

@@ -2,8 +2,7 @@ package es.iespuertodelacruz.mp.canarytrails.dto.fauna;
 
 import java.util.List;
 
-public record FaunaEntradaDto(
-        int id,
+public record FaunaEntradaCreateDto(
         String nombre,
         String descripcion,
         boolean aprobada,

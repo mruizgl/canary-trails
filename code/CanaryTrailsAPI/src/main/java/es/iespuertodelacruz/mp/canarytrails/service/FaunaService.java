@@ -2,6 +2,7 @@ package es.iespuertodelacruz.mp.canarytrails.service;
 
 import es.iespuertodelacruz.mp.canarytrails.common.IServiceGeneric;
 import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
+import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.repository.FaunaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,13 +42,15 @@ public class FaunaService implements IServiceGeneric<Fauna, Integer> {
             throw new RuntimeException("El usuario ha de existir");
         }
 
-        /*if (savedFauna.getRutas() != null && !savedFauna.getRutas().isEmpty()) {
+        Fauna savedFauna = faunaRepository.save(object);
+
+        if (savedFauna.getRutas() != null && !savedFauna.getRutas().isEmpty()) {
             for (Ruta ruta : savedFauna.getRutas()) {
                 faunaRepository.addRutaFaunaRelation(savedFauna.getId(), ruta.getId());
             }
-        }*/
+        }
 
-        return faunaRepository.save(object);
+        return savedFauna;
     }
 
     @Override
@@ -83,7 +86,18 @@ public class FaunaService implements IServiceGeneric<Fauna, Integer> {
                 fauna.setRutas(object.getRutas());
             }
 
-            faunaRepository.save(fauna);
+            Fauna savedFauna = faunaRepository.save(fauna);
+
+            // Se borran las relaciones siempre. Si hay nuevas se actualizan, si no se quiere actualizar se tienen q
+            // poner las id de las que ya estaban, y si no se pone ninguna o un 0, se borran todas las relaciones
+            int cantidad = faunaRepository.deleteRutaFaunaRelation(savedFauna.getId());
+            //System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY"+cantidad);
+
+            if (savedFauna.getRutas() != null && !savedFauna.getRutas().isEmpty()) {
+                for (Ruta ruta : object.getRutas()) {
+                    faunaRepository.addRutaFaunaRelation(savedFauna.getId(), ruta.getId());
+                }
+            }
 
             return true;
         } else{
@@ -93,6 +107,7 @@ public class FaunaService implements IServiceGeneric<Fauna, Integer> {
     }
 
     @Override
+    @Transactional
     public boolean deleteById(Integer id) {
 
         faunaRepository.deleteRutaFaunaRelation(id);
