@@ -1,5 +1,6 @@
 package es.iespuertodelacruz.mp.canarytrails.controller;
 
+import es.iespuertodelacruz.mp.canarytrails.dto.zona.ZonaEntradaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.zona.ZonaSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Zona;
 import es.iespuertodelacruz.mp.canarytrails.mapper.ZonaMapper;
@@ -17,8 +18,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Controlador para la gestión de zonas en la API de administración.
+ * Proporciona endpoints para crear, leer, actualizar y eliminar zonas.
+ * @author Melissa R.G. y Pedro M.E.
+ */
 @RestController
-@RequestMapping("/api/zonas")
+@RequestMapping("/api/v1/admin/zonas")
 @CrossOrigin
 public class ZonaController {
 
@@ -59,10 +65,11 @@ public class ZonaController {
 
     @Operation(summary = "Crear una nueva zona")
     @PostMapping
-    public ResponseEntity<ZonaSalidaDto> create(@RequestBody ZonaSalidaDto zonaSalidaDto) {
-        logger.info("Petición POST para crear zona: {}", zonaSalidaDto);
-        Zona saved = zonaService.save(zonaMapper.toEntity(zonaSalidaDto));
-        logger.debug("Zona creada con ID {}", saved.getId());
+    public ResponseEntity<ZonaSalidaDto> create(@RequestBody ZonaEntradaDto zonaEntradaDto) {
+        logger.info("Petición POST para crear zona: {}", zonaEntradaDto);
+        Zona zona = new Zona();
+        zona.setNombre(zonaEntradaDto.nombre());
+        Zona saved = zonaService.save(zona);
         return ResponseEntity.ok(zonaMapper.toDTO(saved));
     }
 

@@ -10,8 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador REST para la gestión de la entidad Flora.
+ * Proporciona endpoints para crear, leer, actualizar y eliminar registros de flora.
+ * @author Melissa R.G. y Pedro M.E.
+ */
 @RestController
-@RequestMapping("/flora")
+@RequestMapping("/api/v1/admin/flora")
 @CrossOrigin(origins = "*")
 public class FloraController {
 
