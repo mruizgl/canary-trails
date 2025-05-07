@@ -1,14 +1,15 @@
 package es.iespuertodelacruz.mp.canarytrails.dto;
 
+import es.iespuertodelacruz.mp.canarytrails.dto.zona.ZonaSalidaDto;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ZonaDTOTest {
+class ZonaSalidaDtoTest {
 
     @Test
     void testConstructorAndGetters() {
-        ZonaDTO dto = new ZonaDTO(1, "Norte");
+        ZonaSalidaDto dto = new ZonaSalidaDto(1, "Norte");
 
         assertEquals(1, dto.getId());
         assertEquals("Norte", dto.getNombre());
@@ -16,7 +17,7 @@ class ZonaDTOTest {
 
     @Test
     void testSetters() {
-        ZonaDTO dto = new ZonaDTO();
+        ZonaSalidaDto dto = new ZonaSalidaDto();
         dto.setId(2);
         dto.setNombre("Sur");
 
@@ -26,15 +27,15 @@ class ZonaDTOTest {
 
     @Test
     void testToStringNotNull() {
-        ZonaDTO dto = new ZonaDTO(3, "Este");
+        ZonaSalidaDto dto = new ZonaSalidaDto(3, "Este");
         assertNotNull(dto.toString());
     }
 
     @Test
     void testEqualsAndHashCode() {
-        ZonaDTO dto1 = new ZonaDTO(1, "Norte");
-        ZonaDTO dto2 = new ZonaDTO(1, "Norte");
-        ZonaDTO dto3 = new ZonaDTO(2, "Sur");
+        ZonaSalidaDto dto1 = new ZonaSalidaDto(1, "Norte");
+        ZonaSalidaDto dto2 = new ZonaSalidaDto(1, "Norte");
+        ZonaSalidaDto dto3 = new ZonaSalidaDto(2, "Sur");
 
         assertEquals(dto1, dto2);
         assertNotEquals(dto1, dto3);

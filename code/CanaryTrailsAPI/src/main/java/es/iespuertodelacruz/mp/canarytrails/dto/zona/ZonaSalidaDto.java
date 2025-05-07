@@ -1,15 +1,15 @@
-package es.iespuertodelacruz.mp.canarytrails.dto;
+package es.iespuertodelacruz.mp.canarytrails.dto.zona;
 
 import java.util.Objects;
 
-public class ZonaDTO {
+public class ZonaSalidaDto {
     private Integer id;
     private String nombre;
 
-    public ZonaDTO() {
+    public ZonaSalidaDto() {
     }
 
-    public ZonaDTO(Integer id, String nombre) {
+    public ZonaSalidaDto(Integer id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -33,8 +33,8 @@ public class ZonaDTO {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        ZonaDTO zonaDTO = (ZonaDTO) o;
-        return Objects.equals(id, zonaDTO.id);
+        ZonaSalidaDto zonaSalidaDto = (ZonaSalidaDto) o;
+        return Objects.equals(id, zonaSalidaDto.id);
     }
 
     @Override

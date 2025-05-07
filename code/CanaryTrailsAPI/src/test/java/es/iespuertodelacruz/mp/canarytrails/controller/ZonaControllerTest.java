@@ -1,7 +1,7 @@
 package es.iespuertodelacruz.mp.canarytrails.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.iespuertodelacruz.mp.canarytrails.config.TestSecurityConfig;
-import es.iespuertodelacruz.mp.canarytrails.dto.ZonaDTO;
+import es.iespuertodelacruz.mp.canarytrails.dto.zona.ZonaSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Zona;
 import es.iespuertodelacruz.mp.canarytrails.mapper.ZonaMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.ZonaService;
@@ -39,7 +39,7 @@ class ZonaControllerTest {
     @Test
     void testGetAllZonas() throws Exception {
         Zona zona = new Zona(); zona.setId(1); zona.setNombre("Norte");
-        ZonaDTO dto = new ZonaDTO(1, "Norte");
+        ZonaSalidaDto dto = new ZonaSalidaDto(1, "Norte");
 
         when(zonaService.findAll()).thenReturn(List.of(zona));
         when(zonaMapper.toDTO(zona)).thenReturn(dto);
@@ -53,7 +53,7 @@ class ZonaControllerTest {
     @Test
     void testGetByIdSuccess() throws Exception {
         Zona zona = new Zona(); zona.setId(2); zona.setNombre("Sur");
-        ZonaDTO dto = new ZonaDTO(2, "Sur");
+        ZonaSalidaDto dto = new ZonaSalidaDto(2, "Sur");
 
         when(zonaService.findById(2)).thenReturn(Optional.of(zona));
         when(zonaMapper.toDTO(zona)).thenReturn(dto);
@@ -74,12 +74,12 @@ class ZonaControllerTest {
 
     @Test
     void testCreateZona() throws Exception {
-        ZonaDTO input = new ZonaDTO(null, "Centro");
+        ZonaSalidaDto input = new ZonaSalidaDto(null, "Centro");
         Zona entity = new Zona(); entity.setNombre("Centro");
         Zona saved = new Zona(); saved.setId(3); saved.setNombre("Centro");
-        ZonaDTO output = new ZonaDTO(3, "Centro");
+        ZonaSalidaDto output = new ZonaSalidaDto(3, "Centro");
 
-        when(zonaMapper.toEntity(any(ZonaDTO.class))).thenReturn(entity);
+        when(zonaMapper.toEntity(any(ZonaSalidaDto.class))).thenReturn(entity);
         when(zonaService.save(any(Zona.class))).thenReturn(saved);
         when(zonaMapper.toDTO(saved)).thenReturn(output);
 
