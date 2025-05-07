@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * Controlador para la gestión de municipios en la API de administración.
@@ -71,59 +73,72 @@ public class MunicipioControllerAdmin {
 
     @Operation(summary = "Crear un nuevo municipio")
     @PostMapping("/add")
-    public ResponseEntity<MunicipioSalidaDto> create(@RequestBody MunicipioEntradaDto dto) {
+    public ResponseEntity<?> create(@RequestBody MunicipioEntradaDto dto) {
         logger.info("POST /api/v1/admin/municipios/add - Crear municipio: {}", dto);
 
         Municipio municipio = municipioMapper.toEntity(dto);
 
-        // Buscar la zona (lanzar 404 si no existe)
-        Zona zona = zonaService.findById(dto.zonaId())
-                .orElseThrow(() -> {
-                    logger.warn("Zona con ID {} no encontrada", dto.zonaId());
-                    return new ResponseStatusException(
-                            HttpStatus.NOT_FOUND, "Zona con ID " + dto.zonaId() + " no encontrada"
-                    );
-                });
+        Optional<Zona> optionalZona = zonaService.findById(dto.zonaId());
 
-        municipio.setZona(zona);
+        if (optionalZona.isEmpty()) {
+            logger.warn("Zona con ID {} no encontrada", dto.zonaId());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    Map.of("mensaje", "Zona con ID " + dto.zonaId() + " no encontrada")
+            );
+        }
 
-
+        municipio.setZona(optionalZona.get());
         Municipio guardado = municipioService.save(municipio);
         logger.debug("Municipio creado con ID {}", guardado.getId());
 
-        return ResponseEntity.ok(municipioMapper.toDto(guardado));
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                Map.of(
+                        "mensaje", "Municipio creado correctamente",
+                        "municipio", municipioMapper.toDto(guardado)
+                )
+        );
     }
+
 
     @Operation(summary = "Actualizar un municipio existente")
     @PutMapping("/update")
-    public ResponseEntity<Boolean> update(@RequestBody MunicipioEdicionDto dto) {
+    public ResponseEntity<?> update(@RequestBody MunicipioEdicionDto dto) {
         logger.info("PUT /api/v1/admin/municipios/update - Actualizar municipio ID {}", dto.id());
 
         Municipio municipio = municipioMapper.toEntity(dto);
         municipio.setId(dto.id());
 
         boolean actualizado = municipioService.update(municipio);
+
         if (actualizado) {
             logger.debug("Municipio actualizado: {}", municipio);
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok(Map.of("mensaje", "Municipio actualizado correctamente"));
         } else {
             logger.warn("No se pudo actualizar el municipio con ID {}", dto.id());
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    Map.of("mensaje", "No se encontró el municipio con ID " + dto.id())
+            );
         }
     }
+
 
 
     @Operation(summary = "Eliminar un municipio por ID")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
         logger.info("DELETE /api/v1/admin/municipios/delete/{} - Eliminar municipio", id);
+
         boolean eliminado = municipioService.deleteById(id);
+
         if (eliminado) {
             logger.debug("Municipio con ID {} eliminado", id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(Map.of("mensaje", "Municipio eliminado correctamente"));
         } else {
             logger.warn("Municipio con ID {} no encontrado para eliminación", id);
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    Map.of("mensaje", "No se encontró el municipio con ID " + id)
+            );
         }
     }
+
 }
