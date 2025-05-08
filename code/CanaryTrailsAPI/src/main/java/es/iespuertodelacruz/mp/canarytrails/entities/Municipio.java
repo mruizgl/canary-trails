@@ -57,7 +57,7 @@ public class Municipio {
      * Relación de muchos a uno con la entidad Zona.
      * Mapeado a la columna "zona_id" en la base de datos.
      */
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "zona_id", nullable = false)
     private Zona zona;
 

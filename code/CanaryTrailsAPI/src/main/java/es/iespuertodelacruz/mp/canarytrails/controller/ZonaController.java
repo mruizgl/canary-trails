@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
@@ -93,15 +94,13 @@ public class ZonaController {
 
     @Operation(summary = "Eliminar una zona por ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        logger.info("Petición DELETE para eliminar zona con ID {}", id);
-        if (zonaService.findById(id).isPresent()) {
-            zonaService.deleteById(id);
-            logger.debug("Zona con ID {} eliminada", id);
-            return ResponseEntity.noContent().build();
-        } else {
-            logger.warn("Zona con ID {} no encontrada para eliminación", id);
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> eliminarZona(@PathVariable int id) {
+        try {
+            zonaService.eliminarZonaPorId(id);
+            return ResponseEntity.ok("Zona eliminada correctamente.");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
+
 }
