@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -43,15 +44,23 @@ public class ZonaService implements ICrudService<Zona, Integer> {
     }
 
     public void eliminarZonaPorId(int zonaId) {
-        List<Municipio> municipiosAsociados = municipioRepository.findByZonaId(zonaId);
-        if (!municipiosAsociados.isEmpty()) {
-            String nombres = municipiosAsociados.stream()
+        Optional<Zona> zonaOptional = zonaRepository.findById(zonaId);
+
+        if (zonaOptional.isEmpty()) {
+            throw new NoSuchElementException("La zona con ID " + zonaId + " no existe.");
+        }
+
+        List<Municipio> asociados = municipioRepository.findByZonaId(zonaId);
+        if (!asociados.isEmpty()) {
+            String nombres = asociados.stream()
                     .map(Municipio::getNombre)
                     .collect(Collectors.joining(", "));
             throw new IllegalStateException(
                     "No se puede eliminar la zona porque está asociada a los siguientes municipios: " + nombres +
                             ". Desasócialos primero para poder eliminarla.");
         }
+
         zonaRepository.deleteById(zonaId);
     }
+
 }
