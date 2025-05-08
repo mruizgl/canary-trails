@@ -1,9 +1,9 @@
 package es.iespuertodelacruz.mp.canarytrails.dto.ruta;
 
-
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaSalidaDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.ruta.UsuarioSalidaRutaDto;
 
-public record RutaSalidaDtoV1(
+public record RutaSalidaDto(
         int id,
         String nombre,
         String dificultad,
@@ -11,11 +11,10 @@ public record RutaSalidaDtoV1(
         float distanciaMetros,
         float desnivel,
         boolean aprobada,
-        UsuarioSalidaRutaDto usuario,     //Usuario sin informacion adicional
+        UsuarioSalidaRutaDto usuario,  //Usuario sin informacion adicional
         //List<ComentarioSalidaDtoV1> comentarios,   //Comentario con la información del usuario que lo hizo
         //List<MunicipiosSalidaDtoV2> municpios,    //Municipio sin información adicional
-        FaunaSalidaDto faunas,
-        //FloraSalidaDto floras,
-
+        FaunaSalidaDto faunas
+        // FloraSalidaDto floras
 ) {
 }
