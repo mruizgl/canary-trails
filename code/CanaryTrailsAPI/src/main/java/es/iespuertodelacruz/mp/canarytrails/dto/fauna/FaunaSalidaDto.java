@@ -1,11 +1,21 @@
 package es.iespuertodelacruz.mp.canarytrails.dto.fauna;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioSalidaDtoV2;
+import java.util.List;
 
+/**
+ * Salida de Fauna con las relaciones cargadas
+ * @param id
+ * @param nombre
+ * @param descripcion
+ * @param aprobada
+ * @param usuario que la creo
+ * @param rutas en las que aparece
+ */
 public record FaunaSalidaDto(
         int id,
         String nombre,
         String descripcion,
         boolean aprobada,
-        UsuarioSalidaDtoV2 usuario
+        UsuarioSalidaFaunaDto usuario,
+        List<RutaSalidaFaunaDto> rutas
 ) {}

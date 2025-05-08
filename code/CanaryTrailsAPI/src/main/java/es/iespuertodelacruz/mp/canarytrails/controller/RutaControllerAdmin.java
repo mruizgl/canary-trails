@@ -1,13 +1,8 @@
 package es.iespuertodelacruz.mp.canarytrails.controller;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaEntradaDto;
-import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDtoV2;
-import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioSalidaDtoV2;
-import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
-import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.service.FaunaService;
 import es.iespuertodelacruz.mp.canarytrails.service.FloraService;
 import es.iespuertodelacruz.mp.canarytrails.service.RutaService;

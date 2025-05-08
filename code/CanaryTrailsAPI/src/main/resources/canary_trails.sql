@@ -1,8 +1,6 @@
 -- Elimina las tablas intermedias primero para evitar errores de FK
 DROP TABLE IF EXISTS ruta_fauna;
 DROP TABLE IF EXISTS ruta_flora;
-DROP TABLE IF EXISTS usuario_flora;
-DROP TABLE IF EXISTS usuario_fauna;
 DROP TABLE IF EXISTS usuario_ruta_favorita;
 DROP TABLE IF EXISTS comentarios;
 DROP TABLE IF EXISTS coordenada_ruta;
@@ -89,7 +87,9 @@ CREATE TABLE faunas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT NOT NULL,
-    aprobada TINYINT(1) DEFAULT 0
+    aprobada TINYINT(1) DEFAULT 0,
+    usuario_id INTEGER NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
 -- Tabla: floras
@@ -101,7 +101,9 @@ CREATE TABLE floras (
     salida_flor VARCHAR(20) NOT NULL,
     caida_flor VARCHAR(20) NOT NULL,
     descripcion TEXT NOT NULL,
-    aprobada TINYINT(1) DEFAULT 0
+    aprobada TINYINT(1) DEFAULT 0,
+    usuario_id INTEGER NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
 -- Tabla: comentario
@@ -125,24 +127,6 @@ CREATE TABLE usuario_ruta_favorita (
     FOREIGN KEY (ruta_id) REFERENCES rutas(id)
 );
 
--- Tabla intermedia: usuario_fauna
--- CREATE TABLE usuario_fauna (
-    -- id INT AUTO_INCREMENT PRIMARY KEY,
-    -- usuario_id INT NOT NULL,
-    -- fauna_id INT NOT NULL,
-    -- FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-    -- FOREIGN KEY (fauna_id) REFERENCES faunas(id)
--- );
-
--- Tabla intermedia: usuario_flora
--- CREATE TABLE usuario_flora (
-    -- id INT AUTO_INCREMENT PRIMARY KEY,
-    -- usuario_id INT NOT NULL,
-    -- flora_id INT NOT NULL,
-    -- FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-    -- FOREIGN KEY (flora_id) REFERENCES floras(id)
-);
-
 -- Tabla intermedia: ruta_flora
 CREATE TABLE ruta_flora (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -163,3 +147,14 @@ CREATE TABLE ruta_fauna (
     FOREIGN KEY (fauna_id) REFERENCES faunas(id)
 );
 
+INSERT INTO `usuarios` (`nombre`, `apellidos`, `correo`, `password`, `verificado`, `rol`) VALUES
+('Admin', 'Istrador', 'admin@mail.com', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', '1', 'ADMIN');
+
+INSERT INTO `faunas` (`nombre`, `descripcion`, `aprobada`, `usuario_id`) VALUES
+('Phoenix Canariensis', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', '1', '1');
+
+INSERT INTO `faunas` (`nombre`, `descripcion`, `aprobada`, `usuario_id`) VALUES
+('Ejemplo', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', '0', '1');
+
+INSERT INTO `rutas` (`nombre`, `dificultad`, `tiempo_duracion`, `distancia_metros`, `desnivel`, `aprobada`, `usuario_id`) VALUES
+('Paisaje Lunar', 'Intermedia', '5', '13090', '852.51', '1', '1');
