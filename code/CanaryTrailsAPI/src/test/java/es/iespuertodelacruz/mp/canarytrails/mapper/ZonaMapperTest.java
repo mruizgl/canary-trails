@@ -1,6 +1,6 @@
 package es.iespuertodelacruz.mp.canarytrails.mapper;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.ZonaDTO;
+import es.iespuertodelacruz.mp.canarytrails.dto.zona.ZonaSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Zona;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -17,7 +17,7 @@ class ZonaMapperTest {
         zona.setId(1);
         zona.setNombre("Norte");
 
-        ZonaDTO dto = mapper.toDTO(zona);
+        ZonaSalidaDto dto = mapper.toDTO(zona);
 
         assertNotNull(dto);
         assertEquals(1, dto.getId());
@@ -26,7 +26,7 @@ class ZonaMapperTest {
 
     @Test
     void testToEntity() {
-        ZonaDTO dto = new ZonaDTO(2, "Sur");
+        ZonaSalidaDto dto = new ZonaSalidaDto(2, "Sur");
 
         Zona zona = mapper.toEntity(dto);
 
