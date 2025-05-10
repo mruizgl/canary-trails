@@ -3,10 +3,7 @@ package es.iespuertodelacruz.mp.canarytrails.controller;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDtoV2;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
-import es.iespuertodelacruz.mp.canarytrails.service.FaunaService;
-import es.iespuertodelacruz.mp.canarytrails.service.FloraService;
-import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
-import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
+import es.iespuertodelacruz.mp.canarytrails.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,11 +27,11 @@ public class RutaControllerAdmin {
     @Autowired
     FaunaService faunaService;
 
-    //@Autowired
-    //ComentarioService comentarioService;
+    @Autowired
+    ComentarioService comentarioService;
 
-    //@Autowired
-    //MunicipioService municipioService;
+    @Autowired
+    MunicipioService municipioService;
 
     @GetMapping
     public ResponseEntity<?> findAllRutas(){
