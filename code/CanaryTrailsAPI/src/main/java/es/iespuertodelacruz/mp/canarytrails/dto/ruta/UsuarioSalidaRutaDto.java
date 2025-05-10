@@ -1,7 +1,7 @@
 package es.iespuertodelacruz.mp.canarytrails.dto.ruta;
 
 /**
- * Salida de Usuario que se carga en la salida de Fauna con el contenido que se necesita
+ * Salida de Usuario que se carga en la salida de Ruta con el contenido que se necesita
  * @param id
  * @param nombre
  * @param apellidos

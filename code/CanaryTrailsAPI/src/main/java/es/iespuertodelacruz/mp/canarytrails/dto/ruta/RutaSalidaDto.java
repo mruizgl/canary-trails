@@ -1,8 +1,6 @@
 package es.iespuertodelacruz.mp.canarytrails.dto.ruta;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.comentario.ComentarioSalidaDtoV1;
-import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipiosSalidaDtoV2;
-
+import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaSalidaDto;
 import java.util.List;
 
 public record RutaSalidaDto(
@@ -13,11 +11,10 @@ public record RutaSalidaDto(
         float distanciaMetros,
         float desnivel,
         boolean aprobada,
-        UsuarioSalidaRutaDto usuario,  //Usuario sin informacion adicional
-        List<ComentarioSalidaDtoV1> comentarios,   //Comentario con la información del usuario que lo hizo
-        List<MunicipiosSalidaDtoV2> municipios,    //Municipio sin información adicional
-        List<FaunaSalidaRutaDto> faunas,
-        List<FloraSalidaRutaDto> floras
-
+        UsuarioSalidaRutaDto usuario,     //Usuario sin informacion adicional
+        List<ComentarioSalidaRutaDto> comentarios,   //Comentario con la información del usuario que lo hizo
+        List<MunicipioSalidaRutaDto> municpios,    //Municipio sin información adicional
+        FaunaSalidaRutaDto faunas,
+        FloraSalidaRutaDto floras
 ) {
 }
