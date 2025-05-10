@@ -1,4 +1,22 @@
 package es.iespuertodelacruz.mp.canarytrails.dto.usuario;
 
-public record RutaFavoritaSalidaUsuarioDto() {
+/**
+ * Salida de Ruta Favorita cargada en Usuario con el contenido necesario
+ * @param id
+ * @param nombre
+ * @param dificultad
+ * @param tiempoDuracion
+ * @param distanciaMetros
+ * @param desnivel
+ * @param aprobada
+ */
+public record RutaFavoritaSalidaUsuarioDto(
+        int id,
+        String nombre,
+        String dificultad,
+        long tiempoDuracion,
+        float distanciaMetros,
+        float desnivel,
+        boolean aprobada
+) {
 }
