@@ -13,7 +13,7 @@ import es.iespuertodelacruz.mp.canarytrails.mapper.CoordenadaMapper;
 
 
 @RestController
-@RequestMapping("/coordenadas")
+@RequestMapping("/api/v1/admin/coordenadas")
 @CrossOrigin(origins = "*")
 public class CoordenadaController {
 

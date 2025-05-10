@@ -1,6 +1,7 @@
 package es.iespuertodelacruz.mp.canarytrails.controller;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.ZonaDTO;
+import es.iespuertodelacruz.mp.canarytrails.dto.zona.ZonaEntradaDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.zona.ZonaSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Zona;
 import es.iespuertodelacruz.mp.canarytrails.mapper.ZonaMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.ZonaService;
@@ -8,17 +9,24 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Controlador para la gestión de zonas en la API de administración.
+ * Proporciona endpoints para crear, leer, actualizar y eliminar zonas.
+ * @author Melissa R.G. y Pedro M.E.
+ */
 @RestController
-@RequestMapping("/api/zonas")
+@RequestMapping("/api/v1/admin/zonas")
 @CrossOrigin
 public class ZonaController {
 
@@ -32,7 +40,7 @@ public class ZonaController {
 
     @Operation(summary = "Obtener todas las zonas")
     @GetMapping
-    public List<ZonaDTO> getAll() {
+    public List<ZonaSalidaDto> getAll() {
         logger.info("Petición GET para obtener todas las zonas");
         return zonaService.findAll().stream()
                 .map(zonaMapper::toDTO)
@@ -45,7 +53,7 @@ public class ZonaController {
             @ApiResponse(responseCode = "404", description = "Zona no encontrada")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<ZonaDTO> getById(@PathVariable Integer id) {
+    public ResponseEntity<ZonaSalidaDto> getById(@PathVariable Integer id) {
         logger.info("Petición GET para obtener la zona con ID {}", id);
         Optional<Zona> zonaOpt = zonaService.findById(id);
         return zonaOpt.map(z -> {
@@ -59,21 +67,22 @@ public class ZonaController {
 
     @Operation(summary = "Crear una nueva zona")
     @PostMapping
-    public ResponseEntity<ZonaDTO> create(@RequestBody ZonaDTO zonaDTO) {
-        logger.info("Petición POST para crear zona: {}", zonaDTO);
-        Zona saved = zonaService.save(zonaMapper.toEntity(zonaDTO));
-        logger.debug("Zona creada con ID {}", saved.getId());
+    public ResponseEntity<ZonaSalidaDto> create(@RequestBody ZonaEntradaDto zonaEntradaDto) {
+        logger.info("Petición POST para crear zona: {}", zonaEntradaDto);
+        Zona zona = new Zona();
+        zona.setNombre(zonaEntradaDto.nombre());
+        Zona saved = zonaService.save(zona);
         return ResponseEntity.ok(zonaMapper.toDTO(saved));
     }
 
     @Operation(summary = "Actualizar una zona existente por ID")
     @PutMapping("/{id}")
-    public ResponseEntity<ZonaDTO> update(@PathVariable Integer id, @RequestBody ZonaDTO zonaDTO) {
+    public ResponseEntity<ZonaSalidaDto> update(@PathVariable Integer id, @RequestBody ZonaSalidaDto zonaSalidaDto) {
         logger.info("Petición PUT para actualizar zona con ID {}", id);
         return zonaService.findById(id)
                 .map(existing -> {
                     logger.debug("Zona original: {}", existing);
-                    existing.setNombre(zonaDTO.getNombre());
+                    existing.setNombre(zonaSalidaDto.getNombre());
                     Zona updated = zonaService.save(existing);
                     logger.debug("Zona actualizada: {}", updated);
                     return ResponseEntity.ok(zonaMapper.toDTO(updated));
@@ -86,15 +95,16 @@ public class ZonaController {
 
     @Operation(summary = "Eliminar una zona por ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        logger.info("Petición DELETE para eliminar zona con ID {}", id);
-        if (zonaService.findById(id).isPresent()) {
-            zonaService.deleteById(id);
-            logger.debug("Zona con ID {} eliminada", id);
-            return ResponseEntity.noContent().build();
-        } else {
-            logger.warn("Zona con ID {} no encontrada para eliminación", id);
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> eliminarZona(@PathVariable int id) {
+        try {
+            zonaService.eliminarZonaPorId(id);
+            return ResponseEntity.ok("Zona eliminada correctamente.");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
+
+
 }

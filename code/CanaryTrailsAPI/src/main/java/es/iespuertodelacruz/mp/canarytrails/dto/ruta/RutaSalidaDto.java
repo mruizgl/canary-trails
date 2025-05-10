@@ -1,9 +1,7 @@
 package es.iespuertodelacruz.mp.canarytrails.dto.ruta;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaSalidaDto;
-
 import java.util.List;
-
 
 public record RutaSalidaDto(
         int id,
@@ -18,6 +16,5 @@ public record RutaSalidaDto(
         List<MunicipioSalidaRutaDto> municpios,    //Municipio sin información adicional
         FaunaSalidaRutaDto faunas,
         FloraSalidaRutaDto floras
-
 ) {
 }
