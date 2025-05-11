@@ -1,6 +1,8 @@
 package es.iespuertodelacruz.mp.canarytrails.entities;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,10 +53,15 @@ public class Usuario {
     private List<Flora> floras;
 
     public Usuario() {
+        this.rutasCreadas = new ArrayList<>();
+        this.comentarios = new ArrayList<>();
+        this.rutasFavoritas = new ArrayList<>();
+        this.faunas = new ArrayList<>();
+        this.floras = new ArrayList<>();
     }
 
     //Crear el usuario al registrar. El validado se establece en 0 por defecto y el rol se establece en el service
-    public Usuario(String nombre, String apellidos, String correo, String password) {
+    /*public Usuario(String nombre, String apellidos, String correo, String password) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.correo = correo;
@@ -76,7 +83,7 @@ public class Usuario {
         this.rutasFavoritas = rutasFavoritas;
         this.faunas = faunas;
         this.floras = floras;
-    }
+    }*/
 
     public Integer getId() {
         return id;

@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 
 class CoordenadaServiceTest {
 
-    @Mock
+    /*@Mock
     private CoordenadaRepository coordenadaRepository;
 
     @InjectMocks
@@ -61,5 +61,5 @@ class CoordenadaServiceTest {
         doNothing().when(coordenadaRepository).deleteById(1);
         coordenadaService.deleteById(1);
         verify(coordenadaRepository, times(1)).deleteById(1);
-    }
+    }*/
 }

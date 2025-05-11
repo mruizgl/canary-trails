@@ -1,6 +1,6 @@
-package es.iespuertodelacruz.mp.canarytrails.dto.ruta;
+package es.iespuertodelacruz.mp.canarytrails.dto.coordenada;
 
-public record RutaEntradaDto (
+public record RutaSalidaCoordenadaDto (
         int id,
         String nombre,
         String dificultad,
@@ -8,5 +8,5 @@ public record RutaEntradaDto (
         float distanciaMetros,
         float desnivel,
         boolean aprobada
-) {
+){
 }

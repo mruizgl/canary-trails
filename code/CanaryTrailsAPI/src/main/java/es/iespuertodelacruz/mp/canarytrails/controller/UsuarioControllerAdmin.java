@@ -22,7 +22,7 @@ public class UsuarioControllerAdmin {
 
     @GetMapping
     public ResponseEntity<?> findAllUsuarios(){
-        System.out.println("holaaaaaa estoy aqui");
+        //System.out.println("holaaaaaa estoy aqui");
         return ResponseEntity.ok(usuarioService.findAll()
                         /*.stream()
                         .map(usuario -> new UsuarioSalidaDto(

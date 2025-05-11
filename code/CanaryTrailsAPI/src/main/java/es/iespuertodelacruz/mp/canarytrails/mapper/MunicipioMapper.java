@@ -3,6 +3,7 @@ package es.iespuertodelacruz.mp.canarytrails.mapper;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioEntradaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioSalidaDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.ruta.MunicipioSalidaRutaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Municipio;
 import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioEdicionDto;
 
@@ -22,4 +23,7 @@ public interface MunicipioMapper {
     @Mapping(target = "zona", ignore = true)
     @Mapping(target = "rutas", ignore = true)
     Municipio toEntity(MunicipioEdicionDto dto); // ✅ necesario para el update
+
+    //  <--- Dto's --->
+    MunicipioSalidaRutaDto toSalidaRutaDto(Municipio municipio);
 }

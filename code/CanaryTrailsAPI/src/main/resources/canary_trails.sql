@@ -151,10 +151,11 @@ INSERT INTO `usuarios` (`nombre`, `apellidos`, `correo`, `password`, `verificado
 ('Admin', 'Istrador', 'admin@mail.com', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', '1', 'ADMIN');
 
 INSERT INTO `faunas` (`nombre`, `descripcion`, `aprobada`, `usuario_id`) VALUES
-('Phoenix Canariensis', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', '1', '1');
-
-INSERT INTO `faunas` (`nombre`, `descripcion`, `aprobada`, `usuario_id`) VALUES
+('Phoenix Canariensis', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', '1', '1'),
 ('Ejemplo', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', '0', '1');
+
+INSERT INTO `floras` (`nombre`, `especie`, `tipo_hoja`, `salida_flor`, `caida_flor`, `descripcion`, `aprobada`, `usuario_id`) VALUES
+( 'Ejemplo', 'Especie', 'tipo 1', 'salida', 'caida', 'descripcion', '0', '1');
 
 INSERT INTO `rutas` (`nombre`, `dificultad`, `tiempo_duracion`, `distancia_metros`, `desnivel`, `aprobada`, `usuario_id`) VALUES
 ('Paisaje Lunar', 'Intermedia', '5', '13090', '852.51', '1', '1');

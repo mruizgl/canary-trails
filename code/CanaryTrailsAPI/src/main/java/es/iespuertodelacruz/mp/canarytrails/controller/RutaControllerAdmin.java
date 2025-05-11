@@ -1,13 +1,17 @@
 package es.iespuertodelacruz.mp.canarytrails.controller;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaUpdateDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDtoV2;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
+import es.iespuertodelacruz.mp.canarytrails.mapper.RutaMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -17,6 +21,9 @@ public class RutaControllerAdmin {
 
     @Autowired
     RutaService rutaService;
+
+    @Autowired
+    RutaMapper rutaMapper;
 
     @Autowired
     UsuarioService usuarioService;
@@ -36,20 +43,12 @@ public class RutaControllerAdmin {
     @GetMapping
     public ResponseEntity<?> findAllRutas(){
 
-        return ResponseEntity.ok(rutaService.findAll()
-                .stream()
-                .map(ruta -> new RutaSalidaDtoV2(
-                        ruta.getId(),
-                        ruta.getNombre(),
-                        ruta.getDificultad(),
-                        ruta.getTiempoDuracion(),
-                        ruta.getDistanciaMetros(),
-                        ruta.getDesnivel(),
-                        ruta.getAprobada()
-                        )
-                )
-                .collect(Collectors.toList())
-        );
+        List<Ruta> rutas = rutaService.findAll();
+        List<RutaSalidaDto> rutasSalidasDto = rutas.stream()
+                .map(rutaMapper::toDto)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(rutasSalidasDto);
     }
 
     @GetMapping("/{id}")
@@ -75,7 +74,7 @@ public class RutaControllerAdmin {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createRuta(@RequestBody RutaEntradaDto dto){
+    public ResponseEntity<?> createRuta(@RequestBody RutaEntradaUpdateDto dto){
         //Logger logger = Logger.getLogger("logger");
         //Logger logger = Logger.getLogger(Globals.LOGGER);
         //logger.info("Llamada al find all get /api/usuarios");
@@ -107,7 +106,7 @@ public class RutaControllerAdmin {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateAlumno(@RequestBody RutaEntradaDto dto){
+    public ResponseEntity<?> updateAlumno(@RequestBody RutaEntradaUpdateDto dto){
         Ruta ruta = new Ruta();
         ruta.setId(dto.id());
         ruta.setNombre(dto.nombre());
