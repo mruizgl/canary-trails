@@ -1,4 +1,4 @@
-package es.iespuertodelacruz.mp.canarytrails.controller;
+package es.iespuertodelacruz.mp.canarytrails.controller.admin;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioEntradaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioEdicionDto;

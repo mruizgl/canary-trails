@@ -1,10 +1,10 @@
 package es.iespuertodelacruz.mp.canarytrails.dto.zona;
 
+
 import java.util.List;
 
-public record ZonaSalidaDto(
-        Integer id,
+public record ZonaEntradaCreateDto(
         String nombre,
-        List<MunicipioSalidaZonaDto> municipios
+        List<Integer> municipios
 ) {
 }

@@ -1,21 +1,15 @@
-package es.iespuertodelacruz.mp.canarytrails.controller;
+package es.iespuertodelacruz.mp.canarytrails.controller.admin;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.coordenada.CoordenadaEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.coordenada.CoordenadaEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.coordenada.CoordenadaSalidaDto;
-import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Coordenada;
-import es.iespuertodelacruz.mp.canarytrails.entities.Flora;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
-import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.service.CoordenadaService;
 import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import es.iespuertodelacruz.mp.canarytrails.mapper.CoordenadaMapper;
 

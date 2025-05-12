@@ -12,9 +12,9 @@ public record RutaSalidaDto(
         boolean aprobada,
         UsuarioSalidaRutaDto usuario,     //Usuario sin informacion adicional
         List<ComentarioSalidaRutaDto> comentarios,   //Comentario con la información del usuario que lo hizo
-        List<MunicipioSalidaRutaDto> municpios,    //Municipio sin información adicional
         List<FaunaSalidaRutaDto> faunas,
         List<FloraSalidaRutaDto> floras,
-        List<CoordenadaSalidaRutaDto> coordenadas
+        List<CoordenadaSalidaRutaDto> coordenadas,
+        List<MunicipioSalidaRutaDto> municpios   //Municipio sin información adicional
 ) {
 }

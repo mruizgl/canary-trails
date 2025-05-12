@@ -1,4 +1,4 @@
-package es.iespuertodelacruz.mp.canarytrails.controller;
+package es.iespuertodelacruz.mp.canarytrails.controller.admin;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraEntradaUpdateDto;
@@ -13,9 +13,6 @@ import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**

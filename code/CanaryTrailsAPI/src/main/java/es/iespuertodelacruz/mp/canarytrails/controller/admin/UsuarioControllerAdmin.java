@@ -1,4 +1,4 @@
-package es.iespuertodelacruz.mp.canarytrails.controller;
+package es.iespuertodelacruz.mp.canarytrails.controller.admin;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioRegisterDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
