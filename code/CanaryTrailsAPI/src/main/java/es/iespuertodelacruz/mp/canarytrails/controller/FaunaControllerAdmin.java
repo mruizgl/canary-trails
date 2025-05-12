@@ -109,14 +109,13 @@ public class FaunaControllerAdmin {
         fauna.setUsuario(usuario);
 
         if(dto.rutas() != null){
-            List<Ruta> nuevasRutas = new ArrayList<>();
+            //List<Ruta> nuevasRutas = new ArrayList<>();
             for( int id : dto.rutas()){
                 Ruta ruta = rutaService.findById(id);
                 if(ruta != null){
-                    nuevasRutas.add(ruta);
+                    fauna.getRutas().add(ruta);
                 }
             }
-            fauna.setRutas(nuevasRutas);
         }
 
         return ResponseEntity.ok(faunaService.update(fauna));

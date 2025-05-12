@@ -76,16 +76,13 @@ public class CoordenadaController {
         Coordenada coordenada = coordenadaMapper.toEntityUpdate(dto);
 
         if(dto.rutas() != null){
-            List<Ruta> nuevasRutas = new ArrayList<>();
             for( int id : dto.rutas()){
                 Ruta ruta = rutaService.findById(id);
                 if(ruta != null){
-                    nuevasRutas.add(ruta);
+                    coordenada.getRutas().add(ruta);
                 }
             }
-            coordenada.setRutas(nuevasRutas);
         }
-
         return ResponseEntity.ok(coordenadaService.update(coordenada));
     }
 

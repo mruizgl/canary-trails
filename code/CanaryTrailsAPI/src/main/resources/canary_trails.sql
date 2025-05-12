@@ -159,3 +159,11 @@ INSERT INTO `floras` (`nombre`, `especie`, `tipo_hoja`, `salida_flor`, `caida_fl
 
 INSERT INTO `rutas` (`nombre`, `dificultad`, `tiempo_duracion`, `distancia_metros`, `desnivel`, `aprobada`, `usuario_id`) VALUES
 ('Paisaje Lunar', 'Intermedia', '5', '13090', '852.51', '1', '1');
+
+INSERT INTO `comentarios` (`titulo`, `descripcion`, `usuario_id`, `ruta_id`) VALUES
+('Esto mola', 'Esto mola mucho', '1', '1'),
+('Esto no mola', 'Esto no mola nada', '1', '1');
+
+INSERT INTO `coordenadas` (`latitud`, `longitud`) VALUES
+('34.0000', '35.0000'),
+('27.0000', '50.0000');

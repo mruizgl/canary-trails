@@ -60,15 +60,7 @@ public class RutaControllerAdmin {
             return ResponseEntity.notFound().build();
         }
 
-        RutaSalidaDtoV2 dto = new RutaSalidaDtoV2(
-                ruta.getId(),
-                ruta.getNombre(),
-                ruta.getDificultad(),
-                ruta.getTiempoDuracion(),
-                ruta.getDistanciaMetros(),
-                ruta.getDesnivel(),
-                ruta.getAprobada()
-        );
+        RutaSalidaDto dto = rutaMapper.toDto(ruta);
 
         return ResponseEntity.ok(dto);
     }
