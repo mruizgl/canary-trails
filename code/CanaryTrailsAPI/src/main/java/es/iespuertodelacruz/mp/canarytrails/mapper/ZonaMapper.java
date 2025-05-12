@@ -5,10 +5,14 @@ import es.iespuertodelacruz.mp.canarytrails.entities.Zona;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ZonaMapper {
     ZonaMapper INSTANCE = Mappers.getMapper(ZonaMapper.class);
 
     ZonaSalidaDto toDTO(Zona zona);
     Zona toEntity(ZonaSalidaDto dto);
+
+    List<ZonaSalidaDto> toDTOList(List<Zona> zonas);
 }
