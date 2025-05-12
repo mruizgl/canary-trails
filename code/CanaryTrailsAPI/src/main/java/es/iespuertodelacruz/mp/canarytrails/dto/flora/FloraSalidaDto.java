@@ -11,7 +11,7 @@ public record FloraSalidaDto (
          String caidaFlor,
          String descripcion,
          boolean aprobada,
-         UsuarioSalidaFlora usuario,
-         List<RutaSalidaFlora> rutas
+         UsuarioSalidaFloraDto usuario,
+         List<RutaSalidaFloraDto> rutas
 ) {
 }

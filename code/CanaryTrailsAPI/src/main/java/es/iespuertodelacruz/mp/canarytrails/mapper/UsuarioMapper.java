@@ -6,9 +6,15 @@ import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioEntradaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import org.mapstruct.Mapper;
+import org.mapstruct.control.MappingControl;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+        componentModel = "spring",
+        uses = {
+                RelacionesMapper.class
+        }
+)
 public interface UsuarioMapper {
 
     //UsuarioMapper INSTANCE = Mappers.getMapper(UsuarioMapper.class);

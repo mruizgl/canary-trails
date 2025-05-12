@@ -12,12 +12,7 @@ import org.mapstruct.Mapping;
 @Mapper(
         componentModel = "spring",
         uses = {
-            UsuarioMapper.class,
-            ComentarioMapper.class,
-            MunicipioMapper.class,
-            FaunaMapper.class,
-            FloraMapper.class,
-            CoordenadaMapper.class
+            RelacionesMapper.class
         }
 )
 public interface RutaMapper {

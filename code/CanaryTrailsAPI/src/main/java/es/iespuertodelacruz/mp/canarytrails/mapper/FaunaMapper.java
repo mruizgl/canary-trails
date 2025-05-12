@@ -13,8 +13,7 @@ import org.springframework.context.annotation.Lazy;
 @Mapper(
         componentModel = "spring",
         uses = {
-                //UsuarioMapper.class
-                //RutaMapper.class
+                RelacionesMapper.class
         }
 )
 public interface FaunaMapper {
@@ -30,8 +29,4 @@ public interface FaunaMapper {
     @Mapping(target = "usuario", ignore = true)
     @Mapping(target = "rutas", ignore = true)
     Fauna toEntityUpdate(FaunaEntradaUpdateDto dto);
-
-    //  <--- Relaciones Dto's --->
-    FaunaSalidaRutaDto toSalidaRutaDto(Fauna entity);
-    FaunaSalidaUsuarioDto toSalidaUsuarioDto(Fauna entity);
 }

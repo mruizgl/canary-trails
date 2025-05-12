@@ -1,6 +1,6 @@
 package es.iespuertodelacruz.mp.canarytrails.dto.flora;
 
-public record UsuarioSalidaFlora(
+public record UsuarioSalidaFloraDto(
         int id,
         String nombre,
         String apellidos,

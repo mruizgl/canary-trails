@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper(
         componentModel = "spring",
         uses = {
-                //RutaMapper.class
+                RelacionesMapper.class
         }
 )
 public interface CoordenadaMapper {

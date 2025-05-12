@@ -8,7 +8,12 @@ import es.iespuertodelacruz.mp.canarytrails.entities.Comentario;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+        componentModel = "spring",
+        uses = {
+                RelacionesMapper.class
+        }
+)
 public interface ComentarioMapper {
     Comentario toEntity(ComentarioEntradaDto dto);
 

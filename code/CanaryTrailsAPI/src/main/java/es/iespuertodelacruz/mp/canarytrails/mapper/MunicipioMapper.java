@@ -10,7 +10,12 @@ import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioEdicionDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = { ZonaMapper.class })
+@Mapper(
+        componentModel = "spring",
+        uses = {
+                RelacionesMapper.class
+        }
+)
 public interface MunicipioMapper {
 
     @Mapping(source = "zona", target = "zona")
@@ -22,7 +27,7 @@ public interface MunicipioMapper {
 
     @Mapping(target = "zona", ignore = true)
     @Mapping(target = "rutas", ignore = true)
-    Municipio toEntity(MunicipioEdicionDto dto); // ✅ necesario para el update
+    Municipio toEntity(MunicipioEdicionDto dto);
 
     //  <--- Dto's --->
     MunicipioSalidaRutaDto toSalidaRutaDto(Municipio municipio);
