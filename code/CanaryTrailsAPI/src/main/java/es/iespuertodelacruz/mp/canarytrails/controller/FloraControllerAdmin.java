@@ -109,14 +109,12 @@ public class FloraControllerAdmin {
         flora.setUsuario(usuario);
 
         if(dto.rutas() != null){
-            List<Ruta> nuevasRutas = new ArrayList<>();
             for( int id : dto.rutas()){
                 Ruta ruta = rutaService.findById(id);
                 if(ruta != null){
-                    nuevasRutas.add(ruta);
+                    flora.getRutas().add(ruta);
                 }
             }
-            flora.setRutas(nuevasRutas);
         }
 
         return ResponseEntity.ok(floraService.update(flora));

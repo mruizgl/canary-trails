@@ -69,12 +69,16 @@ public class CoordenadaService implements IServiceGeneric<Coordenada, Integer> {
                 coordenada.setLatitud(object.getLatitud());
             }
 
+            if(object.getRutas() != null && !object.getRutas().isEmpty()){
+                coordenada.setRutas(object.getRutas());
+            }
+
             Coordenada savedCoordenada = coordenadaRepository.save(coordenada);
 
             // Se borran las relaciones siempre. Si hay nuevas se actualizan, si no se quiere actualizar se tienen q
             // poner las id de las que ya estaban, y si no se pone ninguna o un 0, se borran todas las relaciones
             int cantidad = coordenadaRepository.deleteRutaCoordenadaRelation(savedCoordenada.getId());
-            //System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY"+cantidad);
+            //System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY "+cantidad);
 
             if (savedCoordenada.getRutas() != null && !savedCoordenada.getRutas().isEmpty()) {
                 for (Ruta ruta : object.getRutas()) {
