@@ -27,8 +27,8 @@ public interface CoordenadaMapper {
     @Mapping(target = "rutas", ignore = true)
     Coordenada toEntityUpdate(CoordenadaEntradaUpdateDto dto);
 
-    List<CoordenadaDTO> toDTOList(List<Coordenada> coordenadas);
-    List<Coordenada> toEntityList(List<CoordenadaDTO> coordenadasDto);
+    List<CoordenadaSalidaDto> toDTOList(List<Coordenada> coordenadas);
+    //List<Coordenada> toEntityList(List<CoordenadaDTO> coordenadasDto);
 
     // <--- Relaciones Dto's --->
     CoordenadaSalidaRutaDto toSalidaRutaDto(Coordenada entity);

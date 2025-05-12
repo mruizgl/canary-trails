@@ -6,6 +6,7 @@ import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.repository.CoordenadaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,7 @@ public class CoordenadaService implements IServiceGeneric<Coordenada, Integer> {
     }
 
     @Override
+    @Transactional
     public Coordenada save(Coordenada coordenada) {
         if(coordenada.getLatitud() == null){
             throw new RuntimeException("La latitud no puede estar vacia");
@@ -48,6 +50,7 @@ public class CoordenadaService implements IServiceGeneric<Coordenada, Integer> {
     }
 
     @Override
+    @Transactional
     public boolean update(Coordenada object) {
         if(object != null && object.getId() != null) {
 
@@ -86,6 +89,7 @@ public class CoordenadaService implements IServiceGeneric<Coordenada, Integer> {
     }
 
     @Override
+    @Transactional
     public boolean deleteById(Integer id) {
         int cantidad = coordenadaRepository.deleteCoordenadaById(id);
         return cantidad > 0;
