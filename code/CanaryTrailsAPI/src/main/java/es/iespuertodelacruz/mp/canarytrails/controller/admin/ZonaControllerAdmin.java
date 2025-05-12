@@ -16,7 +16,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/v1/admin/zonas")
 @CrossOrigin(origins = "*")
-public class ZonaController {
+public class ZonaControllerAdmin {
 
     @Autowired
     ZonaService zonaService;

@@ -2,13 +2,15 @@ package es.iespuertodelacruz.mp.canarytrails.dto.municipio;
 
 
 import java.math.BigDecimal;
+import java.util.List;
 
-public record MunicipioEdicionDto(
+public record MunicipioEntradaUpdateDto(
         Integer id,
         String nombre,
         Integer altitudMedia,
         BigDecimal latitudGeografica,
         BigDecimal longitudGeografica,
-        Integer zonaId
+        Integer zona,
+        List<Integer> rutas
 ) {}
 

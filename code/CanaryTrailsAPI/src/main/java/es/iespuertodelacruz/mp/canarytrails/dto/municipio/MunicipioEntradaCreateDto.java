@@ -1,9 +1,12 @@
 package es.iespuertodelacruz.mp.canarytrails.dto.municipio;
 
-public record MunicipioEntradaDto(
+import java.util.List;
+
+public record MunicipioEntradaCreateDto(
         String nombre,
         int altitudMedia,
         double latitudGeografica,
         double longitudGeografica,
-        int zonaId
+        int zonaId,
+        List<Integer> rutas 
 ) {}

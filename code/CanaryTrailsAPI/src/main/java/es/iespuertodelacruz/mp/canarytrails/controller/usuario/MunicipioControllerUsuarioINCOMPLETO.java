@@ -1,4 +1,4 @@
-package es.iespuertodelacruz.mp.canarytrails.controller.admin;
+package es.iespuertodelacruz.mp.canarytrails.controller.usuario;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioEntradaUpdateDto;
@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/admin/municipios")
+@RequestMapping("/api/v1/usuario/municipios")
 @CrossOrigin(origins = "*")
-public class MunicipioControllerAdmin {
+public class MunicipioControllerUsuarioINCOMPLETO {
 
     @Autowired
     MunicipioService municipioService;
@@ -124,16 +124,5 @@ public class MunicipioControllerAdmin {
         }
 
         return ResponseEntity.ok(actualizado);
-    }
-
-    /**
-     * Endpoint que elimina un municipio a partir de su id
-     * @param id del municipio
-     * @return true si se ha borrado, false si no
-     */
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id) {
-
-        return ResponseEntity.ok(municipioService.deleteById(id));
     }
 }

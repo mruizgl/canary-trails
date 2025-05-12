@@ -2,6 +2,7 @@ package es.iespuertodelacruz.mp.canarytrails.service;
 
 import es.iespuertodelacruz.mp.canarytrails.common.IServiceGeneric;
 import es.iespuertodelacruz.mp.canarytrails.entities.Municipio;
+import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.entities.Zona;
 import es.iespuertodelacruz.mp.canarytrails.repository.MunicipioRepository;
 import es.iespuertodelacruz.mp.canarytrails.repository.ZonaRepository;
@@ -45,10 +46,12 @@ public class MunicipioService implements IServiceGeneric<Municipio, Integer> {
             logger.warn("Nombre del municipio es obligatorio");
             throw new RuntimeException("El municipio debe tener un nombre");
         }
+
         if (municipio.getAltitudMedia() == null) {
             logger.warn("Altitud media es obligatoria");
             throw new RuntimeException("El municipio debe tener altitud media");
         }
+
         if (municipio.getLatitudGeografica() == null) {
             logger.warn("Latitud geográfica es obligatoria");
             throw new RuntimeException("El municipio debe tener latitud");
@@ -62,59 +65,89 @@ public class MunicipioService implements IServiceGeneric<Municipio, Integer> {
             throw new RuntimeException("El municipio debe tener una zona válida");
         }
 
-        Zona zona = zonaRepository.findById(municipio.getZona().getId())
-                .orElseThrow(() -> {
-                    logger.error("Zona con ID {} no encontrada", municipio.getZona().getId());
-                    return new RuntimeException("Zona no encontrada");
-                });
+        Municipio municipioGuardado = municipioRepository.save(municipio);
 
-        municipio.setZona(zona);
+        if (municipioGuardado.getRutas() != null && !municipioGuardado.getRutas().isEmpty()) {
+            for (Ruta ruta : municipioGuardado.getRutas()) {
+                municipioRepository.addRutaMunicipioRelation(municipioGuardado.getId(), ruta.getId());
+            }
+        }
 
-        Municipio guardado = municipioRepository.save(municipio);
-        logger.debug("Municipio guardado con ID {}", guardado.getId());
-        return guardado;
+        logger.debug("Municipio guardado con ID {}", municipioGuardado.getId());
+        return municipioGuardado;
     }
 
     @Override
     @Transactional
-    public boolean update(Municipio municipio) {
-        logger.info("Actualizando municipio con ID {}", municipio.getId());
+    public boolean update(Municipio object) {
 
-        if (municipio != null && municipio.getId() != null) {
-            Municipio existente = municipioRepository.findById(municipio.getId()).orElse(null);
-            if (existente == null) {
-                logger.warn("No se encontró el municipio con ID {}", municipio.getId());
-                return false;
+        if(object != null && object.getId() != null) {
+            logger.info("Actualizando municipio con ID {}", object.getId());
+
+            Municipio municipio = municipioRepository.findById(object.getId()).orElse(null);
+
+            if(municipio == null){
+                throw new RuntimeException("No existe la municipio " +object);
+                //TODO: cambiarlo por un false ?
             }
 
-            if (municipio.getNombre() != null) existente.setNombre(municipio.getNombre());
-            if (municipio.getAltitudMedia() != null) existente.setAltitudMedia(municipio.getAltitudMedia());
-            if (municipio.getLatitudGeografica() != null) existente.setLatitudGeografica(municipio.getLatitudGeografica());
-            if (municipio.getLongitudGeografica() != null) existente.setLongitudGeografica(municipio.getLongitudGeografica());
-            if (municipio.getZona() != null && municipio.getZona().getId() != null) {
-                Zona zona = zonaRepository.findById(municipio.getZona().getId())
-                        .orElseThrow(() -> {
-                            logger.error("Zona con ID {} no encontrada", municipio.getZona().getId());
-                            return new RuntimeException("Zona no encontrada");
-                        });
-                existente.setZona(zona);
+            if(object.getNombre() != null){
+                logger.info("Nombre actualizando de {} a {}", object.getNombre(), municipio.getNombre() );
+                municipio.setNombre(object.getNombre());
             }
 
-            municipioRepository.save(existente);
-            logger.debug("Municipio actualizado con ID {}", existente.getId());
+            if (object.getAltitudMedia() != null) {
+                logger.info("Altitud Media actualizando de {} a {}", object.getAltitudMedia(), municipio.getAltitudMedia() );
+                municipio.setAltitudMedia(object.getAltitudMedia());
+            }
+
+            if (object.getLatitudGeografica() != null) {
+                logger.info("Latitud actualizando de {} a {}", object.getLatitudGeografica(), municipio.getLatitudGeografica() );
+                municipio.setLatitudGeografica(object.getLatitudGeografica());
+            }
+
+            if (object.getLongitudGeografica() != null) {
+                logger.info("Longitud actualizando de {} a {}", object.getLongitudGeografica(), municipio.getLongitudGeografica() );
+                municipio.setLongitudGeografica(object.getLongitudGeografica());
+            }
+
+            if (object.getZona() != null) {
+                logger.info("Zona actualizando de {} a {}", object.getZona(), municipio.getZona() );
+                municipio.setZona(object.getZona());
+            }
+
+            if (object.getRutas() != null) {
+                logger.info("Rutas actualizandos");
+                municipio.setRutas(object.getRutas());
+            }
+
+            Municipio savedMunicipio = municipioRepository.save(municipio);
+
+            int cantidad = municipioRepository.deleteRutaMunicipioRelation(municipio.getId());
+            logger.info("Relaciones actualizadas. Borradas {} relaciones", cantidad);
+            //System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY"+cantidad);
+
+            if (savedMunicipio.getRutas() != null && !savedMunicipio.getRutas().isEmpty()) {
+                for (Ruta ruta : object.getRutas()) {
+                    logger.info("Relaciones actualizando. Creando relacion municipio {} ruta {}", savedMunicipio.getId(), ruta.getId());
+                    municipioRepository.addRutaMunicipioRelation(savedMunicipio.getId(), ruta.getId());
+                }
+            }
+
+            logger.warn("Objeto terminado de actualizar");
             return true;
+        } else{
+            logger.warn("Intento de actualización con objeto o id nula");
+            return false;
         }
-
-        logger.warn("Intento de actualización con datos incompletos");
-        return false;
     }
 
     @Override
     @Transactional
     public boolean deleteById(Integer id) {
         logger.info("Eliminando municipio con ID {}", id);
-        municipioRepository.deleteById(id);
-        logger.debug("Municipio con ID {} eliminado", id);
-        return true;
+        int cantidad = municipioRepository.deleteMunicipioById(id);
+
+        return cantidad > 0;
     }
 }
