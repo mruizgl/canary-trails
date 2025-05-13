@@ -65,12 +65,12 @@ public class CoordenadaControllerAdmin {
 
         Coordenada coordenada = coordenadaMapper.toEntityCreate(dto);
 
-        for( int id : dto.rutas()){
+       /* for( int id : dto.rutas()){
             Ruta ruta = rutaService.findById(id);
-            if(ruta != null){
+            if(ruta != null && !coordenada.getRutas().contains(ruta)){
                 coordenada.getRutas().add(ruta);
             }
-        }
+        }*/
 
         try{
             coordenada = coordenadaService.save(coordenada);
@@ -90,14 +90,14 @@ public class CoordenadaControllerAdmin {
     public ResponseEntity<?> update(@RequestBody CoordenadaEntradaUpdateDto dto) {
         Coordenada coordenada = coordenadaMapper.toEntityUpdate(dto);
 
-        if(dto.rutas() != null){
+        /*if(dto.rutas() != null){
             for( int id : dto.rutas()){
                 Ruta ruta = rutaService.findById(id);
                 if(ruta != null){
                     coordenada.getRutas().add(ruta);
                 }
             }
-        }
+        }*/
         return ResponseEntity.ok(coordenadaService.update(coordenada));
     }
 

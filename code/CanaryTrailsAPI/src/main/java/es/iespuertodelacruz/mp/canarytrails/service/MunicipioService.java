@@ -145,6 +145,14 @@ public class MunicipioService implements IServiceGeneric<Municipio, Integer> {
     @Override
     @Transactional
     public boolean deleteById(Integer id) {
+
+        Municipio municipio = findById(id);
+
+        if(!municipio.getRutas().isEmpty()){
+            logger.warn("El municipio a eliminar contiene las rutas {} y no puede ser eliminado", municipio.getRutas().toString());
+            throw new RuntimeException("El municipio a eliminar no puede contener rutas");
+        }
+
         logger.info("Eliminando municipio con ID {}", id);
         int cantidad = municipioRepository.deleteMunicipioById(id);
 

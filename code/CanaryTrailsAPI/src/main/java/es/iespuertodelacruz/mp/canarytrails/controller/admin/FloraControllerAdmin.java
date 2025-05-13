@@ -80,7 +80,7 @@ public class FloraControllerAdmin {
 
         for( int id : dto.rutas()){
             Ruta ruta = rutaService.findById(id);
-            if(ruta != null){
+            if(ruta != null && !flora.getRutas().contains(ruta)){
                 flora.getRutas().add(ruta);
             }
         }
@@ -111,7 +111,7 @@ public class FloraControllerAdmin {
         if(dto.rutas() != null){
             for( int id : dto.rutas()){
                 Ruta ruta = rutaService.findById(id);
-                if(ruta != null){
+                if(ruta != null && !flora.getRutas().contains(ruta)){
                     flora.getRutas().add(ruta);
                 }
             }

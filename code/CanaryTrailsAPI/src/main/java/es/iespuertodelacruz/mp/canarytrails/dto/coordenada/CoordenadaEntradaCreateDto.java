@@ -5,7 +5,7 @@ import java.util.List;
 
 public record CoordenadaEntradaCreateDto(
         BigDecimal latitud,
-        BigDecimal longitud,
-        List<Integer> rutas
+        BigDecimal longitud
+        //List<Integer> rutas
 ) {
 }

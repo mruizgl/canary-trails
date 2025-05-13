@@ -82,7 +82,7 @@ public class FaunaControllerAdmin {
 
         for( int id : dto.rutas()){
             Ruta ruta = rutaService.findById(id);
-            if(ruta != null){
+            if(ruta != null && !fauna.getRutas().contains(ruta)){
                 fauna.getRutas().add(ruta);
             }
         }
@@ -113,7 +113,7 @@ public class FaunaControllerAdmin {
             //List<Ruta> nuevasRutas = new ArrayList<>();
             for( int id : dto.rutas()){
                 Ruta ruta = rutaService.findById(id);
-                if(ruta != null){
+                if(ruta != null && !fauna.getRutas().contains(ruta)){
                     fauna.getRutas().add(ruta);
                 }
             }

@@ -78,7 +78,7 @@ public class MunicipioControllerAdmin {
 
         for( int id : dto.rutas()){
             Ruta ruta = rutaService.findById(id);
-            if(ruta != null){
+            if(ruta != null && !municipio.getRutas().contains(ruta)){
                 municipio.getRutas().add(ruta);
             }
         }
@@ -106,14 +106,14 @@ public class MunicipioControllerAdmin {
         municipio.setZona(zona);
 
         if(dto.rutas() != null){
-            List<Ruta> nuevasRutas = new ArrayList<>();
+            //List<Ruta> nuevasRutas = new ArrayList<>();
             for( int id : dto.rutas()){
                 Ruta ruta = rutaService.findById(id);
-                if(ruta != null){
-                    nuevasRutas.add(ruta);
+                if(ruta != null && !municipio.getRutas().contains(ruta)){
+                    municipio.getRutas().add(ruta);
                 }
             }
-            municipio.setRutas(nuevasRutas);
+            //municipio.setRutas(nuevasRutas);
         }
 
         boolean actualizado;
@@ -133,6 +133,12 @@ public class MunicipioControllerAdmin {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
+
+        try{
+            municipioService.deleteById(id);
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
         return ResponseEntity.ok(municipioService.deleteById(id));
     }

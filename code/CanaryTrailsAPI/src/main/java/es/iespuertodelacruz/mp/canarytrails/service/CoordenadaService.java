@@ -38,15 +38,13 @@ public class CoordenadaService implements IServiceGeneric<Coordenada, Integer> {
             throw new RuntimeException("La altitud no puede estar vacía");
         }
 
-        Coordenada savedCoordenada = coordenadaRepository.save(coordenada);
-
-        if (savedCoordenada.getRutas() != null && !savedCoordenada.getRutas().isEmpty()) {
+        /*if (savedCoordenada.getRutas() != null && !savedCoordenada.getRutas().isEmpty()) {
             for (Ruta ruta : savedCoordenada.getRutas()) {
                 coordenadaRepository.addRutaCoordenadaRelation(savedCoordenada.getId(), ruta.getId());
             }
-        }
+        }*/
 
-        return savedCoordenada;
+        return coordenadaRepository.save(coordenada);
     }
 
     @Override
@@ -77,14 +75,13 @@ public class CoordenadaService implements IServiceGeneric<Coordenada, Integer> {
 
             // Se borran las relaciones siempre. Si hay nuevas se actualizan, si no se quiere actualizar se tienen q
             // poner las id de las que ya estaban, y si no se pone ninguna o un 0, se borran todas las relaciones
-            int cantidad = coordenadaRepository.deleteRutaCoordenadaRelation(savedCoordenada.getId());
-            //System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY "+cantidad);
+           /* int cantidad = coordenadaRepository.deleteRutaCoordenadaRelation(savedCoordenada.getId());
 
             if (savedCoordenada.getRutas() != null && !savedCoordenada.getRutas().isEmpty()) {
                 for (Ruta ruta : object.getRutas()) {
                     coordenadaRepository.addRutaCoordenadaRelation(savedCoordenada.getId(), ruta.getId());
                 }
-            }
+            }*/
 
             return true;
         } else{
