@@ -91,7 +91,6 @@ public class FaunaService implements IServiceGeneric<Fauna, Integer> {
             // Se borran las relaciones siempre. Si hay nuevas se actualizan, si no se quiere actualizar se tienen q
             // poner las id de las que ya estaban, y si no se pone ninguna o un 0, se borran todas las relaciones
             int cantidad = faunaRepository.deleteRutaFaunaRelation(savedFauna.getId());
-            //System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY"+cantidad);
 
             if (savedFauna.getRutas() != null && !savedFauna.getRutas().isEmpty()) {
                 for (Ruta ruta : object.getRutas()) {

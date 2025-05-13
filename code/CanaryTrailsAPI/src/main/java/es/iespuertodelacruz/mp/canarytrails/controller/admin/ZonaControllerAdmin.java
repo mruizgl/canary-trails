@@ -69,6 +69,7 @@ public class ZonaControllerAdmin {
         for( int id : dto.municipios()){
             Municipio municipio = municipioService.findById(id);
             if(municipio != null){
+                municipio.setZona(zona);    //Hay que actualizar la relacion ya que Zona no es el dueño de la relacion
                 zona.getMunicipios().add(municipio);
             }
         }

@@ -1,9 +1,10 @@
 package es.iespuertodelacruz.mp.canarytrails.controller.admin;
 
+import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDtoV2;
-import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
+import es.iespuertodelacruz.mp.canarytrails.entities.*;
 import es.iespuertodelacruz.mp.canarytrails.mapper.RutaMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,15 @@ public class RutaControllerAdmin {
     ComentarioService comentarioService;
 
     @Autowired
+    CoordenadaService coordenadaService;
+
+    @Autowired
     MunicipioService municipioService;
 
+    /**
+     * Endpoint que devuelve todas las rutas de la bbdd
+     * @return todas las rutas existentes
+     */
     @GetMapping
     public ResponseEntity<?> findAllRutas(){
 
@@ -50,6 +58,11 @@ public class RutaControllerAdmin {
         return ResponseEntity.ok(rutasSalidasDto);
     }
 
+    /**
+     * Endpoint que devuelve una ruta segun la id
+     * @param id de la ruta
+     * @return la ruta que tiene el id introducido
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> findRutaById(@PathVariable Integer id){
 
@@ -59,64 +72,136 @@ public class RutaControllerAdmin {
             return ResponseEntity.notFound().build();
         }
 
-        RutaSalidaDto dto = rutaMapper.toDto(ruta);
-
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(rutaMapper.toDto(ruta));
     }
 
+    /**
+     * Endpoint que crea una ruta en la bbdd
+     * @param dto con los datos de la ruta a crear
+     * @return la ruta creada
+     */
     @PostMapping("/add")
-    public ResponseEntity<?> createRuta(@RequestBody RutaEntradaUpdateDto dto){
-        //Logger logger = Logger.getLogger("logger");
-        //Logger logger = Logger.getLogger(Globals.LOGGER);
-        //logger.info("Llamada al find all get /api/usuarios");
-        Ruta ruta = new Ruta();
-        ruta.setNombre(dto.nombre());
-        ruta.setDificultad(dto.dificultad());
-        ruta.setAprobada(dto.aprobada());
-        ruta.setTiempoDuracion(dto.tiempoDuracion());
-        ruta.setDistanciaMetros(dto.distanciaMetros());
-        ruta.setDesnivel(dto.desnivel());
-        ruta.setAprobada(dto.aprobada());
+    public ResponseEntity<?> createRuta(@RequestBody RutaEntradaCreateDto dto){
 
-        /*Usuario usuario = usuarioService.findById(dto.usuario());
-        fauna.setUsuario(usuario);*/
+        Ruta ruta = rutaMapper.toEntityCreate(dto);
 
-        Ruta rutaGuardada = rutaService.save(ruta);
+        Usuario usuario = usuarioService.findById(dto.usuario());
+        ruta.setUsuario(usuario);
 
-        RutaSalidaDtoV2 dtoSalida = new RutaSalidaDtoV2(
-                rutaGuardada.getId(),
-                rutaGuardada.getNombre(),
-                rutaGuardada.getDificultad(),
-                rutaGuardada.getTiempoDuracion(),
-                rutaGuardada.getDistanciaMetros(),
-                rutaGuardada.getDesnivel(),
-                rutaGuardada.getAprobada()
-        );
+        for( int id : dto.faunas()){
+            Fauna fauna = faunaService.findById(id);
+            if(fauna != null && !ruta.getFaunas().contains(fauna)){
+                ruta.getFaunas().add(fauna);
+            }
+        }
 
-        return ResponseEntity.ok(dtoSalida);
+        for( int id : dto.floras()){
+            Flora flora = floraService.findById(id);
+            if(flora != null && !ruta.getFloras().contains(flora)){
+                ruta.getFloras().add(flora);
+            }
+        }
+
+        for( int id : dto.coordenadas()){
+            Coordenada coordenada = coordenadaService.findById(id);
+            if(coordenada != null && !ruta.getCoordenadas().contains(coordenada)){
+                ruta.getCoordenadas().add(coordenada);
+            }
+        }
+
+        for( int id : dto.municipios()){
+            Municipio municipio = municipioService.findById(id);
+            if(municipio != null && !ruta.getMunicipios().contains(municipio)){
+                ruta.getMunicipios().add(municipio);
+            }
+        }
+
+        try{
+            ruta = rutaService.save(ruta);
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        return ResponseEntity.ok(ruta);
     }
 
+    /**
+     * Endpoint que actualiza una ruta existente en la bbdd
+     * @param dto con los datos que se quieren actualizar y la id de la ruta a actualizar
+     * @return true si la ruta se ha actualizado correctamente o false si no
+     */
     @PutMapping("/update")
     public ResponseEntity<?> updateAlumno(@RequestBody RutaEntradaUpdateDto dto){
-        Ruta ruta = new Ruta();
-        ruta.setId(dto.id());
-        ruta.setNombre(dto.nombre());
-        ruta.setDificultad(dto.dificultad());
-        ruta.setAprobada(dto.aprobada());
-        ruta.setTiempoDuracion(dto.tiempoDuracion());
-        ruta.setDistanciaMetros(dto.distanciaMetros());
-        ruta.setDesnivel(dto.desnivel());
-        ruta.setAprobada(dto.aprobada());
+        Ruta ruta = rutaMapper.toEntityUpdate(dto);
 
+        Usuario usuario = usuarioService.findById(dto.usuario());
+        ruta.setUsuario(usuario);
+
+        if(dto.faunas() != null && !dto.faunas().isEmpty()) {
+            for (int id : dto.faunas()) {
+                Fauna fauna = faunaService.findById(id);
+                if (fauna != null && !ruta.getFaunas().contains(fauna)) {
+                    ruta.getFaunas().add(fauna);
+                }
+            }
+        }
+
+        if(dto.floras() != null && !dto.floras().isEmpty()) {
+            for (int id : dto.floras()) {
+                Flora flora = floraService.findById(id);
+                if (flora != null && !ruta.getFloras().contains(flora)) {
+                    ruta.getFloras().add(flora);
+                }
+            }
+        }
+
+        if(dto.coordenadas() != null && !dto.coordenadas().isEmpty()) {
+            for (int id : dto.coordenadas()) {
+                Coordenada coordenada = coordenadaService.findById(id);
+                if (coordenada != null && !ruta.getCoordenadas().contains(coordenada)) {
+                    ruta.getCoordenadas().add(coordenada);
+                }
+            }
+        }
+
+        if(dto.comentarios() != null && !dto.comentarios().isEmpty()) {
+            for (int id : dto.comentarios()) {
+                Comentario comentario = comentarioService.findById(id);
+                if (comentario != null && !ruta.getComentarios().contains(comentario)) {
+                    comentario.setRuta(ruta);
+                    ruta.getComentarios().add(comentario);
+                }
+            }
+        }
+
+        if(dto.municipios() != null && !dto.municipios().isEmpty()) {
+            for (int id : dto.municipios()) {
+                Municipio municipio = municipioService.findById(id);
+                if (municipio != null && !ruta.getMunicipios().contains(municipio)) {
+                    ruta.getMunicipios().add(municipio);
+                }
+            }
+        }
+
+        boolean actualizada;
+
+        try{
+            actualizada = rutaService.update(ruta);
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
         return ResponseEntity.ok(rutaService.update(ruta));
     }
 
+    /**
+     * Endpoint que borra una ruta de la bbdd a partir de su id
+     * @param id de la ruta a borrar
+     * @return true si se ha borrado correctamente o false si no
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteRuta(@PathVariable("id") int id){
-        //Logger logger = Logger.getLogger("logger");
-        //Logger logger = Logger.getLogger(Globals.LOGGER);
-        //logger.info("Llamada al find all get /api/alumnos");
+
         return ResponseEntity.ok(rutaService.deleteById(id));
     }
 }

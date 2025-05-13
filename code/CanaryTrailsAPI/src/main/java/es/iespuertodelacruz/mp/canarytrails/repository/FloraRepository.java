@@ -21,11 +21,11 @@ public interface FloraRepository extends JpaRepository<Flora, Integer> {
     @Query(
             value= "DELETE FROM ruta_flora WHERE flora_id = :floraId",
             nativeQuery = true)
-    int deleteRutaFloraRelation(@Param("floraId") int faunaId);
+    int deleteRutaFloraRelation(@Param("floraId") int floraId);
 
     @Modifying
     @Query(
             value="INSERT INTO ruta_flora (flora_id, ruta_id) VALUES (:floraId, :rutaId)",
             nativeQuery = true)
-    void addRutaFloraRelation(@Param("floraId") int faunaId, @Param("rutaId") int rutaId);
+    void addRutaFloraRelation(@Param("floraId") int floraId, @Param("rutaId") int rutaId);
 }

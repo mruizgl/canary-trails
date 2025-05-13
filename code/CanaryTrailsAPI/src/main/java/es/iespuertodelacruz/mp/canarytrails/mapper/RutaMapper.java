@@ -17,6 +17,8 @@ import org.mapstruct.Mapping;
 )
 public interface RutaMapper {
 
+    RutaSalidaDto toDto(Ruta entity);
+
     @Mapping(target = "usuario", ignore = true)
     @Mapping(target = "municipios", ignore = true)
     @Mapping(target = "faunas", ignore = true)
@@ -24,13 +26,11 @@ public interface RutaMapper {
     @Mapping(target = "coordenadas", ignore = true)
     Ruta toEntityCreate(RutaEntradaCreateDto dto);
 
-
-    //RutaMapper INSTANCE = Mappers.getMapper(RutaMapper.class);
+    @Mapping(target = "usuario", ignore = true)
+    @Mapping(target = "municipios", ignore = true)
+    @Mapping(target = "faunas", ignore = true)
+    @Mapping(target = "floras", ignore = true)
+    @Mapping(target = "coordenadas", ignore = true)
     Ruta toEntityUpdate(RutaEntradaUpdateDto dto);
 
-    RutaSalidaDto toDto(Ruta entity);
-
-    //  <--- Relaciones Dto's --->
-    RutaSalidaFaunaDto toSalidaFaunaDto(Ruta entity);
-    RutaSalidaUsuarioDto toSalidaUsuarioDto(Ruta entity);
 }

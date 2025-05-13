@@ -10,10 +10,10 @@ public record RutaEntradaCreateDto (
         float desnivel,
         boolean aprobada,
         Integer usuario,
-        //List<Integer> comentarios,
-        List<Integer> municipios,
+        //List<Integer> comentarios,    //No hay comentarios en una recien creada
         List<Integer> faunas,
         List<Integer> floras,
-        List<Integer> coordenadas
+        List<Integer> coordenadas,
+        List<Integer> municipios
 ){
 }
