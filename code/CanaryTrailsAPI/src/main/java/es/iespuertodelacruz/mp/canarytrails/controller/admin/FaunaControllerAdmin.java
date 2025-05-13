@@ -87,11 +87,13 @@ public class FaunaControllerAdmin {
             }
         }
 
-        Fauna faunaGuardada = faunaService.save(fauna);
+        try{
+            fauna = faunaService.save(fauna);
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
-        FaunaSalidaDto dtoSalida = faunaMapper.toDto(faunaGuardada);
-
-        return ResponseEntity.ok(dtoSalida);
+        return ResponseEntity.ok(faunaMapper.toDto(fauna));
     }
 
     /**
@@ -117,7 +119,15 @@ public class FaunaControllerAdmin {
             }
         }
 
-        return ResponseEntity.ok(faunaService.update(fauna));
+        boolean actualizada;
+
+        try {
+            actualizada = faunaService.update(fauna);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        return ResponseEntity.ok(actualizada);
     }
 
     /**

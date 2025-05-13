@@ -28,11 +28,20 @@ public class CoordenadaControllerAdmin {
     @Autowired
     RutaService rutaService;
 
+    /**
+     * Endpoint que devuelve todas las coordenadas de la bbdd
+     * @return todas las coordenadas existentes
+     */
     @GetMapping
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(coordenadaMapper.toDTOList(coordenadaService.findAll()));
     }
 
+    /**
+     * Endpoint que devuelve una coordenada de la bbdd según la id
+     * @param id de la coordenada
+     * @return coordenada que tiene la id introducida
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id) {
         Coordenada coordenada = coordenadaService.findById(id);
@@ -46,6 +55,11 @@ public class CoordenadaControllerAdmin {
         return ResponseEntity.ok(dto);
     }
 
+    /**
+     * Endpoint que crea una coordenada en la bbdd
+     * @param dto con los datos de la coordenada a crear
+     * @return la coordenada creada
+     */
     @PostMapping("/add")
     public ResponseEntity<?> create(@RequestBody CoordenadaEntradaCreateDto dto) {
 
@@ -58,13 +72,20 @@ public class CoordenadaControllerAdmin {
             }
         }
 
-        Coordenada coordenadaGuardada = coordenadaService.save(coordenada);
+        try{
+            coordenada = coordenadaService.save(coordenada);
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
-        CoordenadaSalidaDto dtoSalida = coordenadaMapper.toDTO(coordenadaGuardada);
-
-        return ResponseEntity.ok(dtoSalida);
+        return ResponseEntity.ok(coordenadaMapper.toDTO(coordenada));
     }
 
+    /**
+     * Endpoint que actualiza una coordenada de la bbdd
+     * @param dto con los datos de la coordenada a actualizar
+     * @return true si se ha actualizado correctamente o false si no
+     */
     @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody CoordenadaEntradaUpdateDto dto) {
         Coordenada coordenada = coordenadaMapper.toEntityUpdate(dto);
@@ -80,6 +101,11 @@ public class CoordenadaControllerAdmin {
         return ResponseEntity.ok(coordenadaService.update(coordenada));
     }
 
+    /**
+     * Endpoint que borra una coordenada de la bbdd segun la id
+     * @param id de la coordenada a borrar
+     * @return true si se ha borrado correctamente y false si no
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         return ResponseEntity.ok(coordenadaService.deleteById(id));

@@ -85,11 +85,14 @@ public class FloraControllerAdmin {
             }
         }
 
-        Flora floraGuardada = floraService.save(flora);
+        try{
+            flora = floraService.save(flora);
 
-        FloraSalidaDto dtoSalida = floraMapper.toDTO(floraGuardada);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
-        return ResponseEntity.ok(dtoSalida);
+        return ResponseEntity.ok(floraMapper.toDTO(flora));
     }
 
     /**
@@ -114,7 +117,15 @@ public class FloraControllerAdmin {
             }
         }
 
-        return ResponseEntity.ok(floraService.update(flora));
+        boolean actualizada;
+
+        try{
+            actualizada = floraService.update(flora);
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        return ResponseEntity.ok(actualizada);
     }
 
     /**
