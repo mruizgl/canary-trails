@@ -1,9 +1,10 @@
 package es.iespuertodelacruz.mp.canarytrails.dto.comentario;
 
-public record ComentarioSalidaDto(
+public record ComentarioEntradaUpdateDto(
         Integer id,
         String titulo,
         String descripcion,
-        UsuarioSalidaComentarioDto usuario,
-        RutaSalidaComentarioDto ruta
-) {}
+        Integer usuario,
+        Integer ruta
+) {
+}

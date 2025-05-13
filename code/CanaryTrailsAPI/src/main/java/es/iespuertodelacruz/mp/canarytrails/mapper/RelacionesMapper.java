@@ -1,5 +1,7 @@
 package es.iespuertodelacruz.mp.canarytrails.mapper;
 
+import es.iespuertodelacruz.mp.canarytrails.dto.comentario.RutaSalidaComentarioDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.comentario.UsuarioSalidaComentarioDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.coordenada.RutaSalidaCoordenadaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.RutaSalidaFaunaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.UsuarioSalidaFaunaDto;
@@ -8,6 +10,7 @@ import es.iespuertodelacruz.mp.canarytrails.dto.flora.UsuarioSalidaFloraDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.municipio.RutaSalidaMunicipioDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.municipio.ZonaSalidaMunicipioDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.*;
+import es.iespuertodelacruz.mp.canarytrails.dto.usuario.ComentarioSalidaUsuarioDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.usuario.FaunaSalidaUsuarioDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.zona.MunicipioSalidaZonaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.*;
@@ -34,6 +37,7 @@ public interface RelacionesMapper {
     //  <--- Rutas Favoritas Relaciones --->
 
     //  <--- Usuarios Relaciones --->
+    ComentarioSalidaUsuarioDto toSalidaUsuarioDto(Comentario entity);
 
     //  <--- Faunas Relaciones --->
     UsuarioSalidaFaunaDto toSalidaFaunaDto(Usuario usuario);
@@ -47,5 +51,6 @@ public interface RelacionesMapper {
     RutaSalidaCoordenadaDto toSalidaCoordenadaDto(Ruta ruta);
 
     //  <--- Comentarios Relaciones --->
-
+    UsuarioSalidaComentarioDto toSalidaComentario(Usuario usuario);
+    RutaSalidaComentarioDto toSalidaComentario(Ruta ruta);
 }
