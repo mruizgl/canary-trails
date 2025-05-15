@@ -32,10 +32,10 @@ public class Usuario {
 
     private String rol;
 
-    @OneToMany(mappedBy = "upload/usuario")
+    @OneToMany(mappedBy = "usuario")
     private List<Ruta> rutasCreadas;
 
-    @OneToMany(mappedBy = "upload/usuario")
+    @OneToMany(mappedBy = "usuario")
     private List<Comentario> comentarios;
 
     @ManyToMany
@@ -46,11 +46,14 @@ public class Usuario {
     )
     private List<Ruta> rutasFavoritas;
 
-    @OneToMany(mappedBy = "upload/usuario")
+    @OneToMany(mappedBy = "usuario")
     private List<Fauna> faunas;
 
-    @OneToMany(mappedBy = "upload/usuario")
+    @OneToMany(mappedBy = "usuario")
     private List<Flora> floras;
+
+    @Column(columnDefinition = "TEXT")
+    private String foto;
 
     public Usuario() {
         this.rutasCreadas = new ArrayList<>();
@@ -59,31 +62,6 @@ public class Usuario {
         this.faunas = new ArrayList<>();
         this.floras = new ArrayList<>();
     }
-
-    //Crear el usuario al registrar. El validado se establece en 0 por defecto y el rol se establece en el service
-    /*public Usuario(String nombre, String apellidos, String correo, String password) {
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.correo = correo;
-        this.password = password;
-    }
-
-    public Usuario(Integer id, String nombre, String apellidos, String correo, String password, Boolean verificado,
-                   String rol, List<Ruta> rutasCreadas, List<Comentario> comentarios, List<Ruta> rutasFavoritas,
-                   List<Fauna> faunas, List<Flora> floras) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.correo = correo;
-        this.password = password;
-        this.verificado = verificado;
-        this.rol = rol;
-        this.rutasCreadas = rutasCreadas;
-        this.comentarios = comentarios;
-        this.rutasFavoritas = rutasFavoritas;
-        this.faunas = faunas;
-        this.floras = floras;
-    }*/
 
     public Integer getId() {
         return id;
@@ -181,6 +159,14 @@ public class Usuario {
         this.floras = floras;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -200,11 +186,15 @@ public class Usuario {
                 ", nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +
                 ", correo='" + correo + '\'' +
-                ", contraseña='" + password + '\'' +
+                ", password='" + password + '\'' +
                 ", verificado=" + verificado +
                 ", rol='" + rol + '\'' +
                 ", rutasCreadas=" + rutasCreadas +
                 ", comentarios=" + comentarios +
+                ", rutasFavoritas=" + rutasFavoritas +
+                ", faunas=" + faunas +
+                ", floras=" + floras +
+                ", foto='" + foto + '\'' +
                 '}';
     }
 }

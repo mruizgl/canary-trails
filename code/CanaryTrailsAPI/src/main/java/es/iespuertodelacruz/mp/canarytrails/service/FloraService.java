@@ -59,6 +59,8 @@ public class FloraService implements IServiceGeneric<Flora, Integer> {
             throw new RuntimeException("El usuario ha de existir");
         }
 
+        //La foto se permite establecerse en nulo, en el front cargamos un "No tiene foto" o algo así
+
         Flora savedFlora = floraRepository.save(flora);
 
         if (savedFlora.getRutas() != null && !savedFlora.getRutas().isEmpty()) {
@@ -100,6 +102,10 @@ public class FloraService implements IServiceGeneric<Flora, Integer> {
 
             if (object.getRutas() != null) {
                 flora.setRutas(object.getRutas());
+            }
+
+            if (object.getFoto() != null && !object.getFoto().isBlank()) {
+                flora.setFoto(object.getFoto());
             }
 
             Flora savedFlora = floraRepository.save(flora);

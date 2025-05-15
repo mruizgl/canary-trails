@@ -7,6 +7,6 @@ public record MunicipioEntradaCreateDto(
         int altitudMedia,
         double latitudGeografica,
         double longitudGeografica,
-        int zonaId,
+        Integer zona,
         List<Integer> rutas 
 ) {}

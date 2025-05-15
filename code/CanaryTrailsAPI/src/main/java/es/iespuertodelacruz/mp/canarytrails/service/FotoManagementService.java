@@ -3,6 +3,7 @@ package es.iespuertodelacruz.mp.canarytrails.service;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,64 +18,21 @@ public class FotoManagementService {
 
     private final Path root = Paths.get("src/main/resources/uploads");
 
-    private Path getFilenameFree(String filename){
-        Path pathCompleto = this.root.resolve(filename);
-        String nombre="";
-        String extension = "";
-        if( filename.contains(".")) {
-            extension = filename.substring(filename.lastIndexOf(".") + 1);
-            nombre = filename.substring(0, filename.length() -
-                    extension.length() -1);
-        }
-        else {
-            nombre = filename;
-        }
-        int contador=1;
-        while(Files.exists(pathCompleto)) {
-            String nuevoNombre = nombre + "_" + contador;
-            nuevoNombre += "."+extension;
-            pathCompleto = this.root.resolve(nuevoNombre);
-            contador++;
-        }
-        return(pathCompleto);
-    }
-
-    /*public String save(String nombrefichero, byte[] dataFile) {
-
-        //creamos el directorio si no existe
-        try {
-            Files.createDirectories(root);
-        } catch (IOException e) {
-            throw new RuntimeException("no se puede crear el directorio");
-        }
+    //@Transactional
+    public String save(MultipartFile file, String categoria) {
 
         try {
-            Path filenameFree = getFilenameFree(nombrefichero);
-            Files.
-                    write(filenameFree,dataFile);
-            return filenameFree.getFileName().toString();
-        } catch (Exception e) {
-            if (e instanceof FileAlreadyExistsException) {
-                throw new RuntimeException("A file of that name already exists.");
-            }
-            throw new RuntimeException(e.getMessage());
-        }
-    }*/
+            // Crear el subdirectorio correspondiente
+            Path subdir = this.root.resolve(categoria);
+            Files.createDirectories(subdir);
 
-    public String save(MultipartFile file) {
 
-        //creamos el directorio si no existe
-        try {
-            Files.createDirectories(root);
-        } catch (IOException e) {
-            throw new RuntimeException("No se puede crear el directorio");
-        }
+            // Obtener un nombre de archivo libre dentro de esa categoría
+            Path filenameFree = getFilenameFree(subdir, file.getOriginalFilename());
 
-        try {
-            Path filenameFree = getFilenameFree(file.getOriginalFilename());
-            Files.
-                    copy(file.getInputStream(),filenameFree);
-            return filenameFree.getFileName().toString();
+            Files.copy(file.getInputStream(),filenameFree);
+
+            return categoria + "/" + filenameFree.getFileName().toString();
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("Ya existe un fichero llamado así");
@@ -83,20 +41,40 @@ public class FotoManagementService {
         }
     }
 
-    /*public Resource get(String filename) {
-        try {
-            //obtenemos la ruta al fichero en nuestra carpeta, dado el nombre como parámetro
-            Path pathForFilename = root.resolve(filename);
-            //queremos devolver un recurso fichero. Obtenemos un recurso para el path del fichero deseado
-            Resource resource = new UrlResource(pathForFilename.toUri());
-            if( resource.exists()) {
-                return resource;
-            }else {
-                throw new RuntimeException("no se puede acceder a " + filename);
-            }
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Error: " + e.getMessage());
+    private Path getFilenameFree(Path directorio, String filename){
+
+        Path pathCompleto = directorio.resolve(filename);
+        String nombre="";
+        String extension = "";
+
+        //Si contiene punto, desglosa por punto y extension
+        if( filename.contains(".")) {
+            extension = filename.substring(filename.lastIndexOf(".") + 1);
+            nombre = filename.substring(0, filename.length() -
+                    extension.length() -1);
+        } else {
+            //Si no, el nombre es tal cual
+            nombre = filename;
         }
-    }*/
+
+        int contador=1;
+
+        //Mientras exista el path completo, se va a actualizar con el contador para que se cree un archivo con nombre nuevo
+        while(Files.exists(pathCompleto)) {
+            String nuevoNombre = nombre + "_" + contador;
+
+            //Solo le añade la extension si tiene una establecida
+            if (!extension.isEmpty()) {
+                nuevoNombre += "." + extension;
+            }
+
+            pathCompleto = directorio.resolve(nuevoNombre);
+            contador++;
+        }
+
+        return(pathCompleto);
+    }
+
+
 
 }

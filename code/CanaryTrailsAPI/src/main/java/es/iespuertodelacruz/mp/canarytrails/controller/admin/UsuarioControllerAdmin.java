@@ -1,14 +1,19 @@
 package es.iespuertodelacruz.mp.canarytrails.controller.admin;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioEntradaCreateDto;
-import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.mapper.UsuarioMapper;
+import es.iespuertodelacruz.mp.canarytrails.dto.usuario.auth.UsuarioRegisterDto;
+import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
+import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
+import es.iespuertodelacruz.mp.canarytrails.service.FotoManagementService;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +31,9 @@ public class UsuarioControllerAdmin {
 
     @Autowired
     UsuarioMapper usuarioMapper;
+
+    @Autowired
+    FotoManagementService fotoManagementService;
 
     /**
      * Endpoint para obtener todos los usuarios
@@ -94,6 +102,7 @@ public class UsuarioControllerAdmin {
         return ResponseEntity.ok(actualizado);
     }
 
+
     /**
      * Borra un usuario a partir de la id
      * @param id del usuario a borrar
@@ -103,4 +112,28 @@ public class UsuarioControllerAdmin {
     public ResponseEntity<?> deleteUsuario(@PathVariable("id") int id) {
        return ResponseEntity.ok(usuarioService.deleteById(id));
     }
+
+    @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadFile(@RequestParam("id") Integer id, @RequestParam("file") MultipartFile file) {
+
+        String mensaje = "";
+        String categoria = "usuario";
+
+        try {
+            String namefile = fotoManagementService.save(file, categoria);
+            mensaje = "" + namefile;
+
+            Usuario usuario = usuarioService.findById(id);
+
+            usuario.setFoto(namefile);
+            usuarioService.update(usuario);
+
+            return ResponseEntity.ok(mensaje);
+        } catch (Exception e) {
+            mensaje = "No se pudo subir el archivo: " + file.getOriginalFilename()
+                    + ". Error: " + e.getMessage();
+            return ResponseEntity.badRequest().body(mensaje);
+        }
+    }
+
 }

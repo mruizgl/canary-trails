@@ -73,7 +73,7 @@ public class MunicipioControllerAdmin {
 
         Municipio municipio = municipioMapper.toEntityCreate(dto);
 
-        Zona zona = zonaService.findById(dto.zonaId());
+        Zona zona = zonaService.findById(dto.zona());
         municipio.setZona(zona);
 
         for( int id : dto.rutas()){

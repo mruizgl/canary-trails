@@ -3,16 +3,20 @@ package es.iespuertodelacruz.mp.canarytrails.controller.admin;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraSalidaDto;
+import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
 import es.iespuertodelacruz.mp.canarytrails.entities.Flora;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.mapper.FloraMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.FloraService;
+import es.iespuertodelacruz.mp.canarytrails.service.FotoManagementService;
 import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -36,6 +40,9 @@ public class FloraControllerAdmin {
 
     @Autowired
     RutaService rutaService;
+
+    @Autowired
+    FotoManagementService fotoManagementService;
 
     /**
      * Endpoint para obtener todas las floras
@@ -126,6 +133,29 @@ public class FloraControllerAdmin {
         }
 
         return ResponseEntity.ok(actualizada);
+    }
+
+    @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadFile(@RequestParam("id") Integer id, @RequestParam("file") MultipartFile file) {
+
+        String mensaje = "";
+        String categoria = "flora";
+
+        try {
+            String namefile = fotoManagementService.save(file, categoria);
+            mensaje = "" + namefile;
+
+            Flora flora = floraService.findById(id);
+
+            flora.setFoto(namefile);
+            floraService.update(flora);
+
+            return ResponseEntity.ok(mensaje);
+        } catch (Exception e) {
+            mensaje = "No se pudo subir el archivo: " + file.getOriginalFilename()
+                    + ". Error: " + e.getMessage();
+            return ResponseEntity.badRequest().body(mensaje);
+        }
     }
 
     /**

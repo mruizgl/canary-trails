@@ -6,11 +6,15 @@ import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.mapper.FaunaMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.FaunaService;
+import es.iespuertodelacruz.mp.canarytrails.service.FotoManagementService;
 import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +36,9 @@ public class FaunaControllerAdmin {
 
     @Autowired
     RutaService rutaService;
+
+    @Autowired
+    FotoManagementService fotoManagementService;
 
     /**
      * Endpoint para obtener todas las faunas
@@ -103,7 +110,7 @@ public class FaunaControllerAdmin {
      * @return true si se ha actualizado y false si no
      */
     @PutMapping("/update")
-    public ResponseEntity<?> updateAlumno(@RequestBody FaunaEntradaUpdateDto dto){
+    public ResponseEntity<?> updateFauna(@RequestBody FaunaEntradaUpdateDto dto){
 
         Fauna fauna = faunaMapper.toEntityUpdate(dto);
 
@@ -130,6 +137,36 @@ public class FaunaControllerAdmin {
 
         return ResponseEntity.ok(actualizada);
     }
+
+    /**
+     * Endpoint que actualiza la foto de una fauna
+     * @param id de la fauna a la que se le quiere colocar la foto
+     * @param file foto que se le quiere establecer
+     * @return la ruta que se le ha establecido a la fauna
+     */
+    @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadFile(@RequestParam("id") Integer id, @RequestParam("file") MultipartFile file) {
+
+        String mensaje = "";
+        String categoria = "fauna";
+
+        try {
+            String namefile = fotoManagementService.save(file, categoria);
+            mensaje = "" + namefile;
+
+            Fauna fauna = faunaService.findById(id);
+
+            fauna.setFoto(namefile);
+            faunaService.update(fauna);
+
+            return ResponseEntity.ok(mensaje);
+        } catch (Exception e) {
+            mensaje = "No se pudo subir el archivo: " + file.getOriginalFilename()
+                    + ". Error: " + e.getMessage();
+            return ResponseEntity.badRequest().body(mensaje);
+        }
+    }
+
 
     /**
      * Borra una fauna a partir de la id

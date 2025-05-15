@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS usuario_ruta_favorita;
 DROP TABLE IF EXISTS comentarios;
 DROP TABLE IF EXISTS coordenada_ruta;
 DROP TABLE IF EXISTS ruta_municipio;
+DROP TABLE IF EXISTS ruta_foto;
 
 -- Elimina las tablas principales dependientes
 DROP TABLE IF EXISTS rutas;
@@ -41,7 +42,8 @@ CREATE TABLE usuarios (
     correo VARCHAR(320) UNIQUE NOT NULL, -- tiene como máximo 320 caracteres
     password VARCHAR(255) NOT NULL,
     verificado TINYINT(1) DEFAULT 0,
-    rol VARCHAR(20)
+    rol VARCHAR(20),
+    foto TEXT NOT NULL
 );
 
 -- Tabla: ruta
@@ -55,6 +57,14 @@ CREATE TABLE rutas (
     aprobada TINYINT(1) DEFAULT 0,
     usuario_id INT NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+-- Tabla intermedia: ruta_municipio
+CREATE TABLE ruta_foto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ruta_id INT NOT NULL,
+    nombre_foto TEXT NOT NULL,
+    FOREIGN KEY (ruta_id) REFERENCES rutas(id)
 );
 
 -- Tabla intermedia: ruta_municipio
@@ -89,6 +99,7 @@ CREATE TABLE faunas (
     descripcion TEXT NOT NULL,
     aprobada TINYINT(1) DEFAULT 0,
     usuario_id INTEGER NOT NULL,
+    foto TEXT,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
@@ -103,6 +114,7 @@ CREATE TABLE floras (
     descripcion TEXT NOT NULL,
     aprobada TINYINT(1) DEFAULT 0,
     usuario_id INTEGER NOT NULL,
+    foto TEXT,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
@@ -147,8 +159,9 @@ CREATE TABLE ruta_fauna (
     FOREIGN KEY (fauna_id) REFERENCES faunas(id)
 );
 
-INSERT INTO `usuarios` (`nombre`, `apellidos`, `correo`, `password`, `verificado`, `rol`) VALUES
-('Admin', 'Istrador', 'admin@mail.com', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', '1', 'ADMIN');
+INSERT INTO `usuarios` (`nombre`, `apellidos`, `correo`, `password`, `verificado`, `rol`, `foto`) VALUES
+('Admin', 'Istrador', 'admin@mail.com', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', '1', 'ADMIN',
+'src/main/resources/uploads/usuario/default.png');
 
 INSERT INTO `faunas` (`nombre`, `descripcion`, `aprobada`, `usuario_id`) VALUES
 ('Phoenix Canariensis', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', '1', '1'),

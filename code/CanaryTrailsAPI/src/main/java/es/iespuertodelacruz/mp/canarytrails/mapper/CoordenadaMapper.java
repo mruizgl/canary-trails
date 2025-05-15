@@ -20,10 +20,7 @@ public interface CoordenadaMapper {
 
     CoordenadaSalidaDto toDTO(Coordenada coordenada);
 
-    @Mapping(target = "upload/rutas", ignore = true)
     Coordenada toEntityCreate(CoordenadaEntradaCreateDto dto);
-
-    @Mapping(target = "upload/rutas", ignore = true)
     Coordenada toEntityUpdate(CoordenadaEntradaUpdateDto dto);
 
     List<CoordenadaSalidaDto> toDTOList(List<Coordenada> coordenadas);

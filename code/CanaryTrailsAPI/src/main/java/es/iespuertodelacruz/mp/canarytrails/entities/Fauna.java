@@ -33,6 +33,9 @@ public class Fauna {
     @ManyToMany(mappedBy = "faunas")
     private List<Ruta> rutas;
 
+    @Column(columnDefinition = "TEXT")
+    private String foto;
+
     public Fauna() {
         this.rutas = new ArrayList<>();
     }
@@ -85,6 +88,14 @@ public class Fauna {
         this.rutas = rutas;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -106,6 +117,7 @@ public class Fauna {
                 ", aprobada=" + aprobada +
                 ", usuario=" + usuario +
                 ", rutas=" + rutas +
+                ", foto='" + foto + '\'' +
                 '}';
     }
 }

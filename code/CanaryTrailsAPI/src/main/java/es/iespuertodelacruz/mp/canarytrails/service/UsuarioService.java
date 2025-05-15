@@ -110,6 +110,13 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
                 usuario.setVerificado(object.getVerificado());
             }
 
+            if(object.getFoto() != null && !object.getFoto().isBlank()){
+                usuario.setFoto(object.getFoto());
+            } else {
+                String defaultFoto = "src/main/resources/uploads/usuario/default.png";
+                usuario.setFoto(defaultFoto);
+            }
+
             usuarioRepository.save(usuario);
             return true;
         } else{
