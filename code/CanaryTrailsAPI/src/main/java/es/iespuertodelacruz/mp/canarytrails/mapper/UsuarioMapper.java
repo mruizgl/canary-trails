@@ -2,10 +2,13 @@ package es.iespuertodelacruz.mp.canarytrails.mapper;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.UsuarioSalidaFaunaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.UsuarioSalidaRutaDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioEntradaDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.control.MappingControl;
 import org.mapstruct.factory.Mappers;
 
@@ -17,13 +20,17 @@ import org.mapstruct.factory.Mappers;
 )
 public interface UsuarioMapper {
 
-    //UsuarioMapper INSTANCE = Mappers.getMapper(UsuarioMapper.class);
 
-    Usuario toEntity(UsuarioEntradaDto dto);
     UsuarioSalidaDto toDto(Usuario entity);
 
-    // <--- Dto's --->
-    UsuarioSalidaRutaDto toSalidaRutaDto(Usuario entity);
+    Usuario toEntityCreate(UsuarioEntradaCreateDto dto);
 
-    UsuarioSalidaFaunaDto toSalidaFaunaDto(Usuario entity);
+    @Mapping(target = "rutas", ignore = true)
+    @Mapping(target = "faunas", ignore = true)
+    @Mapping(target = "floras", ignore = true)
+    @Mapping(target = "comentarios", ignore = true)
+    @Mapping(target = "rutasFavoritas", ignore = true)
+    Usuario toEntityUpdate(UsuarioEntradaUpdateDto dto);
+
+
 }

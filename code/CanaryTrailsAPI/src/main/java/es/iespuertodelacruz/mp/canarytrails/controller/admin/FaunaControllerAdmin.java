@@ -29,6 +29,7 @@ public class FaunaControllerAdmin {
 
     @Autowired
     UsuarioService usuarioService;
+
     @Autowired
     RutaService rutaService;
 

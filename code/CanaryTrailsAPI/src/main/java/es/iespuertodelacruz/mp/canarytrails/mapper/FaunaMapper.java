@@ -3,12 +3,9 @@ package es.iespuertodelacruz.mp.canarytrails.mapper;
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaSalidaDto;
-import es.iespuertodelacruz.mp.canarytrails.dto.ruta.FaunaSalidaRutaDto;
-import es.iespuertodelacruz.mp.canarytrails.dto.usuario.FaunaSalidaUsuarioDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.context.annotation.Lazy;
 
 @Mapper(
         componentModel = "spring",

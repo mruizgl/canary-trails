@@ -1,6 +1,5 @@
 package es.iespuertodelacruz.mp.canarytrails.mapper;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.CoordenadaDTO;
 import es.iespuertodelacruz.mp.canarytrails.dto.coordenada.CoordenadaEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.coordenada.CoordenadaEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.coordenada.CoordenadaSalidaDto;
@@ -21,10 +20,10 @@ public interface CoordenadaMapper {
 
     CoordenadaSalidaDto toDTO(Coordenada coordenada);
 
-    @Mapping(target = "rutas", ignore = true)
+    @Mapping(target = "upload/rutas", ignore = true)
     Coordenada toEntityCreate(CoordenadaEntradaCreateDto dto);
 
-    @Mapping(target = "rutas", ignore = true)
+    @Mapping(target = "upload/rutas", ignore = true)
     Coordenada toEntityUpdate(CoordenadaEntradaUpdateDto dto);
 
     List<CoordenadaSalidaDto> toDTOList(List<Coordenada> coordenadas);

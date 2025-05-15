@@ -1,6 +1,7 @@
 package es.iespuertodelacruz.mp.canarytrails.controller.admin;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioRegisterDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioEntradaCreateDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.usuario.auth.UsuarioRegisterDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,59 +23,42 @@ public class UsuarioControllerAdmin {
 
     @GetMapping
     public ResponseEntity<?> findAllUsuarios(){
-        //System.out.println("holaaaaaa estoy aqui");
-        return ResponseEntity.ok(usuarioService.findAll()
-                        /*.stream()
-                        .map(usuario -> new UsuarioSalidaDto(
-                                        usuario.getId(),
-                                        usuario.getNombre(),
-                                        usuario.getApellidos(),
-                                        usuario.getCorreo(),
-                                        usuario.getPassword(),
-                                        usuario.getVerificado(),
-                                        usuario.getRol(),
 
-
-                                )
-                        )
-                .collect(Collectors.toList())*/
-        );
+        //TODO: pasar por el dto, comentar como en los otros controller
+        return ResponseEntity.ok(usuarioService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findUsuarioById(@PathVariable Integer id){
 
         Usuario usuario = usuarioService.findById(id);
-        /*UsuarioSalidaDto dto = new UsuarioSalidaDto(
-                usuario.getId(),
-                usuario.getNombre(),
-                usuario.getApellidos(),
-                usuario.getCorreo(),
-                usuario.getPassword(),
-                usuario.getVerificado(),
-                usuario.getRol(),
-
-        );
-        return ResponseEntity.ok(dto);*/
 
         if(usuario == null){
             return ResponseEntity.notFound().build();
         }
 
+        //TODO: devolver como dto
         return ResponseEntity.ok(usuario);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createUsuario(@RequestBody UsuarioRegisterDto dto){
-        //Logger logger = Logger.getLogger("logger");
-        //Logger logger = Logger.getLogger(Globals.LOGGER);
-        //logger.info("Llamada al find all get /api/usuarios");
+    public ResponseEntity<?> createUsuario(@RequestBody UsuarioEntradaCreateDto dto){
+
+
+        //TODO: mapear ode dto create a entidad, hacer el save
+
         Usuario usuario = new Usuario();
         usuario.setNombre(dto.nombre());
         usuario.setApellidos(dto.apellidos());
         usuario.setCorreo(dto.correo());
         usuario.setPassword(dto.password());
 
+        //TODO: mapeado a dto salida
         return ResponseEntity.ok(usuarioService.save(usuario));
     }
+
+    //TODO: UPDATE mapear de Entrada update a dto, hacer el update, devolver un response entity con el usuarioService.update(usuario)
+
+    //TODO: DELETE tal cual los otros delete, pero haciendo un catch del runtime exception (ejemplo sencillo en controller de zona)
+
 }

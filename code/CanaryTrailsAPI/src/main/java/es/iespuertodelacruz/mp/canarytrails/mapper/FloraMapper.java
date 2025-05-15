@@ -1,6 +1,5 @@
 package es.iespuertodelacruz.mp.canarytrails.mapper;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.FloraDTO;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraSalidaDto;
@@ -9,7 +8,6 @@ import es.iespuertodelacruz.mp.canarytrails.dto.usuario.FloraSalidaUsuarioDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Flora;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
@@ -24,12 +22,12 @@ public interface FloraMapper {
 
     FloraSalidaDto toDTO(Flora flora);
 
-    @Mapping(target = "usuario", ignore = true)
-    @Mapping(target = "rutas", ignore = true)
+    @Mapping(target = "upload/usuario", ignore = true)
+    @Mapping(target = "upload/rutas", ignore = true)
     Flora toEntityCreate(FloraEntradaCreateDto dto);
 
-    @Mapping(target = "usuario", ignore = true)
-    @Mapping(target = "rutas", ignore = true)
+    @Mapping(target = "upload/usuario", ignore = true)
+    @Mapping(target = "upload/rutas", ignore = true)
     Flora toEntityUpdate(FloraEntradaUpdateDto dto);
 
     List<FloraSalidaDto> toDTOList(List<Flora> floraList);
