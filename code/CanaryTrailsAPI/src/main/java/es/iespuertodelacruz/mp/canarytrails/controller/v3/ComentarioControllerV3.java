@@ -1,4 +1,4 @@
-package es.iespuertodelacruz.mp.canarytrails.controller.admin;
+package es.iespuertodelacruz.mp.canarytrails.controller.v3;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.comentario.ComentarioEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.comentario.ComentarioEntradaUpdateDto;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,8 +20,8 @@ import java.util.stream.Collectors;
  * @author Melissa R.G. y Pedro M.E.
  */
 @RestController
-@RequestMapping("/api/v1/admin/comentarios")
-public class ComentarioControllerAdmin {
+@RequestMapping("/api/v3/comentarios")
+public class ComentarioControllerV3 {
 
     @Autowired
     ComentarioService comentarioService;

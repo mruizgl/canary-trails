@@ -1,9 +1,8 @@
-package es.iespuertodelacruz.mp.canarytrails.controller.admin;
+package es.iespuertodelacruz.mp.canarytrails.controller.v3;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDto;
-import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDtoV2;
 import es.iespuertodelacruz.mp.canarytrails.entities.*;
 import es.iespuertodelacruz.mp.canarytrails.mapper.RutaMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.*;
@@ -17,9 +16,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/admin/rutas")
+@RequestMapping("/api/v3/rutas")
 @CrossOrigin
-public class RutaControllerAdmin {
+public class RutaControllerV3 {
 
     @Autowired
     RutaService rutaService;

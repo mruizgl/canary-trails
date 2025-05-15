@@ -1,9 +1,8 @@
-package es.iespuertodelacruz.mp.canarytrails.controller.admin;
+package es.iespuertodelacruz.mp.canarytrails.controller.v3;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraSalidaDto;
-import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
 import es.iespuertodelacruz.mp.canarytrails.entities.Flora;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
@@ -25,9 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Melissa R.G. y Pedro M.E.
  */
 @RestController
-@RequestMapping("/api/v1/admin/floras")
+@RequestMapping("/api/v3/floras")
 @CrossOrigin(origins = "*")
-public class FloraControllerAdmin {
+public class FloraControllerV3 {
 
     @Autowired
     FloraService floraService;

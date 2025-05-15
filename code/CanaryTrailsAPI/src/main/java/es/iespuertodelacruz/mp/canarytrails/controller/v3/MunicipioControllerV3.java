@@ -1,4 +1,4 @@
-package es.iespuertodelacruz.mp.canarytrails.controller.admin;
+package es.iespuertodelacruz.mp.canarytrails.controller.v3;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioEntradaUpdateDto;
@@ -14,13 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/admin/municipios")
+@RequestMapping("/api/v3/municipios")
 @CrossOrigin(origins = "*")
-public class MunicipioControllerAdmin {
+public class MunicipioControllerV3 {
 
     @Autowired
     MunicipioService municipioService;

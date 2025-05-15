@@ -1,4 +1,4 @@
-package es.iespuertodelacruz.mp.canarytrails.controller.admin;
+package es.iespuertodelacruz.mp.canarytrails.controller.v3;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.*;
 import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
@@ -10,7 +10,6 @@ import es.iespuertodelacruz.mp.canarytrails.service.FotoManagementService;
 import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +19,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/admin/faunas")
+@RequestMapping("/api/v3/faunas")
 @CrossOrigin
-public class FaunaControllerAdmin {
+public class FaunaControllerV3 {
 
     
     @Autowired

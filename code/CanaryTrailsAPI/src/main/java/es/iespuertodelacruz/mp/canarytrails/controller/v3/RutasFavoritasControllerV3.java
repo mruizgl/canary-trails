@@ -1,4 +1,4 @@
-package es.iespuertodelacruz.mp.canarytrails.controller.admin;
+package es.iespuertodelacruz.mp.canarytrails.controller.v3;
 
 
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDtoV2;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/admin/rutas_favoritas")
+@RequestMapping("/api/v3/rutas_favoritas")
 @CrossOrigin
-public class RutasFavoritasControllerAdmin {
+public class RutasFavoritasControllerV3 {
 
     @Autowired
     RutaService rutaService;
