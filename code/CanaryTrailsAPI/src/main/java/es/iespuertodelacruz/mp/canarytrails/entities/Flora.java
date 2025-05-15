@@ -79,6 +79,9 @@ public class Flora {
     @ManyToMany(mappedBy = "floras")
     private List<Ruta> rutas;
 
+    @Column(columnDefinition = "TEXT")
+    private String foto;
+
     // Getters y Setters
 
     /**
@@ -233,6 +236,14 @@ public class Flora {
         this.rutas = rutas;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
     /**
      * Compara esta flora con otro objeto para determinar si son iguales.
      * Dos instancias de Flora se consideran iguales si tienen el mismo identificador.
@@ -270,6 +281,7 @@ public class Flora {
                 ", aprobada=" + aprobada +
                 ", usuario=" + usuario +
                 ", rutas=" + rutas +
+                ", foto='" + foto + '\'' +
                 '}';
     }
 }

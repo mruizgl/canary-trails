@@ -104,6 +104,10 @@ public class FloraService implements IServiceGeneric<Flora, Integer> {
                 flora.setRutas(object.getRutas());
             }
 
+            if (object.getFoto() != null && !object.getFoto().isBlank()) {
+                flora.setFoto(object.getFoto());
+            }
+
             Flora savedFlora = floraRepository.save(flora);
 
             // Se borran las relaciones siempre. Si hay nuevas se actualizan, si no se quiere actualizar se tienen q
