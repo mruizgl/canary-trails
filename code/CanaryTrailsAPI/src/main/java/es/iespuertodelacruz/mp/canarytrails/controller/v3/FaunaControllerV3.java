@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v3/faunas")
 @CrossOrigin
-public class FaunaControllerAdmin {
+public class FaunaControllerV3 {
 
     
     @Autowired

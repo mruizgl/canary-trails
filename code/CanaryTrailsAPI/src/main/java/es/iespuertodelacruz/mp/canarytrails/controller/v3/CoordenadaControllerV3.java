@@ -16,7 +16,7 @@ import es.iespuertodelacruz.mp.canarytrails.mapper.CoordenadaMapper;
 @RestController
 @RequestMapping("/api/v3/coordenadas")
 @CrossOrigin(origins = "*")
-public class CoordenadaControllerAdmin {
+public class CoordenadaControllerV3 {
 
     @Autowired
     CoordenadaService coordenadaService;

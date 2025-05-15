@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v3/usuarios")
 @CrossOrigin
-public class UsuarioControllerAdmin {
+public class UsuarioControllerV3 {
 
     @Autowired
     UsuarioService usuarioService;

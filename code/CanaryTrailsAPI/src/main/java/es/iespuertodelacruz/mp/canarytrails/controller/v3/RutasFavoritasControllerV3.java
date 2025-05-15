@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v3/rutas_favoritas")
 @CrossOrigin
-public class RutasFavoritasControllerAdmin {
+public class RutasFavoritasControllerV3 {
 
     @Autowired
     RutaService rutaService;

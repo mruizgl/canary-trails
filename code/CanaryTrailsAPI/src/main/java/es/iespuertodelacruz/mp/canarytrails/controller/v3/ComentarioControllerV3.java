@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/v3/comentarios")
-public class ComentarioControllerAdmin {
+public class ComentarioControllerV3 {
 
     @Autowired
     ComentarioService comentarioService;

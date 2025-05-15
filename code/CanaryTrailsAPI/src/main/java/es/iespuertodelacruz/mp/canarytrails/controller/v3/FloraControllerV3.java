@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/v3/floras")
 @CrossOrigin(origins = "*")
-public class FloraControllerAdmin {
+public class FloraControllerV3 {
 
     @Autowired
     FloraService floraService;

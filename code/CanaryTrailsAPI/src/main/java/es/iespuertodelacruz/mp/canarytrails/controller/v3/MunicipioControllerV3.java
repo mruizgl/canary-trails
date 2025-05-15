@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v3/municipios")
 @CrossOrigin(origins = "*")
-public class MunicipioControllerAdmin {
+public class MunicipioControllerV3 {
 
     @Autowired
     MunicipioService municipioService;
