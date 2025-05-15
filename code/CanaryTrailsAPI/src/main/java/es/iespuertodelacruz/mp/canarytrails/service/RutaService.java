@@ -173,6 +173,10 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
                 ruta.setCoordenadas(object.getCoordenadas());
             }
 
+            if(object.getFotos() != null && !object.getFotos().isEmpty()){
+                ruta.setFotos(object.getFotos());
+            }
+
             Ruta actualizada = rutaRepository.save(ruta);
 
             rutaRepository.deleteRutaFaunaRelation(actualizada.getId());

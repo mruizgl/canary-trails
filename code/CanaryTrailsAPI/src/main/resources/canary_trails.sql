@@ -63,7 +63,7 @@ CREATE TABLE rutas (
 CREATE TABLE ruta_foto (
     id INT AUTO_INCREMENT PRIMARY KEY,
     ruta_id INT NOT NULL,
-    foto TEXT NOT NULL,
+    nombre_foto TEXT NOT NULL,
     FOREIGN KEY (ruta_id) REFERENCES rutas(id)
 );
 

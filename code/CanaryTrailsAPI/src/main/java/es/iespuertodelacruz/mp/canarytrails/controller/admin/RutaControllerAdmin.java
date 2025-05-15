@@ -8,8 +8,10 @@ import es.iespuertodelacruz.mp.canarytrails.entities.*;
 import es.iespuertodelacruz.mp.canarytrails.mapper.RutaMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,6 +44,9 @@ public class RutaControllerAdmin {
 
     @Autowired
     MunicipioService municipioService;
+
+    @Autowired
+    FotoManagementService fotoManagementService;
 
     /**
      * Endpoint que devuelve todas las rutas de la bbdd
@@ -192,6 +197,35 @@ public class RutaControllerAdmin {
         }
 
         return ResponseEntity.ok(rutaService.update(ruta));
+    }
+
+    @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadFile(@RequestParam("id") Integer id, @RequestParam("file") MultipartFile file) {
+
+        String mensaje = "";
+        String categoria = "ruta";
+
+        try {
+            String namefile = fotoManagementService.save(file, categoria);
+            mensaje = "" + namefile;
+
+            Ruta ruta = rutaService.findById(id);
+
+            if(!ruta.getFotos().contains(namefile)){
+                ruta.getFotos().add(namefile);
+            } else {
+                String mensajeFotoDuplicada = "La foto ya existe en esta ruta";
+                return ResponseEntity.badRequest().body(mensajeFotoDuplicada);
+            }
+
+            rutaService.update(ruta);
+
+            return ResponseEntity.ok(mensaje);
+        } catch (Exception e) {
+            mensaje = "No se pudo subir el archivo: " + file.getOriginalFilename()
+                    + ". Error: " + e.getMessage();
+            return ResponseEntity.badRequest().body(mensaje);
+        }
     }
 
     /**
