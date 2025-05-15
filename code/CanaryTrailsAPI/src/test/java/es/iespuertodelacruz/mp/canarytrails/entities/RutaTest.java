@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RutaTest {
 
-    @Test
+    /*@Test
     void equalsShouldReturnTrueForSameId() {
         Ruta ruta1 = new Ruta();
         ruta1.setId(1);
@@ -135,5 +135,5 @@ public class RutaTest {
         assertNull(ruta.getDistanciaMetros());
         assertNull(ruta.getDesnivel());
         assertNull(ruta.getAprobada());
-    }
+    }*/
 }

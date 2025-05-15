@@ -1,12 +1,10 @@
-package es.iespuertodelacruz.mp.canarytrails.controller.admin;
+package es.iespuertodelacruz.mp.canarytrails.controller.v3;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioEntradaCreateDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.mapper.UsuarioMapper;
-import es.iespuertodelacruz.mp.canarytrails.dto.usuario.auth.UsuarioRegisterDto;
-import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
-import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.service.FotoManagementService;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ import java.util.stream.Collectors;
  * Controller para los endpoints de Usuario desde el administrador.
  */
 @RestController
-@RequestMapping("/api/v1/admin/usuarios")
+@RequestMapping("/api/v3/usuarios")
 @CrossOrigin
 public class UsuarioControllerAdmin {
 

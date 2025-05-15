@@ -1,10 +1,9 @@
-package es.iespuertodelacruz.mp.canarytrails.controller.admin;
+package es.iespuertodelacruz.mp.canarytrails.controller.v3;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.coordenada.CoordenadaEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.coordenada.CoordenadaEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.coordenada.CoordenadaSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Coordenada;
-import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.service.CoordenadaService;
 import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import es.iespuertodelacruz.mp.canarytrails.mapper.CoordenadaMapper;
 
 
 @RestController
-@RequestMapping("/api/v1/admin/coordenadas")
+@RequestMapping("/api/v3/coordenadas")
 @CrossOrigin(origins = "*")
 public class CoordenadaControllerAdmin {
 

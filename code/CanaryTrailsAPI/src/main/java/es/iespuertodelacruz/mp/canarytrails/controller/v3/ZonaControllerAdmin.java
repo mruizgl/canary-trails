@@ -1,4 +1,4 @@
-package es.iespuertodelacruz.mp.canarytrails.controller.admin;
+package es.iespuertodelacruz.mp.canarytrails.controller.v3;
 
 import es.iespuertodelacruz.mp.canarytrails.dto.zona.ZonaEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.zona.ZonaEntradaUpdateDto;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api/v1/admin/zonas")
+@RequestMapping("/api/v3/zonas")
 @CrossOrigin(origins = "*")
 public class ZonaControllerAdmin {
 
