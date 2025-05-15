@@ -127,7 +127,7 @@ public class RutaControllerAdmin {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
-        return ResponseEntity.ok(ruta);
+        return ResponseEntity.ok(rutaMapper.toDto(ruta));
     }
 
     /**
@@ -137,6 +137,7 @@ public class RutaControllerAdmin {
      */
     @PutMapping("/update")
     public ResponseEntity<?> updateAlumno(@RequestBody RutaEntradaUpdateDto dto){
+
         Ruta ruta = rutaMapper.toEntityUpdate(dto);
 
         Usuario usuario = usuarioService.findById(dto.usuario());
