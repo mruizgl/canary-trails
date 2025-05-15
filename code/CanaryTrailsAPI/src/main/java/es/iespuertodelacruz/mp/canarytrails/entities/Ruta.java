@@ -11,7 +11,7 @@ import java.util.Objects;
  * Esta clase está mapeada a la tabla "rutas" en la base de datos.
  */
 @Entity
-@Table(name = "upload/rutas")
+@Table(name = "rutas")
 public class Ruta {
 
     @Id

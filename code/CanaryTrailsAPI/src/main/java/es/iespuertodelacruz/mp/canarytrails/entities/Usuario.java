@@ -32,10 +32,10 @@ public class Usuario {
 
     private String rol;
 
-    @OneToMany(mappedBy = "upload/usuario")
+    @OneToMany(mappedBy = "usuario")
     private List<Ruta> rutasCreadas;
 
-    @OneToMany(mappedBy = "upload/usuario")
+    @OneToMany(mappedBy = "usuario")
     private List<Comentario> comentarios;
 
     @ManyToMany
@@ -46,10 +46,10 @@ public class Usuario {
     )
     private List<Ruta> rutasFavoritas;
 
-    @OneToMany(mappedBy = "upload/usuario")
+    @OneToMany(mappedBy = "usuario")
     private List<Fauna> faunas;
 
-    @OneToMany(mappedBy = "upload/usuario")
+    @OneToMany(mappedBy = "usuario")
     private List<Flora> floras;
 
     public Usuario() {

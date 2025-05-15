@@ -42,6 +42,12 @@ public class FaunaService implements IServiceGeneric<Fauna, Integer> {
             throw new RuntimeException("El usuario ha de existir");
         }
 
+        /*if(object.getFoto() == null || object.getFoto().isBlank()){
+            object.setFoto("src/main/resources/uploads/fauna/default");
+        }*/
+
+        //La foto se permite establecerse en nulo, en el front cargamos un "No tiene foto" o algo así
+
         Fauna savedFauna = faunaRepository.save(object);
 
         if (savedFauna.getRutas() != null && !savedFauna.getRutas().isEmpty()) {
@@ -84,6 +90,10 @@ public class FaunaService implements IServiceGeneric<Fauna, Integer> {
 
             if (object.getRutas() != null) {
                 fauna.setRutas(object.getRutas());
+            }
+
+            if(object.getFoto() != null && !object.getFoto().isBlank()){
+                fauna.setFoto(object.getFoto());
             }
 
             Fauna savedFauna = faunaRepository.save(fauna);

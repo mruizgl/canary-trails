@@ -19,9 +19,11 @@ public interface MunicipioMapper {
 
     MunicipioSalidaDto toDto(Municipio municipio);
 
-    @Mapping(target = "upload/rutas", ignore = true)
+    @Mapping(target = "rutas", ignore = true)
+    @Mapping(target = "zona", ignore = true)
     Municipio toEntityCreate(MunicipioEntradaCreateDto dto);
 
-    @Mapping(target = "upload/rutas", ignore = true)
+    @Mapping(target = "rutas", ignore = true)
+    @Mapping(target = "zona", ignore = true)
     Municipio toEntityUpdate(MunicipioEntradaUpdateDto dto);
 }

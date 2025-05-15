@@ -22,12 +22,12 @@ public interface FloraMapper {
 
     FloraSalidaDto toDTO(Flora flora);
 
-    @Mapping(target = "upload/usuario", ignore = true)
-    @Mapping(target = "upload/rutas", ignore = true)
+    @Mapping(target = "usuario", ignore = true)
+    @Mapping(target = "rutas", ignore = true)
     Flora toEntityCreate(FloraEntradaCreateDto dto);
 
-    @Mapping(target = "upload/usuario", ignore = true)
-    @Mapping(target = "upload/rutas", ignore = true)
+    @Mapping(target = "usuario", ignore = true)
+    @Mapping(target = "rutas", ignore = true)
     Flora toEntityUpdate(FloraEntradaUpdateDto dto);
 
     List<FloraSalidaDto> toDTOList(List<Flora> floraList);

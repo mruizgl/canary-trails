@@ -24,12 +24,6 @@ public interface UsuarioMapper {
     UsuarioSalidaDto toDto(Usuario entity);
 
     Usuario toEntityCreate(UsuarioEntradaCreateDto dto);
-
-    @Mapping(target = "rutas", ignore = true)
-    @Mapping(target = "faunas", ignore = true)
-    @Mapping(target = "floras", ignore = true)
-    @Mapping(target = "comentarios", ignore = true)
-    @Mapping(target = "rutasFavoritas", ignore = true)
     Usuario toEntityUpdate(UsuarioEntradaUpdateDto dto);
 
 

@@ -17,5 +17,6 @@ public record FaunaSalidaDto(
         String descripcion,
         boolean aprobada,
         UsuarioSalidaFaunaDto usuario,
-        List<RutaSalidaFaunaDto> rutas
+        List<RutaSalidaFaunaDto> rutas,
+        String foto
 ) {}
