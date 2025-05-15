@@ -125,3 +125,4 @@ public class UsuarioTest {
         assertNull(usuario.getVerificado());
         assertNull(usuario.getRol());
     }*/
+}
