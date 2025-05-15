@@ -1,15 +1,23 @@
 package es.iespuertodelacruz.mp.canarytrails.controller.v2;
 
+import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraEntradaCreateDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraSalidaDto;
+import es.iespuertodelacruz.mp.canarytrails.entities.Comentario;
 import es.iespuertodelacruz.mp.canarytrails.entities.Flora;
+import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
+import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.mapper.FloraMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.FloraService;
 import es.iespuertodelacruz.mp.canarytrails.service.FotoManagementService;
 import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -69,7 +77,7 @@ public class FloraControllerV2 {
      * Enpoint que crea una flora a partir de los datos introducidos
      * @param dto con los datos que ha de introducir el usuario
      * @return el JSON del objeto que se ha guardado en la bbdd
-     *//*
+     */
     @PostMapping("/add")
     public ResponseEntity<?> create(@RequestBody FloraEntradaCreateDto dto) {
 
@@ -95,18 +103,17 @@ public class FloraControllerV2 {
         return ResponseEntity.ok(floraMapper.toDTO(flora));
     }
 
-    *//**
+    /**
      * Endpoint que actualiza una flora en la bbdd
      * @param dto con el objeto a actualizar, tiene que contener la id del objeto
      * @return true si se ha actualizado y false si no
-     *//*
+     */
     @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody FloraEntradaUpdateDto dto) {
 
-        Flora flora = floraMapper.toEntityUpdate(dto);
+        //TODO: comprobar si es el creador y si no está aprobada
 
-        Usuario usuario = usuarioService.findById(dto.usuario());
-        flora.setUsuario(usuario);
+        Flora flora = floraMapper.toEntityUpdate(dto);
 
         if(dto.rutas() != null){
             for( int id : dto.rutas()){
@@ -131,6 +138,8 @@ public class FloraControllerV2 {
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadFile(@RequestParam("id") Integer id, @RequestParam("file") MultipartFile file) {
 
+        //TODO: comprobar si es el creador y no está aprobada
+
         String mensaje = "";
         String categoria = "flora";
 
@@ -151,15 +160,21 @@ public class FloraControllerV2 {
         }
     }
 
-    *//**
+    /**
      * Borra una flora a partir de la id
      * @param id de la flora a borrar
      * @return true si se ha borrado, false si no
-     *//*
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
 
+        //TODO: comprobar si es el creador
         return ResponseEntity.ok(floraService.deleteById(id));
-    }*/
+    }
+
+    public boolean esPropietario(Comentario comentario) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return comentario.getUsuario().getNombre().equals(username);
+    }
 }
 

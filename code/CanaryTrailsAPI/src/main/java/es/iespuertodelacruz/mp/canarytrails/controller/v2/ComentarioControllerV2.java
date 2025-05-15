@@ -1,13 +1,18 @@
 package es.iespuertodelacruz.mp.canarytrails.controller.v2;
 
+import es.iespuertodelacruz.mp.canarytrails.dto.comentario.ComentarioEntradaCreateDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.comentario.ComentarioEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.comentario.ComentarioSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Comentario;
+import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
+import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.mapper.ComentarioMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.ComentarioService;
 import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,20 +40,6 @@ public class ComentarioControllerV2 {
     RutaService rutaService;
 
     /**
-     * Endpoint que devuelve todos los comentarios de la bbdd
-     * @return todos los comentarios existentes
-     */
-    @GetMapping
-    public ResponseEntity<?> getAll() {
-        List<Comentario> comentarios = comentarioService.findAll();
-        List<ComentarioSalidaDto> comentarioSalidasDto = comentarios.stream()
-                .map(comentarioMapper::toDto)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(comentarioSalidasDto);
-    }
-
-    /**
      * Endpoint que devuelve un comentario segun la id introducida
      * @param id del comentario que se quiere obtener
      * @return comentario cuya id coincide con la introducida
@@ -70,7 +61,7 @@ public class ComentarioControllerV2 {
      * Endpoint para crear un comentario
      * @param dto con los datos del comentario a crear
      * @return el comentario creado
-     *//*
+     */
     @PostMapping("/add")
     public ResponseEntity<?> crearComentario(@RequestBody ComentarioEntradaCreateDto dto) {
 
@@ -90,20 +81,16 @@ public class ComentarioControllerV2 {
         return ResponseEntity.ok(comentarioMapper.toDto(comentario));
     }
 
-    *//**
+    /**
      * Endpoint para actualizar un comentario existente
      * @param dto con los datos a actualizar
      * @return true si se ha actualizado correctamente o false si no
-     *//*
+     */
     @PutMapping("/update")
     public ResponseEntity<?> editarComentario(@RequestBody ComentarioEntradaUpdateDto dto) {
 
+        //TODO: Comprobar si es el creador
         Comentario comentario = comentarioMapper.toEntityUpdate(dto);
-        Usuario usuario = usuarioService.findById(dto.usuario());
-        Ruta ruta = rutaService.findById(dto.ruta());
-
-        comentario.setUsuario(usuario);
-        comentario.setRuta(ruta);
 
         boolean actualizado;
 
@@ -116,14 +103,20 @@ public class ComentarioControllerV2 {
         return ResponseEntity.ok(actualizado);
     }
 
-    *//**
+    /**
      * Endpoint que elimina un comentario a partir de una id
      * @param id del comentario a eliminar
      * @return true si se ha borrado correctamente o false si no
-     *//*
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> eliminarComentario(@PathVariable Integer id) {
 
+        //TODO: comprobar si es el creador
         return ResponseEntity.ok(comentarioService.deleteById(id));
-    }*/
+    }
+
+    public boolean esPropietario(Comentario comentario) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return comentario.getUsuario().getNombre().equals(username);
+    }
 }

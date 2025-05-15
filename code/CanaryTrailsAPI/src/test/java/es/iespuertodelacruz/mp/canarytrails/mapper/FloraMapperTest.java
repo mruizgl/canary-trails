@@ -1,15 +1,5 @@
 package es.iespuertodelacruz.mp.canarytrails.mapper;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.FloraDTO;
-import es.iespuertodelacruz.mp.canarytrails.entities.Flora;
-import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
-
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class FloraMapperTest {
 
     /*private final FloraMapper mapper = Mappers.getMapper(FloraMapper.class);

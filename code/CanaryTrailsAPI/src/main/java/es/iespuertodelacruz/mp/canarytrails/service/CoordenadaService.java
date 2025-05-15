@@ -30,6 +30,7 @@ public class CoordenadaService implements IServiceGeneric<Coordenada, Integer> {
     @Override
     @Transactional
     public Coordenada save(Coordenada coordenada) {
+
         if(coordenada.getLatitud() == null){
             throw new RuntimeException("La latitud no puede estar vacia");
         }
@@ -67,9 +68,9 @@ public class CoordenadaService implements IServiceGeneric<Coordenada, Integer> {
                 coordenada.setLatitud(object.getLatitud());
             }
 
-            if(object.getRutas() != null && !object.getRutas().isEmpty()){
+            /*if(object.getRutas() != null && !object.getRutas().isEmpty()){
                 coordenada.setRutas(object.getRutas());
-            }
+            }*/
 
             Coordenada savedCoordenada = coordenadaRepository.save(coordenada);
 

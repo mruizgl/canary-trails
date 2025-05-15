@@ -3,6 +3,7 @@ package es.iespuertodelacruz.mp.canarytrails.controller.v2;
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaSalidaDto;
+import es.iespuertodelacruz.mp.canarytrails.entities.Comentario;
 import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
@@ -14,6 +15,7 @@ import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,6 +87,7 @@ public class FaunaControllerV2 {
     public ResponseEntity<?> createFauna(@RequestBody FaunaEntradaCreateDto dto){
 
         Fauna fauna = faunaMapper.toEntityCreate(dto);
+        fauna.setAprobada(false);
 
         Usuario usuario = usuarioService.findById(dto.usuario());
         fauna.setUsuario(usuario);
@@ -113,13 +116,11 @@ public class FaunaControllerV2 {
     @PutMapping("/update")
     public ResponseEntity<?> updateFauna(@RequestBody FaunaEntradaUpdateDto dto){
 
+        //TODO: Comprobar si es el creador y si no está aprobada
         Fauna fauna = faunaMapper.toEntityUpdate(dto);
-
-        Usuario usuario = usuarioService.findById(dto.usuario());
-        fauna.setUsuario(usuario);
+        fauna.setAprobada(false);
 
         if(dto.rutas() != null){
-            //List<Ruta> nuevasRutas = new ArrayList<>();
             for( int id : dto.rutas()){
                 Ruta ruta = rutaService.findById(id);
                 if(ruta != null && !fauna.getRutas().contains(ruta)){
@@ -147,6 +148,8 @@ public class FaunaControllerV2 {
      */
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadFile(@RequestParam("id") Integer id, @RequestParam("file") MultipartFile file) {
+
+        //TODO: comprobar si es el creador y si no está aprobada
 
         String mensaje = "";
         String categoria = "fauna";
@@ -177,6 +180,13 @@ public class FaunaControllerV2 {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteFauna(@PathVariable("id") int id){
 
+        //TODO: comprobar si ha sido creada por el usuario que quiere borrarla
+
         return ResponseEntity.ok(faunaService.deleteById(id));
+    }
+
+    public boolean esPropietario(Comentario comentario) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return comentario.getUsuario().getNombre().equals(username);
     }
 }

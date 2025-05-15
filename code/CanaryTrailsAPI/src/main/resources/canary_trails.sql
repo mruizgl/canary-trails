@@ -37,7 +37,7 @@ CREATE TABLE municipios (
 -- Tabla: usuario
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
+    nombre VARCHAR(100) NOT NULL UNIQUE,
     apellidos VARCHAR(100) NOT NULL,
     correo VARCHAR(320) UNIQUE NOT NULL, -- tiene como máximo 320 caracteres
     password VARCHAR(255) NOT NULL,

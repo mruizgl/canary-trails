@@ -1,16 +1,5 @@
 package es.iespuertodelacruz.mp.canarytrails.mapper;
 
-import es.iespuertodelacruz.mp.canarytrails.dto.CoordenadaDTO;
-import es.iespuertodelacruz.mp.canarytrails.entities.Coordenada;
-import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
-
-import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class CoordenadaMapperTest {
 
     /*private final CoordenadaMapper mapper = Mappers.getMapper(CoordenadaMapper.class);

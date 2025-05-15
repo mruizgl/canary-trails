@@ -1,12 +1,16 @@
 package es.iespuertodelacruz.mp.canarytrails.controller.v2;
 
+import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaCreateDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.*;
 import es.iespuertodelacruz.mp.canarytrails.mapper.RutaMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,7 +83,7 @@ public class RutaControllerV2 {
      * Endpoint que crea una ruta en la bbdd
      * @param dto con los datos de la ruta a crear
      * @return la ruta creada
-     *//*
+     */
     @PostMapping("/add")
     public ResponseEntity<?> createRuta(@RequestBody RutaEntradaCreateDto dto){
 
@@ -125,13 +129,15 @@ public class RutaControllerV2 {
         return ResponseEntity.ok(rutaMapper.toDto(ruta));
     }
 
-    *//**
+    /**
      * Endpoint que actualiza una ruta existente en la bbdd
      * @param dto con los datos que se quieren actualizar y la id de la ruta a actualizar
      * @return true si la ruta se ha actualizado correctamente o false si no
-     *//*
+     */
     @PutMapping("/update")
     public ResponseEntity<?> updateAlumno(@RequestBody RutaEntradaUpdateDto dto){
+
+        //TODO: comprobar que la ruta es la suya y no está aprobada
 
         Ruta ruta = rutaMapper.toEntityUpdate(dto);
 
@@ -198,6 +204,8 @@ public class RutaControllerV2 {
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadFile(@RequestParam("id") Integer id, @RequestParam("file") MultipartFile file) {
 
+        //TODO: comprobar que la ruta es suya y no está aprobada
+
         String mensaje = "";
         String categoria = "ruta";
 
@@ -224,14 +232,14 @@ public class RutaControllerV2 {
         }
     }
 
-    *//**
+    /**
      * Endpoint que borra una ruta de la bbdd a partir de su id
      * @param id de la ruta a borrar
      * @return true si se ha borrado correctamente o false si no
-     *//*
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteRuta(@PathVariable("id") int id){
-
+        //TODO: comprobar que la ruta es suya
         return ResponseEntity.ok(rutaService.deleteById(id));
-    }*/
+    }
 }
