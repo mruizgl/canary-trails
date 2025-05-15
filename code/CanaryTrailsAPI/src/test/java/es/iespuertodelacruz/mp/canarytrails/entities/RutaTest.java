@@ -136,4 +136,3 @@ public class RutaTest {
         assertNull(ruta.getDesnivel());
         assertNull(ruta.getAprobada());
     }*/
-}
