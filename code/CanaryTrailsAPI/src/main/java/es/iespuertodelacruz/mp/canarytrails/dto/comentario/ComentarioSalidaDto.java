@@ -4,6 +4,6 @@ public record ComentarioSalidaDto(
         Integer id,
         String titulo,
         String descripcion,
-        String nombreUsuario,
-        String nombreRuta
+        UsuarioSalidaComentarioDto usuario,
+        RutaSalidaComentarioDto ruta
 ) {}

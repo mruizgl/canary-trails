@@ -42,6 +42,12 @@ public class FaunaService implements IServiceGeneric<Fauna, Integer> {
             throw new RuntimeException("El usuario ha de existir");
         }
 
+        /*if(object.getFoto() == null || object.getFoto().isBlank()){
+            object.setFoto("src/main/resources/uploads/fauna/default");
+        }*/
+
+        //La foto se permite establecerse en nulo, en el front cargamos un "No tiene foto" o algo así
+
         Fauna savedFauna = faunaRepository.save(object);
 
         if (savedFauna.getRutas() != null && !savedFauna.getRutas().isEmpty()) {
@@ -86,12 +92,15 @@ public class FaunaService implements IServiceGeneric<Fauna, Integer> {
                 fauna.setRutas(object.getRutas());
             }
 
+            if(object.getFoto() != null && !object.getFoto().isBlank()){
+                fauna.setFoto(object.getFoto());
+            }
+
             Fauna savedFauna = faunaRepository.save(fauna);
 
             // Se borran las relaciones siempre. Si hay nuevas se actualizan, si no se quiere actualizar se tienen q
             // poner las id de las que ya estaban, y si no se pone ninguna o un 0, se borran todas las relaciones
             int cantidad = faunaRepository.deleteRutaFaunaRelation(savedFauna.getId());
-            //System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY"+cantidad);
 
             if (savedFauna.getRutas() != null && !savedFauna.getRutas().isEmpty()) {
                 for (Ruta ruta : object.getRutas()) {

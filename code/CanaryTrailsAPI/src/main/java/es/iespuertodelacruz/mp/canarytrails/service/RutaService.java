@@ -1,9 +1,8 @@
 package es.iespuertodelacruz.mp.canarytrails.service;
 
 import es.iespuertodelacruz.mp.canarytrails.common.IServiceGeneric;
-import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
-import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
-import es.iespuertodelacruz.mp.canarytrails.repository.RutaRepository;
+import es.iespuertodelacruz.mp.canarytrails.entities.*;
+import es.iespuertodelacruz.mp.canarytrails.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
@@ -17,6 +16,24 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
 
     @Autowired
     RutaRepository rutaRepository;
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
+    @Autowired
+    FaunaRepository faunaRepository;
+
+    @Autowired
+    FloraRepository floraRepository;
+
+    @Autowired
+    ComentarioRepository comentarioRepository;
+
+    @Autowired
+    MunicipioRepository municipioRepository;
+
+    @Autowired
+    CoordenadaRepository coordenadaRepository;
 
     @Override
     public List<Ruta> findAll() {
@@ -53,13 +70,47 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
             throw new RuntimeException("La ruta ha de tener desnivel");
         }
 
-        //Manejar usuario que la ha creado
-        //Manejar Si tiene Fauna/Flora
-        //Manejar municipio al que pertenece
-        //Manejar coordenadas
+        if(object.getUsuario() == null){
+            throw new RuntimeException("La ruta ha de tener un usuario creador");
+        }
+
+        if(object.getMunicipios() == null){
+            throw new RuntimeException("La ruta ha de tener al menos un municipio asociado");
+        }
+
+        if(object.getCoordenadas() == null || !(object.getCoordenadas().size() < 5)){
+            throw new RuntimeException("La ruta ha de tener al menos 5 coordenadas asociada");
+        }
+
+        Ruta guardada = rutaRepository.save(object);
+
+        if (guardada.getFaunas() != null && !guardada.getFaunas().isEmpty()) {
+            for (Fauna fauna : guardada.getFaunas()) {
+                faunaRepository.addRutaFaunaRelation(fauna.getId(), guardada.getId());
+            }
+        }
+
+        if (guardada.getFloras() != null && !guardada.getFloras().isEmpty()) {
+            for (Flora flora : guardada.getFloras()) {
+                floraRepository.addRutaFloraRelation(flora.getId(), guardada.getId());
+            }
+        }
+
+        if (guardada.getCoordenadas() != null && !guardada.getCoordenadas().isEmpty()) {
+            for (Coordenada coordenada : guardada.getCoordenadas()) {
+                coordenadaRepository.addRutaCoordenadaRelation(coordenada.getId(), guardada.getId());
+            }
+        }
+
+        if (guardada.getMunicipios() != null && !guardada.getMunicipios().isEmpty()) {
+            for (Municipio municipio : guardada.getMunicipios()) {
+                municipioRepository.addRutaMunicipioRelation(municipio.getId(), guardada.getId());
+            }
+        }
+
         //No hace falta manejar comentarios ya que se acaba de crear y no tiene
 
-        return rutaRepository.save(object);
+        return guardada;
     }
 
     @Override
@@ -72,7 +123,6 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
 
             if(ruta == null){
                 throw new RuntimeException("No existe la ruta " +object);
-                //TODO: cambiarlo por un false ?
             }
 
             if(object.getNombre() != null){
@@ -99,16 +149,64 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
                 ruta.setAprobada(object.getAprobada());
             }
 
-            /*if(object.getUsuario() != null){
+            if(object.getUsuario() != null){
                 ruta.setUsuario(object.getUsuario());
-            }*/
+            }
 
-            //Manejar si tiene comentarios
-            //Manejar si tiene fauna/flora
-            //Manejar si tiene municipio
-            //Manejar si tiene coordenada
+            if(object.getComentarios() != null){
+                ruta.setComentarios(object.getComentarios());
+            }
 
-            rutaRepository.save(ruta);
+            if(object.getFaunas() != null){
+                ruta.setFaunas(object.getFaunas());
+            }
+
+            if(object.getFloras() != null){
+                ruta.setFloras(object.getFloras());
+            }
+
+            if(object.getMunicipios() != null){
+                ruta.setMunicipios(object.getMunicipios());
+            }
+
+            if(object.getCoordenadas() != null){
+                ruta.setCoordenadas(object.getCoordenadas());
+            }
+
+            if(object.getFotos() != null && !object.getFotos().isEmpty()){
+                ruta.setFotos(object.getFotos());
+            }
+
+            Ruta actualizada = rutaRepository.save(ruta);
+
+            rutaRepository.deleteRutaFaunaRelation(actualizada.getId());
+            rutaRepository.deleteRutaFloraRelation(actualizada.getId());
+            rutaRepository.deleteRutaCoordenadaRelation(actualizada.getId());
+            rutaRepository.deleteRutaMunicipioRelation(actualizada.getId());
+
+            if (actualizada.getFaunas() != null && !actualizada.getFaunas().isEmpty()) {
+                for (Fauna fauna : actualizada.getFaunas()) {
+                    faunaRepository.addRutaFaunaRelation(fauna.getId(), actualizada.getId());
+                }
+            }
+
+            if (actualizada.getFloras() != null && !actualizada.getFloras().isEmpty()) {
+                for (Flora flora : actualizada.getFloras()) {
+                    floraRepository.addRutaFloraRelation(flora.getId(), actualizada.getId());
+                }
+            }
+
+            if (actualizada.getCoordenadas() != null && !actualizada.getCoordenadas().isEmpty()) {
+                for (Coordenada coordenada : actualizada.getCoordenadas()) {
+                    coordenadaRepository.addRutaCoordenadaRelation(coordenada.getId(), actualizada.getId());
+                }
+            }
+
+            if (actualizada.getMunicipios() != null && !actualizada.getMunicipios().isEmpty()) {
+                for (Municipio municipio : actualizada.getMunicipios()) {
+                    municipioRepository.addRutaMunicipioRelation(municipio.getId(), actualizada.getId());
+                }
+            }
 
             return true;
         } else{
@@ -132,7 +230,9 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
         rutaRepository.deleteRutaCoordenadaRelation(id);
 
         //La relación con Usuario es 1:N así q la hace JPA
-        //La relación con comentarios es 1:N así que la hace JPA
+
+        //Poner una verificacion al borrar la ruta de que se van a borrar los comentarios
+        comentarioRepository.deleteComentarioByRutaId(id);
 
         int cantidad = rutaRepository.deleteRutaById(id);
         return cantidad >0;

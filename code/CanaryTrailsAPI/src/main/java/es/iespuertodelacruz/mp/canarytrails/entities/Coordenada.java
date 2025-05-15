@@ -2,6 +2,7 @@ package es.iespuertodelacruz.mp.canarytrails.entities;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,6 +42,10 @@ public class Coordenada {
      */
     @ManyToMany(mappedBy = "coordenadas")
     private List<Ruta> rutas;
+
+    public Coordenada() {
+        this.rutas = new ArrayList<>();
+    }
 
     /**
      * Obtiene el identificador de la coordenada.

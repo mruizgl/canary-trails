@@ -84,7 +84,6 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
 
             if(usuario == null){
                 throw new RuntimeException("No existe el usuario " +object);
-                //TODO: cambiarlo por un false ?
             }
 
             if(object.getNombre() != null){
@@ -111,7 +110,12 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
                 usuario.setVerificado(object.getVerificado());
             }
 
-            //TODO: manejar las actualizaciones de tablas intermedias ?
+            if(object.getFoto() != null && !object.getFoto().isBlank()){
+                usuario.setFoto(object.getFoto());
+            } else {
+                String defaultFoto = "src/main/resources/uploads/usuario/default.png";
+                usuario.setFoto(defaultFoto);
+            }
 
             usuarioRepository.save(usuario);
             return true;
@@ -124,20 +128,17 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
     @Transactional
     public boolean deleteById(Integer id) {
 
-        int cantidad = usuarioRepository.deleteUsuarioBydId(id);
+        //obtener usuario a partir de la id
 
+        //compruebas las relaciones del objeto
+
+        //Si tiene alguna relación con rutas, faunas, floras, devolver un runtime exception
+
+        //Si no, sigues con lo que está abajo
+
+        int cantidad = usuarioRepository.deleteUsuarioBydId(id);
         //Si se ha borrado, sedevuelve true. Si no, false. No se da info por seguridad
         return cantidad > 0;
     }
 
-    /*public List<Ruta> obtenerFavoritas(int idUsuario){
-
-        List<Ruta> favoritas = usuarioRepository.getAllRutasFavoritasById(idUsuario);
-
-        if(favoritas.isEmpty()){
-            return null;
-        }
-
-        return favoritas;
-    }*/
 }

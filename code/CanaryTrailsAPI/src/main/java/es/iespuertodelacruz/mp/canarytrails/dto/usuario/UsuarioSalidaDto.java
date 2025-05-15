@@ -29,6 +29,7 @@ public record UsuarioSalidaDto (
         List<FloraSalidaUsuarioDto> floras,
         List<RutaSalidaUsuarioDto> rutas,
         List<ComentarioSalidaUsuarioDto> comentarios,
-        List<RutaFavoritaSalidaUsuarioDto> rutasFavoritas
+        List<RutaFavoritaSalidaUsuarioDto> rutasFavoritas,
+        String foto
 ) {
 }

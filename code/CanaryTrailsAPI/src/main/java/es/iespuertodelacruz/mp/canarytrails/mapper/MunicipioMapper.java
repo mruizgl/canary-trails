@@ -1,25 +1,29 @@
 package es.iespuertodelacruz.mp.canarytrails.mapper;
 
 
-import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioEntradaDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Municipio;
-import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioEdicionDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.municipio.MunicipioEntradaUpdateDto;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = { ZonaMapper.class })
+@Mapper(
+        componentModel = "spring",
+        uses = {
+                RelacionesMapper.class
+        }
+)
 public interface MunicipioMapper {
 
-    @Mapping(source = "zona", target = "zona")
     MunicipioSalidaDto toDto(Municipio municipio);
 
-    @Mapping(target = "zona", ignore = true)
     @Mapping(target = "rutas", ignore = true)
-    Municipio toEntity(MunicipioEntradaDto dto);
+    @Mapping(target = "zona", ignore = true)
+    Municipio toEntityCreate(MunicipioEntradaCreateDto dto);
 
-    @Mapping(target = "zona", ignore = true)
     @Mapping(target = "rutas", ignore = true)
-    Municipio toEntity(MunicipioEdicionDto dto); // ✅ necesario para el update
+    @Mapping(target = "zona", ignore = true)
+    Municipio toEntityUpdate(MunicipioEntradaUpdateDto dto);
 }

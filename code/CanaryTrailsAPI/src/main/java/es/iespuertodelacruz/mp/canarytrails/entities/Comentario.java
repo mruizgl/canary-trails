@@ -45,6 +45,9 @@ public class Comentario {
     @JoinColumn(name = "ruta_id", nullable = false)
     private Ruta ruta;
 
+    public Comentario() {
+    }
+
     /**
      * Obtiene el identificador del comentario.
      *

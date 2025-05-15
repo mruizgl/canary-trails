@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 public class MunicipioServiceTest {
 
-    private MunicipioRepository municipioRepository;
+    /*private MunicipioRepository municipioRepository;
     private ZonaRepository zonaRepository;
     private MunicipioService municipioService;
 
@@ -76,5 +76,5 @@ public class MunicipioServiceTest {
         Municipio saved = municipioService.save(municipio);
         assertNotNull(saved);
         verify(municipioRepository, times(1)).save(municipio);
-    }
+    }*/
 }

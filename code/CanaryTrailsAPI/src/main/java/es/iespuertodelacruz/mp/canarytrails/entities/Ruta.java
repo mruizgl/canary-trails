@@ -39,6 +39,11 @@ public class Ruta {
     @OneToMany(mappedBy = "ruta")
     private List<Comentario> comentarios;
 
+    @ElementCollection
+    @CollectionTable(name = "ruta_foto", joinColumns = @JoinColumn(name = "ruta_id"))
+    @Column(name = "nombre_foto")
+    private List<String> fotos;
+
     @ManyToMany
     @JoinTable(
             name = "ruta_municipio",
@@ -80,6 +85,7 @@ public class Ruta {
         this.floras = new ArrayList<>();
         this.faunas = new ArrayList<>();
         this.coordenadas = new ArrayList<>();
+        this.fotos = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -194,6 +200,14 @@ public class Ruta {
         this.usuariosQueLaTienenComoFavorita = usuariosQueLaTienenComoFavorita;
     }
 
+    public List<String> getFotos() {
+        return fotos;
+    }
+
+    public void setFotos(List<String> fotos) {
+        this.fotos = fotos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -210,18 +224,20 @@ public class Ruta {
     public String toString() {
         return "Ruta{" +
                 "id=" + id +
-                ", nombre=" + nombre +
-                ", dificultad=" + dificultad +
+                ", nombre='" + nombre + '\'' +
+                ", dificultad='" + dificultad + '\'' +
                 ", tiempoDuracion=" + tiempoDuracion +
                 ", distanciaMetros=" + distanciaMetros +
                 ", desnivel=" + desnivel +
                 ", aprobada=" + aprobada +
                 ", usuario=" + usuario +
                 ", comentarios=" + comentarios +
+                ", fotos=" + fotos +
                 ", municipios=" + municipios +
                 ", floras=" + floras +
                 ", faunas=" + faunas +
                 ", coordenadas=" + coordenadas +
+                ", usuariosQueLaTienenComoFavorita=" + usuariosQueLaTienenComoFavorita +
                 '}';
     }
 }
