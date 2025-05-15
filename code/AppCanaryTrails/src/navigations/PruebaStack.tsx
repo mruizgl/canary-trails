@@ -2,11 +2,7 @@ import { View, Text, Button } from 'react-native'
 import React, { useEffect } from 'react'
 import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-
-
 import {  EjemploRepository } from '../data/Database';
-
 import InicioScreen from '../screens/InicioScreen';
 import OtraScreen from '../screens/OtraScreen';
 import { EjemploEntity } from '../data/entity/EjemploEntity';

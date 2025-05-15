@@ -1,7 +1,6 @@
 import { Alert, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
 import { EjemploRepository } from '../data/Database';
 import { EjemploEntity } from '../data/entity/EjemploEntity';
 import { PruebaStackParamList } from '../navigations/PruebaStack';
