@@ -27,8 +27,6 @@ public class RutasFavoritasControllerV3 {
     @Autowired
     RutaMapper rutaMapper;
 
-    @Autowired
-    UsuarioService usuarioService;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findRutasFavoritasByUserId(@PathVariable Integer id) {

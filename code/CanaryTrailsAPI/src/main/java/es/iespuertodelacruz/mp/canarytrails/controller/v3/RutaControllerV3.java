@@ -36,9 +36,6 @@ public class RutaControllerV3 {
     FaunaService faunaService;
 
     @Autowired
-    ComentarioService comentarioService;
-
-    @Autowired
     CoordenadaService coordenadaService;
 
     @Autowired

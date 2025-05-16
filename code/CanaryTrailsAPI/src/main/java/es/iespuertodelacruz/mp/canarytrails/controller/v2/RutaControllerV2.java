@@ -28,16 +28,10 @@ public class RutaControllerV2 {
     RutaMapper rutaMapper;
 
     @Autowired
-    UsuarioService usuarioService;
-
-    @Autowired
     FloraService floraService;
 
     @Autowired
     FaunaService faunaService;
-
-    @Autowired
-    ComentarioService comentarioService;
 
     @Autowired
     CoordenadaService coordenadaService;

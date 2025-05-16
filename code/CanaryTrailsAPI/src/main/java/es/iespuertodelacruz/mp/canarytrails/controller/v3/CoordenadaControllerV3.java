@@ -24,8 +24,6 @@ public class CoordenadaControllerV3 {
     @Autowired
     CoordenadaMapper coordenadaMapper;
 
-    @Autowired
-    RutaService rutaService;
 
     /**
      * Endpoint que devuelve todas las coordenadas de la bbdd

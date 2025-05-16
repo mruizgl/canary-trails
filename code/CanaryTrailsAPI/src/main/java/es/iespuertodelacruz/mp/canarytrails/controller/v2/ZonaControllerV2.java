@@ -26,8 +26,6 @@ public class ZonaControllerV2 {
     @Autowired
     ZonaMapper zonaMapper;
 
-    @Autowired
-    MunicipioService municipioService;
 
     /**
      * Endpoint que devuelve todas las zonas

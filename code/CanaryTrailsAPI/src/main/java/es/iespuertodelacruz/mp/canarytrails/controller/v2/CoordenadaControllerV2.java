@@ -23,8 +23,6 @@ public class CoordenadaControllerV2 {
     @Autowired
     CoordenadaMapper coordenadaMapper;
 
-    @Autowired
-    RutaService rutaService;
 
     /**
      * Endpoint que devuelve una coordenada de la bbdd según la id
