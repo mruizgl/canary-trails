@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RutaTest {
 
+}
+
     /*@Test
     void equalsShouldReturnTrueForSameId() {
         Ruta ruta1 = new Ruta();
