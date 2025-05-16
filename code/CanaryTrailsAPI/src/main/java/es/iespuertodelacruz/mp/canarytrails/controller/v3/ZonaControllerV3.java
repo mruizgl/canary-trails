@@ -128,8 +128,8 @@ public class ZonaControllerV3 {
         Zona zona = zonaService.findById(id);
 
         if(zona == null){
+            //Sin información para que no sepan si existe o no
             return ResponseEntity.notFound().build();
-
         }
 
         try{

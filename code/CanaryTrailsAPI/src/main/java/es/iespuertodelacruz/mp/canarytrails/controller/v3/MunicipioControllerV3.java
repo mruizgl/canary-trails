@@ -73,6 +73,11 @@ public class MunicipioControllerV3 {
         Municipio municipio = municipioMapper.toEntityCreate(dto);
 
         Zona zona = zonaService.findById(dto.zona());
+
+        if(zona == null){
+            return ResponseEntity.notFound().build();
+        }
+
         municipio.setZona(zona);
 
         for( int id : dto.rutas()){
@@ -100,8 +105,12 @@ public class MunicipioControllerV3 {
     public ResponseEntity<?> update(@RequestBody MunicipioEntradaUpdateDto dto) {
 
         Municipio municipio = municipioMapper.toEntityUpdate(dto);
-
         Zona zona = zonaService.findById(dto.zona());
+
+        if(zona == null){
+            return ResponseEntity.notFound().build();
+        }
+
         municipio.setZona(zona);
 
         if(dto.rutas() != null){
@@ -127,6 +136,13 @@ public class MunicipioControllerV3 {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
+
+        Municipio municipio = municipioService.findById(id);
+
+        if(municipio == null){
+            //Sin información para que no sepan si existe o no
+            return ResponseEntity.notFound().build();
+        }
 
         try{
             return ResponseEntity.ok(municipioService.deleteById(id));

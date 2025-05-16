@@ -64,6 +64,16 @@ public class UsuarioControllerV2 {
 
         Usuario usuario = usuarioMapper.toEntityUpdate(dto);
 
+        if (usuarioService.findById(dto.id()).getVerificado()) {
+            usuario.setVerificado(true);
+        } else {
+            usuario.setVerificado(false);
+        }
+
+        usuario.setRol("USER");
+
+        //TODO: comprobar que no pueda editar datos sensibles
+
         boolean actualizado;
         try {
             actualizado = usuarioService.update(usuario);
@@ -86,6 +96,10 @@ public class UsuarioControllerV2 {
             mensaje = "" + namefile;
 
             Usuario usuario = usuarioService.findById(id);
+
+            if(usuario == null){
+                return ResponseEntity.notFound().build();
+            }
 
             usuario.setFoto(namefile);
             usuarioService.update(usuario);

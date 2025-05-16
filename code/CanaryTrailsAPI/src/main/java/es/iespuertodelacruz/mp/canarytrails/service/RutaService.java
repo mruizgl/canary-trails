@@ -84,7 +84,7 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
 
         Ruta guardada = rutaRepository.save(object);
 
-        if (guardada.getFaunas() != null && !guardada.getFaunas().isEmpty()) {
+        /*if (guardada.getFaunas() != null && !guardada.getFaunas().isEmpty()) {
             for (Fauna fauna : guardada.getFaunas()) {
                 faunaRepository.addRutaFaunaRelation(fauna.getId(), guardada.getId());
             }
@@ -100,13 +100,13 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
             for (Coordenada coordenada : guardada.getCoordenadas()) {
                 coordenadaRepository.addRutaCoordenadaRelation(coordenada.getId(), guardada.getId());
             }
-        }
+        }*/
 
-        if (guardada.getMunicipios() != null && !guardada.getMunicipios().isEmpty()) {
+        /*if (guardada.getMunicipios() != null && !guardada.getMunicipios().isEmpty()) {
             for (Municipio municipio : guardada.getMunicipios()) {
                 municipioRepository.addRutaMunicipioRelation(municipio.getId(), guardada.getId());
             }
-        }
+        }*/
 
         //No hace falta manejar comentarios ya que se acaba de crear y no tiene
 
@@ -151,10 +151,6 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
 
             if(object.getUsuario() != null){
                 ruta.setUsuario(object.getUsuario());
-            }
-
-            if(object.getComentarios() != null){
-                ruta.setComentarios(object.getComentarios());
             }
 
             if(object.getFaunas() != null){

@@ -85,6 +85,12 @@ public class FaunaControllerV3 {
         Fauna fauna = faunaMapper.toEntityCreate(dto);
 
         Usuario usuario = usuarioService.findById(dto.usuario());
+
+        if(usuario == null){
+            //No especifica si existe o no por seguridad
+            return ResponseEntity.notFound().build();
+        }
+
         fauna.setUsuario(usuario);
 
         for( int id : dto.rutas()){
@@ -114,10 +120,15 @@ public class FaunaControllerV3 {
         Fauna fauna = faunaMapper.toEntityUpdate(dto);
 
         Usuario usuario = usuarioService.findById(dto.usuario());
+
+        if(usuario == null){
+            //No especifica si existe o no por seguridad
+            return ResponseEntity.notFound().build();
+        }
+
         fauna.setUsuario(usuario);
 
         if(dto.rutas() != null){
-            //List<Ruta> nuevasRutas = new ArrayList<>();
             for( int id : dto.rutas()){
                 Ruta ruta = rutaService.findById(id);
                 if(ruta != null && !fauna.getRutas().contains(ruta)){
@@ -126,15 +137,11 @@ public class FaunaControllerV3 {
             }
         }
 
-        boolean actualizada;
-
         try {
-            actualizada = faunaService.update(fauna);
+            return ResponseEntity.ok(faunaService.update(fauna));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        return ResponseEntity.ok(actualizada);
     }
 
     /**
@@ -155,6 +162,11 @@ public class FaunaControllerV3 {
 
             Fauna fauna = faunaService.findById(id);
 
+            if(fauna == null){
+                //No especifica si existe o no por seguridad
+                return ResponseEntity.notFound().build();
+            }
+
             fauna.setFoto(namefile);
             faunaService.update(fauna);
 
@@ -174,6 +186,13 @@ public class FaunaControllerV3 {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteFauna(@PathVariable("id") int id){
+
+        Fauna fauna = faunaService.findById(id);
+
+        if(fauna ==  null){
+            //No especifica si existe o no por seguridad
+            return ResponseEntity.notFound().build();
+        }
 
         return ResponseEntity.ok(faunaService.deleteById(id));
     }

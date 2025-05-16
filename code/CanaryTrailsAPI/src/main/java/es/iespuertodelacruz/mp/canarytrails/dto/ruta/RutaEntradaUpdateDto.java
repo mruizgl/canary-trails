@@ -11,7 +11,7 @@ public record RutaEntradaUpdateDto(
         float desnivel,
         boolean aprobada,
         Integer usuario,
-        List<Integer> comentarios,
+        //List<Integer> comentarios,
         List<Integer> faunas,
         List<Integer> floras,
         List<Integer> coordenadas,

@@ -5,6 +5,7 @@ import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,9 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    //@Autowired
+    //PasswordEncoder passwordEncoder;
 
 
     /**
@@ -66,6 +70,14 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
             throw new RuntimeException("El la contraseña no es valida");
         }
 
+        //String passwordEncoded = passwordEncoder.encode(object.getPassword());
+        //object.setPassword(passwordEncoded);
+
+        if(object.getFoto() == null){
+            String defaultFoto = "src/main/resources/uploads/usuario/default.png";
+            object.setFoto(defaultFoto);
+        }
+
         //Si no tiene ningun rol se le asigna el de usuario por defecto
         if(object.getRol() == null){
             object.setRol("USER");
@@ -94,11 +106,23 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
                 usuario.setApellidos(object.getApellidos());
             }
 
+            String regex = "^(?=.{6,320}$)([A-Za-z0-9._%+-]{1,64})@([A-Za-z0-9.-]{1,255})\\.[A-Za-z]{2,63}$";
             if(object.getCorreo() != null){
+
+                if(!object.getCorreo().matches(regex)){
+                    throw new RuntimeException("El correo no es valido");
+                }
+
                 usuario.setCorreo(object.getCorreo());
             }
 
+            int min = 8;
+            int max = 255;
+
             if(object.getPassword() != null){
+                if(!(object.getPassword().length() < min) || !(object.getPassword().length() > max)){
+                    throw new RuntimeException("La contraseña no es valida");
+                }
                 usuario.setPassword(object.getPassword());
             }
 

@@ -2,6 +2,7 @@ package es.iespuertodelacruz.mp.canarytrails.entities;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,6 +68,10 @@ public class Municipio {
      */
     @ManyToMany(mappedBy = "municipios")
     private List<Ruta> rutas;
+
+    public Municipio() {
+        this.rutas = new ArrayList<>();
+    }
 
     /**
      * Obtiene el identificador único del municipio.

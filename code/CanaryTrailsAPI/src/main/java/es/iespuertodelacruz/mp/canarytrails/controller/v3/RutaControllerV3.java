@@ -90,6 +90,11 @@ public class RutaControllerV3 {
         Ruta ruta = rutaMapper.toEntityCreate(dto);
 
         Usuario usuario = usuarioService.findById(dto.usuario());
+
+        if(usuario == null){
+            return ResponseEntity.notFound().build();
+        }
+
         ruta.setUsuario(usuario);
 
         for( int id : dto.faunas()){
@@ -169,16 +174,6 @@ public class RutaControllerV3 {
             }
         }
 
-        if(dto.comentarios() != null && !dto.comentarios().isEmpty()) {
-            for (int id : dto.comentarios()) {
-                Comentario comentario = comentarioService.findById(id);
-                if (comentario != null && !ruta.getComentarios().contains(comentario)) {
-                    comentario.setRuta(ruta);
-                    ruta.getComentarios().add(comentario);
-                }
-            }
-        }
-
         if(dto.municipios() != null && !dto.municipios().isEmpty()) {
             for (int id : dto.municipios()) {
                 Municipio municipio = municipioService.findById(id);
@@ -188,15 +183,12 @@ public class RutaControllerV3 {
             }
         }
 
-        boolean actualizada;
-
         try{
-            actualizada = rutaService.update(ruta);
+            return ResponseEntity.ok(rutaService.update(ruta));
         } catch (RuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
-        return ResponseEntity.ok(rutaService.update(ruta));
     }
 
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -235,6 +227,10 @@ public class RutaControllerV3 {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteRuta(@PathVariable("id") int id){
+
+        if(rutaService.findById(id) == null){
+            return ResponseEntity.notFound().build();
+        }
 
         return ResponseEntity.ok(rutaService.deleteById(id));
     }

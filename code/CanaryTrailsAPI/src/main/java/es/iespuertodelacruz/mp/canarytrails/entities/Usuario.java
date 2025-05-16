@@ -33,7 +33,7 @@ public class Usuario {
     private String rol;
 
     @OneToMany(mappedBy = "usuario")
-    private List<Ruta> rutasCreadas;
+    private List<Ruta> rutas;
 
     @OneToMany(mappedBy = "usuario")
     private List<Comentario> comentarios;
@@ -56,7 +56,7 @@ public class Usuario {
     private String foto;
 
     public Usuario() {
-        this.rutasCreadas = new ArrayList<>();
+        this.rutas = new ArrayList<>();
         this.comentarios = new ArrayList<>();
         this.rutasFavoritas = new ArrayList<>();
         this.faunas = new ArrayList<>();
@@ -119,12 +119,12 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public List<Ruta> getRutasCreadas() {
-        return rutasCreadas;
+    public List<Ruta> getrutas() {
+        return rutas;
     }
 
-    public void setRutasCreadas(List<Ruta> rutasCreadas) {
-        this.rutasCreadas = rutasCreadas;
+    public void setrutas(List<Ruta> rutas) {
+        this.rutas = rutas;
     }
 
     public List<Comentario> getComentarios() {
@@ -189,7 +189,7 @@ public class Usuario {
                 ", password='" + password + '\'' +
                 ", verificado=" + verificado +
                 ", rol='" + rol + '\'' +
-                ", rutasCreadas=" + rutasCreadas +
+                ", rutas=" + rutas +
                 ", comentarios=" + comentarios +
                 ", rutasFavoritas=" + rutasFavoritas +
                 ", faunas=" + faunas +
