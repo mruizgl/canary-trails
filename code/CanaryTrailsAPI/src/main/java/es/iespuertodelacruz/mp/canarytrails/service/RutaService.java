@@ -153,10 +153,6 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
                 ruta.setUsuario(object.getUsuario());
             }
 
-            if(object.getComentarios() != null){
-                ruta.setComentarios(object.getComentarios());
-            }
-
             if(object.getFaunas() != null){
                 ruta.setFaunas(object.getFaunas());
             }

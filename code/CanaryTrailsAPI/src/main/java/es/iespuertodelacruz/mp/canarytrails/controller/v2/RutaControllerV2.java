@@ -172,16 +172,6 @@ public class RutaControllerV2 {
             }
         }
 
-        if(dto.comentarios() != null && !dto.comentarios().isEmpty()) {
-            for (int id : dto.comentarios()) {
-                Comentario comentario = comentarioService.findById(id);
-                if (comentario != null && !ruta.getComentarios().contains(comentario)) {
-                    comentario.setRuta(ruta);
-                    ruta.getComentarios().add(comentario);
-                }
-            }
-        }
-
         if(dto.municipios() != null && !dto.municipios().isEmpty()) {
             for (int id : dto.municipios()) {
                 Municipio municipio = municipioService.findById(id);
