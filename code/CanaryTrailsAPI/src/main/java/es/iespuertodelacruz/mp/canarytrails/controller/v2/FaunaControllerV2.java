@@ -35,9 +35,6 @@ public class FaunaControllerV2 {
     FaunaMapper faunaMapper;
 
     @Autowired
-    UsuarioService usuarioService;
-
-    @Autowired
     RutaService rutaService;
 
     @Autowired

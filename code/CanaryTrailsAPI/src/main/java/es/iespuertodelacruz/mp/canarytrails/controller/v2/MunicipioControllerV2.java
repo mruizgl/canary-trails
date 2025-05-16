@@ -23,11 +23,6 @@ public class MunicipioControllerV2 {
     @Autowired
     MunicipioMapper municipioMapper;
 
-    @Autowired
-    ZonaService zonaService;
-
-    @Autowired
-    RutaService rutaService;
 
     /**
      * Endpoint que devuelve una lista de todos los municipios

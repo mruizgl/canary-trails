@@ -2,6 +2,7 @@ package es.iespuertodelacruz.mp.canarytrails.controller.flora;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.iespuertodelacruz.mp.canarytrails.config.TestSecurityConfig;
+import es.iespuertodelacruz.mp.canarytrails.controller.v2.FloraControllerV2;
 import es.iespuertodelacruz.mp.canarytrails.controller.v3.FloraControllerV3;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.*;
 import es.iespuertodelacruz.mp.canarytrails.entities.Flora;
@@ -10,12 +11,15 @@ import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.mapper.FloraMapper;
 import es.iespuertodelacruz.mp.canarytrails.mapper.RelacionesMapper;
 import es.iespuertodelacruz.mp.canarytrails.mapper.RutaMapper;
+import es.iespuertodelacruz.mp.canarytrails.security.JwtFilter;
 import es.iespuertodelacruz.mp.canarytrails.service.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
@@ -32,7 +36,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
-@WebMvcTest(FloraControllerV3.class)
+@WebMvcTest(controllers = FloraControllerV3.class, excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = JwtFilter.class) //excluyi jwtfilter
+})
 @Import(TestSecurityConfig.class)
 public class FloraControllerV3Test {
 
@@ -224,6 +230,7 @@ public class FloraControllerV3Test {
 
     @Test
     public void deleteFloraTest() throws Exception {
+        when(floraService.findById(1)).thenReturn(flora); // esto evita el 404
         when(floraService.deleteById(1)).thenReturn(true);
 
         mockMvc.perform(delete("/api/v3/floras/delete/1"))
@@ -240,6 +247,7 @@ public class FloraControllerV3Test {
                 usuario.getId(), idRutas);
 
         when(floraMapper.toEntityCreate(any())).thenReturn(flora);
+        when(usuarioService.findById(any())).thenReturn(usuario);
         when(rutaService.findById(1)).thenReturn(ruta1);
         when(rutaService.findById(2)).thenReturn(ruta2);
         when(floraService.save(any())).thenReturn(flora);
@@ -271,6 +279,4 @@ public class FloraControllerV3Test {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Error al guardar"));
     }
-
-
 }

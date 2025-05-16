@@ -37,9 +37,6 @@ public class FloraControllerV2 {
     FloraMapper floraMapper;
 
     @Autowired
-    UsuarioService usuarioService;
-
-    @Autowired
     RutaService rutaService;
 
     @Autowired
