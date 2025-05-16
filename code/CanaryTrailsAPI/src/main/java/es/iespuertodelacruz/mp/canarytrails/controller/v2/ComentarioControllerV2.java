@@ -11,6 +11,7 @@ import es.iespuertodelacruz.mp.canarytrails.service.ComentarioService;
 import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -66,7 +67,10 @@ public class ComentarioControllerV2 {
     public ResponseEntity<?> crearComentario(@RequestBody ComentarioEntradaCreateDto dto) {
 
         Comentario comentario = comentarioMapper.toEntityCreate(dto);
-        Usuario usuario = usuarioService.findById(dto.usuario());
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = usuarioService.findByUserName(username);
+        comentario.setUsuario(usuario);
 
         if(usuario == null){
             return ResponseEntity.notFound().build();
@@ -78,7 +82,6 @@ public class ComentarioControllerV2 {
             return ResponseEntity.notFound().build();
         }
 
-        comentario.setUsuario(usuario);
         comentario.setRuta(ruta);
 
         try {
@@ -91,28 +94,6 @@ public class ComentarioControllerV2 {
     }
 
     /**
-     * Endpoint para actualizar un comentario existente
-     * @param dto con los datos a actualizar
-     * @return true si se ha actualizado correctamente o false si no
-     */
-    @PutMapping("/update")
-    public ResponseEntity<?> updateComentario(@RequestBody ComentarioEntradaUpdateDto dto) {
-
-        //TODO: Comprobar si es el creador
-        Comentario comentario = comentarioMapper.toEntityUpdate(dto);
-
-        boolean actualizado;
-
-        try {
-            actualizado = comentarioService.update(comentario);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-
-        return ResponseEntity.ok(actualizado);
-    }
-
-    /**
      * Endpoint que elimina un comentario a partir de una id
      * @param id del comentario a eliminar
      * @return true si se ha borrado correctamente o false si no
@@ -120,10 +101,12 @@ public class ComentarioControllerV2 {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> eliminarComentario(@PathVariable Integer id) {
 
-        //TODO: comprobar si es el creador
-
         if(comentarioService.findById(id) == null){
             return ResponseEntity.notFound().build();
+        }
+
+        if(!esPropietario(comentarioService.findById(id))){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No es el creador del comentario");
         }
 
         return ResponseEntity.ok(comentarioService.deleteById(id));

@@ -39,6 +39,10 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
         return usuarioRepository.findById(id).orElse(null);
     }
 
+    public Usuario findByUserName(String name){
+        return usuarioRepository.findByNombre(name).orElse(null);
+    }
+
 
     @Override
     @Transactional

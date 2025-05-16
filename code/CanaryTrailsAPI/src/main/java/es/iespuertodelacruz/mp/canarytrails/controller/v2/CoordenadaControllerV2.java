@@ -3,12 +3,14 @@ package es.iespuertodelacruz.mp.canarytrails.controller.v2;
 import es.iespuertodelacruz.mp.canarytrails.dto.coordenada.CoordenadaEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.coordenada.CoordenadaEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.coordenada.CoordenadaSalidaDto;
+import es.iespuertodelacruz.mp.canarytrails.entities.Comentario;
 import es.iespuertodelacruz.mp.canarytrails.entities.Coordenada;
 import es.iespuertodelacruz.mp.canarytrails.mapper.CoordenadaMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.CoordenadaService;
 import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -61,22 +63,6 @@ public class CoordenadaControllerV2 {
         }
 
         return ResponseEntity.ok(coordenadaMapper.toDTO(coordenada));
-    }
-
-    /**
-     * Endpoint que actualiza una coordenada de la bbdd
-     * @param dto con los datos de la coordenada a actualizar
-     * @return true si se ha actualizado correctamente o false si no
-     */
-    @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody CoordenadaEntradaUpdateDto dto) {
-        Coordenada coordenada = coordenadaMapper.toEntityUpdate(dto);
-
-        try{
-            return ResponseEntity.ok(coordenadaService.update(coordenada));
-        } catch (Error e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
     }
 
 }

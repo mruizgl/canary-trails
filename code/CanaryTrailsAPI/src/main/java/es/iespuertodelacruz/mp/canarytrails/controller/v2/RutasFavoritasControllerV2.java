@@ -5,10 +5,12 @@ import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.rutafavorita.ModificarRutaFavoritaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Comentario;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
+import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.mapper.RutaMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +33,6 @@ public class RutasFavoritasControllerV2 {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findRutasFavoritasByUserId(@PathVariable Integer id) {
-        //TODO: comprobar que el id es el mismo que el del user
-        // Find by id, check name
 
         List<Ruta> rutasFavoritasById = rutaService.findRutasFavoritasByUserId(id);
         List<RutaSalidaDto> rutaSalidaDtos = rutasFavoritasById.stream()
@@ -44,22 +44,26 @@ public class RutasFavoritasControllerV2 {
     @PostMapping("/add")
     public ResponseEntity<?> createRutaFavorita(@RequestBody ModificarRutaFavoritaDto dto){
 
-        //TODO: comprobar que el id es el mismo que el del user
-        // Find by id, check name
+        if(!esSuPerfil(usuarioService.findById(dto.idUsuario()))){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No se pueden añadir rutas favoritas a otro usuario");
+        }
 
         return ResponseEntity.ok(rutaService.aniadirRutaFavorita(dto.idUsuario(), dto.idRuta()));
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteRutaFavorita(@RequestBody ModificarRutaFavoritaDto dto){
-        //TODO: comprobar que el id es el mismo que el del user
-        // Find by id, check name
+
+        if(!esSuPerfil(usuarioService.findById(dto.idUsuario()))){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No se pueden eliminar rutas favoritas de otros usuarios");
+        }
+
         return ResponseEntity.ok(rutaService.deleteRutaFavorita(dto.idUsuario(), dto.idRuta()));
     }
 
-    public boolean esPropietario(Comentario comentario) {
+    public boolean esSuPerfil(Usuario usuario) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return comentario.getUsuario().getNombre().equals(username);
+        return usuario.getNombre().equals(username);
     }
 
 }

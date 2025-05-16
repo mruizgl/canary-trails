@@ -7,6 +7,7 @@ import es.iespuertodelacruz.mp.canarytrails.entities.*;
 import es.iespuertodelacruz.mp.canarytrails.mapper.RutaMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -91,7 +92,9 @@ public class RutaControllerV2 {
         Ruta ruta = rutaMapper.toEntityCreate(dto);
         ruta.setAprobada(false);
 
-        //ruta.setUsuario el creador
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = usuarioService.findByUserName(username);
+        ruta.setUsuario(usuario);
 
         for( int id : dto.faunas()){
             Fauna fauna = faunaService.findById(id);
@@ -130,68 +133,8 @@ public class RutaControllerV2 {
         return ResponseEntity.ok(rutaMapper.toDto(ruta));
     }
 
-    /**
-     * Endpoint que actualiza una ruta existente en la bbdd
-     * @param dto con los datos que se quieren actualizar y la id de la ruta a actualizar
-     * @return true si la ruta se ha actualizado correctamente o false si no
-     */
-    @PutMapping("/update")
-    public ResponseEntity<?> updateAlumno(@RequestBody RutaEntradaUpdateDto dto){
-
-        //TODO: comprobar que la ruta es la suya y no está aprobada
-
-        Ruta ruta = rutaMapper.toEntityUpdate(dto);
-        ruta.setAprobada(false);
-
-        //ruta.setUsuario el creador
-
-        if(dto.faunas() != null && !dto.faunas().isEmpty()) {
-            for (int id : dto.faunas()) {
-                Fauna fauna = faunaService.findById(id);
-                if (fauna != null && !ruta.getFaunas().contains(fauna)) {
-                    ruta.getFaunas().add(fauna);
-                }
-            }
-        }
-
-        if(dto.floras() != null && !dto.floras().isEmpty()) {
-            for (int id : dto.floras()) {
-                Flora flora = floraService.findById(id);
-                if (flora != null && !ruta.getFloras().contains(flora)) {
-                    ruta.getFloras().add(flora);
-                }
-            }
-        }
-
-        if(dto.coordenadas() != null && !dto.coordenadas().isEmpty()) {
-            for (int id : dto.coordenadas()) {
-                Coordenada coordenada = coordenadaService.findById(id);
-                if (coordenada != null && !ruta.getCoordenadas().contains(coordenada)) {
-                    ruta.getCoordenadas().add(coordenada);
-                }
-            }
-        }
-
-        if(dto.municipios() != null && !dto.municipios().isEmpty()) {
-            for (int id : dto.municipios()) {
-                Municipio municipio = municipioService.findById(id);
-                if (municipio != null && !ruta.getMunicipios().contains(municipio)) {
-                    ruta.getMunicipios().add(municipio);
-                }
-            }
-        }
-
-        try{
-            return ResponseEntity.ok(rutaService.update(ruta));
-        } catch (RuntimeException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadFile(@RequestParam("id") Integer id, @RequestParam("file") MultipartFile file) {
-
-        //TODO: comprobar que la ruta es suya y no está aprobada
 
         String mensaje = "";
         String categoria = "ruta";
@@ -205,6 +148,11 @@ public class RutaControllerV2 {
             if(ruta == null){
                 return ResponseEntity.notFound().build();
             }
+
+            if(!esPropietario(ruta) || ruta.getAprobada()){
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No es el creador de la ruta o la ruta ya ha sido aprobada");
+            }
+
 
             if(!ruta.getFotos().contains(namefile)){
                 ruta.getFotos().add(namefile);
@@ -230,16 +178,20 @@ public class RutaControllerV2 {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteRuta(@PathVariable("id") int id){
-        //TODO: comprobar que la ruta es suya
 
         if(rutaService.findById(id) == null){
             return ResponseEntity.notFound().build();
         }
+
+        if(!esPropietario(rutaService.findById(id)) || rutaService.findById(id).getAprobada()){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No es el creador de la ruta o la ruta ya ha sido aprobada");
+        }
+
         return ResponseEntity.ok(rutaService.deleteById(id));
     }
 
-    public boolean esPropietario(Comentario comentario) {
+    public boolean esPropietario(Ruta ruta) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return comentario.getUsuario().getNombre().equals(username);
+        return ruta.getUsuario().getNombre().equals(username);
     }
 }
