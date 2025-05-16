@@ -2,6 +2,7 @@ package es.iespuertodelacruz.mp.canarytrails.security;
 
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.repository.UsuarioRepository;
+import es.iespuertodelacruz.mp.canarytrails.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import java.util.UUID;
 public class AuthService {
 
 
-    /*@Autowired
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Autowired
@@ -26,47 +27,43 @@ public class AuthService {
     private MailService mailService;
 
 
-    public String register(String username, String password, String email) {
-        Usuario usuario = new Usuario();
-        usuario.setNombre(username);
-        usuario.setPassword(passwordEncoder.encode(password));
-        usuario.setCorreo(email);
+    public String register(Usuario usuario) {
+
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuario.setVerificado(false);
+        usuario.setFoto("src/main/resources/uploads/usuario/default.png");
         usuario.setRol("ROLE_USER");
 
         //TODO: set token del correo
-        String tokenVerifCorreo = UUID.randomUUID().toString();
+        /*String tokenVerifCorreo = UUID.randomUUID().toString();
         usuario.setTokenVerificacion(tokenVerifCorreo);
 
         Date fechaActual = new Date();
-        usuario.setFechaCreacion(fechaActual);
+        usuario.setFechaCreacion(fechaActual);*/
 
         Usuario saved = usuarioRepository.save(usuario);
 
-        if( saved != null) {
-            String senders[] = {"apps.akameterindustries@gmail.com", email};
+        if(saved != null) {
+            /*String senders[] = {"apps.akameterindustries@gmail.com", email};
             mailService.send(senders, "usuario creado: "+usuario.getNombre(),
-                    "http://localhost:8080/api/v1/confirmacion/?correo="+usuario.getCorreo()+"&token="+tokenVerifCorreo);
-            String generatedToken = jwtService.generateToken(usuario.getNombre(), usuario.getRol());
-            return generatedToken;
+                    "http://localhost:8080/api/v1/confirmacion/?correo="+usuario.getCorreo()+"&token="+tokenVerifCorreo);*/
+            return jwtService.generateToken(usuario.getNombre(), usuario.getRol());
         }else {
             return null;
         }
     }
 
 
-
     public String authenticate(String username, String password)  {
         String generatedToken = null;
         Usuario usuario = usuarioRepository.findByNombre(username).orElse(null);
-        System.out.println(usuario.getNombre());
+
         if (usuario != null) {
-            System.out.println("no es nulo");
             if (passwordEncoder.matches(password, usuario.getPassword())) {
-                System.out.println("tiene contraseña");
                 generatedToken = jwtService.generateToken(usuario.getNombre(), usuario.getRol());
             }
         }
 
         return generatedToken;
-    }*/
+    }
 }

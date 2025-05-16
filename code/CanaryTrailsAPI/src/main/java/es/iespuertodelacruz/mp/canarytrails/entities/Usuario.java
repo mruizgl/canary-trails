@@ -119,11 +119,11 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public List<Ruta> getrutas() {
+    public List<Ruta> getRutas() {
         return rutas;
     }
 
-    public void setrutas(List<Ruta> rutas) {
+    public void setRutas(List<Ruta> rutas) {
         this.rutas = rutas;
     }
 
