@@ -124,6 +124,10 @@ public class UsuarioControllerV3 {
 
             Usuario usuario = usuarioService.findById(id);
 
+            if(usuario == null){
+                return ResponseEntity.notFound().build();
+            }
+
             usuario.setFoto(namefile);
             usuarioService.update(usuario);
 

@@ -1,7 +1,6 @@
 package es.iespuertodelacruz.mp.canarytrails.service;
 
 import es.iespuertodelacruz.mp.canarytrails.common.IServiceGeneric;
-import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,8 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    //@Autowired
-    //PasswordEncoder passwordEncoder;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     /**
@@ -70,8 +69,8 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
             throw new RuntimeException("El la contraseña no es valida");
         }
 
-        //String passwordEncoded = passwordEncoder.encode(object.getPassword());
-        //object.setPassword(passwordEncoded);
+        String passwordEncoded = passwordEncoder.encode(object.getPassword());
+        object.setPassword(passwordEncoded);
 
         if(object.getFoto() == null){
             String defaultFoto = "src/main/resources/uploads/usuario/default.png";
@@ -80,7 +79,7 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
 
         //Si no tiene ningun rol se le asigna el de usuario por defecto
         if(object.getRol() == null){
-            object.setRol("USER");
+            object.setRol("ROLE_USER");
         }
 
         return usuarioRepository.save(object);
@@ -152,16 +151,16 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
     @Transactional
     public boolean deleteById(Integer id) {
 
-        //obtener usuario a partir de la id
+        Usuario usuario = findById(id);
 
-        //compruebas las relaciones del objeto
-
-        //Si tiene alguna relación con rutas, faunas, floras, devolver un runtime exception
-
-        //Si no, sigues con lo que está abajo
+        if(usuario.getFaunas() != null || usuario.getRutas() != null || usuario.getFloras() != null || usuario.getComentarios() != null){
+            usuario.setNombre("Usuario eliminado");
+            usuario.setApellidos(" - ");
+            usuarioRepository.save(usuario);
+            return true;
+        }
 
         int cantidad = usuarioRepository.deleteUsuarioBydId(id);
-        //Si se ha borrado, sedevuelve true. Si no, false. No se da info por seguridad
         return cantidad > 0;
     }
 

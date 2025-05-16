@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
@@ -19,4 +20,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
             nativeQuery = true
     ) //Native Query
     int deleteUsuarioBydId(@Param("id") int id);
+
+    @Query(
+            value="SELECT * FROM usuarios WHERE nombre = :nombre",
+            nativeQuery = true
+    ) //Native Query
+    Optional<Usuario> findByNombre(@Param("nombre") String nombre);
 }
