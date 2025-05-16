@@ -13,6 +13,7 @@ import es.iespuertodelacruz.mp.canarytrails.service.FotoManagementService;
 import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -80,7 +81,10 @@ public class FloraControllerV2 {
 
         Flora flora = floraMapper.toEntityCreate(dto);
         flora.setAprobada(false);
-        //flora.setUsuario el que la está creando
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = usuarioService.findByUserName(username);
+        flora.setUsuario(usuario);
 
         for( int id : dto.rutas()){
             Ruta ruta = rutaService.findById(id);
@@ -99,45 +103,8 @@ public class FloraControllerV2 {
         return ResponseEntity.ok(floraMapper.toDTO(flora));
     }
 
-    /**
-     * Endpoint que actualiza una flora en la bbdd
-     * @param dto con el objeto a actualizar, tiene que contener la id del objeto
-     * @return true si se ha actualizado y false si no
-     */
-    @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody FloraEntradaUpdateDto dto) {
-
-        //TODO: comprobar si es el creador y si no está aprobada
-
-        Flora flora = floraMapper.toEntityUpdate(dto);
-        flora.setAprobada(false);
-
-        //flora.setUsuario el que la está creando
-
-        if(dto.rutas() != null){
-            for( int id : dto.rutas()){
-                Ruta ruta = rutaService.findById(id);
-                if(ruta != null && !flora.getRutas().contains(ruta)){
-                    flora.getRutas().add(ruta);
-                }
-            }
-        }
-
-        boolean actualizada;
-
-        try{
-            actualizada = floraService.update(flora);
-        } catch (RuntimeException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-
-        return ResponseEntity.ok(actualizada);
-    }
-
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadFile(@RequestParam("id") Integer id, @RequestParam("file") MultipartFile file) {
-
-        //TODO: comprobar si es el creador y no está aprobada
 
         String mensaje = "";
         String categoria = "flora";
@@ -150,6 +117,10 @@ public class FloraControllerV2 {
 
             if(flora == null){
                 return ResponseEntity.notFound().build();
+            }
+
+            if(!esPropietario(flora) || flora.getAprobada()){
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No es el creador de la flora o esta ya está aprobada");
             }
 
             flora.setFoto(namefile);
@@ -171,16 +142,20 @@ public class FloraControllerV2 {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
 
-        //TODO: comprobar si es el creador
         if(floraService.findById(id) == null){
             return ResponseEntity.notFound().build();
         }
+
+        if(!esPropietario(floraService.findById(id)) || floraService.findById(id).getAprobada()){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No es el creador de la flora o esta ya está aprobada");
+        }
+
         return ResponseEntity.ok(floraService.deleteById(id));
     }
 
-    public boolean esPropietario(Comentario comentario) {
+    public boolean esPropietario(Flora flora) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return comentario.getUsuario().getNombre().equals(username);
+        return flora.getUsuario().getNombre().equals(username);
     }
 }
 

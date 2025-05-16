@@ -1,4 +1,4 @@
-# 📍 Canarias Senderos
+# 📍 Canary Trails
 
 __Autores: Melissa Ruiz González y Pedro Martín Escuela__
 
@@ -31,6 +31,32 @@ El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil
 - React Native CLI o Expo
 
 ### Clonar el repositorio
+
 ```bash
-git clone https://github.com/mruizgl/canary-trails/
-cd canary-trails
+    git clone https://github.com/mruizgl/canary-trails/
+    cd canary-trails
+```
+
+## Índice 
+
+- [Manual del Usuario](#manual)
+
+- [Documentacion del Diseño](#docudis)
+
+    - [Diagramas](#diagrams)
+
+    - [Wireframe](#wireframe)
+
+- [Documentacion del Codigo](#docucode)
+
+    - [Api REST](#api)
+
+    - [App React Native](#app)
+
+    - [Sistema de Gestion Administrador](#gestion)
+
+- [Despliegue](#despliegue)
+
+- [Manual de Uso y Configuracion](#manual)
+
+

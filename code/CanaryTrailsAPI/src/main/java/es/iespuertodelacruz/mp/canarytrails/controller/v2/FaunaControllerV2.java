@@ -13,6 +13,7 @@ import es.iespuertodelacruz.mp.canarytrails.service.FotoManagementService;
 import es.iespuertodelacruz.mp.canarytrails.service.RutaService;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -85,8 +86,10 @@ public class FaunaControllerV2 {
 
         Fauna fauna = faunaMapper.toEntityCreate(dto);
         fauna.setAprobada(false);
-        //fauna.setUsuario(); el que la está creado
 
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = usuarioService.findByUserName(username);
+        fauna.setUsuario(usuario);
 
         for( int id : dto.rutas()){
             Ruta ruta = rutaService.findById(id);
@@ -105,39 +108,6 @@ public class FaunaControllerV2 {
     }
 
     /**
-     * Endpoint que actualiza una fauna en la bbdd
-     * @param dto con el objeto a actualizar, tiene que contener la id del objeto
-     * @return true si se ha actualizado y false si no
-     */
-    @PutMapping("/update")
-    public ResponseEntity<?> updateFauna(@RequestBody FaunaEntradaUpdateDto dto){
-
-        //TODO: Comprobar si es el creador y si no está aprobada
-        Fauna fauna = faunaMapper.toEntityUpdate(dto);
-        fauna.setAprobada(false);
-        //fauna.setUsuario(); el dueño de la fauna
-
-        if(dto.rutas() != null){
-            for( int id : dto.rutas()){
-                Ruta ruta = rutaService.findById(id);
-                if(ruta != null && !fauna.getRutas().contains(ruta)){
-                    fauna.getRutas().add(ruta);
-                }
-            }
-        }
-
-        boolean actualizada;
-
-        try {
-            actualizada = faunaService.update(fauna);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-
-        return ResponseEntity.ok(actualizada);
-    }
-
-    /**
      * Endpoint que actualiza la foto de una fauna
      * @param id de la fauna a la que se le quiere colocar la foto
      * @param file foto que se le quiere establecer
@@ -145,8 +115,6 @@ public class FaunaControllerV2 {
      */
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadFile(@RequestParam("id") Integer id, @RequestParam("file") MultipartFile file) {
-
-        //TODO: comprobar si es el creador y si no está aprobada
 
         String mensaje = "";
         String categoria = "fauna";
@@ -160,6 +128,10 @@ public class FaunaControllerV2 {
             if(fauna == null){
                 //No especifica si existe o no por seguridad
                 return ResponseEntity.notFound().build();
+            }
+
+            if(!esPropietario(fauna) || fauna.getAprobada()){
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No es el creador de la fauna o esta ya ha sido aprobada");
             }
 
             fauna.setFoto(namefile);
@@ -182,8 +154,6 @@ public class FaunaControllerV2 {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteFauna(@PathVariable("id") int id){
 
-        //TODO: comprobar si ha sido creada por el usuario que quiere borrarla
-
         Fauna fauna = faunaService.findById(id);
 
         if(fauna ==  null){
@@ -191,11 +161,15 @@ public class FaunaControllerV2 {
             return ResponseEntity.notFound().build();
         }
 
+        if(!esPropietario(fauna) || fauna.getAprobada()){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No es el creador de la fauna o esta ya ha sido aprobada");
+        }
+
         return ResponseEntity.ok(faunaService.deleteById(id));
     }
 
-    public boolean esPropietario(Comentario comentario) {
+    public boolean esPropietario(Fauna fauna) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return comentario.getUsuario().getNombre().equals(username);
+        return fauna.getUsuario().getNombre().equals(username);
     }
 }

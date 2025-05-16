@@ -7,8 +7,10 @@ import es.iespuertodelacruz.mp.canarytrails.mapper.UsuarioMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.FotoManagementService;
 import es.iespuertodelacruz.mp.canarytrails.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,13 +42,16 @@ public class UsuarioControllerV2 {
     @GetMapping("/{id}")
     public ResponseEntity<?> findUsuarioById(@PathVariable Integer id) {
 
-        //TODO: comprobar si el usuario es el mismo
-
         Usuario usuario = usuarioService.findById(id);
 
         if (usuario == null) {
             return ResponseEntity.notFound().build();
         }
+
+        if(!esSuPerfil(usuario)){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No se pueden ver el perfil de otro usuario");
+        }
+
         UsuarioSalidaDto dto = usuarioMapper.toDto(usuario);
 
         return ResponseEntity.ok(dto);
@@ -60,9 +65,11 @@ public class UsuarioControllerV2 {
     @PutMapping("/update")
     public ResponseEntity<?> updateUsuario(@RequestBody UsuarioEntradaUpdateDto dto) {
 
-        //TODO: comprobar que es el mismo
-
         Usuario usuario = usuarioMapper.toEntityUpdate(dto);
+
+        if(!esSuPerfil(usuario)){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No se pueden actualizar el perfil de otro usuario");
+        }
 
         if (usuarioService.findById(dto.id()).getVerificado()) {
             usuario.setVerificado(true);
@@ -70,7 +77,7 @@ public class UsuarioControllerV2 {
             usuario.setVerificado(false);
         }
 
-        usuario.setRol("USER");
+        usuario.setRol("ROLE_USER");
 
         //TODO: comprobar que no pueda editar datos sensibles
 
@@ -86,8 +93,6 @@ public class UsuarioControllerV2 {
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadFile(@RequestParam("id") Integer id, @RequestParam("file") MultipartFile file) {
 
-        //TODO: comprobar que es el mismo
-
         String mensaje = "";
         String categoria = "usuario";
 
@@ -101,6 +106,10 @@ public class UsuarioControllerV2 {
                 return ResponseEntity.notFound().build();
             }
 
+            if(!esSuPerfil(usuario)){
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No se pueden actualizar la foto de perfil de otro usuario");
+            }
+
             usuario.setFoto(namefile);
             usuarioService.update(usuario);
 
@@ -110,6 +119,11 @@ public class UsuarioControllerV2 {
                     + ". Error: " + e.getMessage();
             return ResponseEntity.badRequest().body(mensaje);
         }
+    }
+
+    public boolean esSuPerfil(Usuario usuario) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return usuario.getNombre().equals(username);
     }
 
 }
