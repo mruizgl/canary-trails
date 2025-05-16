@@ -84,10 +84,6 @@ public class Flora {
     @Column(columnDefinition = "TEXT")
     private String foto;
 
-    public Flora() {
-        this.rutas = new ArrayList<>();
-    }
-
     // Getters y Setters
 
     /**
