@@ -62,7 +62,7 @@ public class ZonaService implements IServiceGeneric<Zona, Integer> {
                 zona.setNombre(object.getNombre());
             }
 
-            if(object.getMunicipios() != null && !object.getMunicipios().isEmpty()){
+            if(object.getMunicipios() != null){
                 zona.setMunicipios(object.getMunicipios());
             }
 

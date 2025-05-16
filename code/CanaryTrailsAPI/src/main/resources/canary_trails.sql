@@ -20,13 +20,13 @@ DROP TABLE IF EXISTS zonas;
 -- Tabla: zonas
 CREATE TABLE zonas (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(20) NOT NULL
+    nombre VARCHAR(20) NOT NULL UNIQUE
 );
 
 -- Tabla: municipios
 CREATE TABLE municipios (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(200) NOT NULL,
+    nombre VARCHAR(200) NOT NULL UNIQUE,
     altitud_media INT NOT NULL,
     latitud_geografica DECIMAL(10, 6) NOT NULL, -- es decimal?
     longitud_geografica DECIMAL(10, 6) NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE usuarios (
 -- Tabla: ruta
 CREATE TABLE rutas (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(200) NOT NULL,
+    nombre VARCHAR(200) NOT NULL UNIQUE,
     dificultad VARCHAR(20) NOT NULL,
     tiempo_duracion BIGINT NOT NULL, -- se guarda en tiempo...?
     distancia_metros FLOAT NOT NULL,
@@ -80,7 +80,8 @@ CREATE TABLE ruta_municipio (
 CREATE TABLE coordenadas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     latitud DECIMAL(10, 6) NOT NULL,
-    longitud DECIMAL(10, 6) NOT NULL
+    longitud DECIMAL(10, 6) NOT NULL,
+    UNIQUE KEY longitud_latitud (latitud, longitud)
 );
 
 -- Tabla intermedia: coordenada_ruta
@@ -95,7 +96,7 @@ CREATE TABLE coordenada_ruta (
 -- Tabla: faunas
 CREATE TABLE faunas (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
+    nombre VARCHAR(100) NOT NULL UNIQUE,
     descripcion TEXT NOT NULL,
     aprobada TINYINT(1) DEFAULT 0,
     usuario_id INTEGER NOT NULL,
@@ -106,7 +107,7 @@ CREATE TABLE faunas (
 -- Tabla: floras
 CREATE TABLE floras (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
+    nombre VARCHAR(100) NOT NULL UNIQUE,
     especie VARCHAR(100) NOT NULL,
     tipo_hoja VARCHAR(50) NOT NULL,
     salida_flor VARCHAR(20) NOT NULL,
@@ -178,5 +179,5 @@ INSERT INTO `comentarios` (`titulo`, `descripcion`, `usuario_id`, `ruta_id`) VAL
 ('Esto no mola', 'Esto no mola nada', '1', '1');
 
 INSERT INTO `coordenadas` (`latitud`, `longitud`) VALUES
-('34.0000', '35.0000'),
-('27.0000', '50.0000');
+('34.762203', '-35.112988'),
+('-27.333332', '50.000000');

@@ -69,6 +69,7 @@ public class ZonaControllerV3 {
         for( int id : dto.municipios()){
             Municipio municipio = municipioService.findById(id);
             if(municipio != null){
+                //TODO: en el front hay que avisar si el municipio ya tiene asociada una zona
                 municipio.setZona(zona);    //Hay que actualizar la relacion ya que Zona no es el dueño de la relacion
                 zona.getMunicipios().add(municipio);
             }
@@ -95,26 +96,25 @@ public class ZonaControllerV3 {
         Zona zona = zonaMapper.toEntityUpdate(dto);
 
         if(dto.municipios() != null){
-            List<Municipio> nuevosMunicipios = new ArrayList<>();
             for( int id : dto.municipios()){
                 Municipio municipio = municipioService.findById(id);
                 if(municipio != null){
                     municipio.setZona(zona);    //Hay que actualizar la relacion ya que Zona no es el dueño de la relacion
-                    nuevosMunicipios.add(municipio);
+                    zona.getMunicipios().add(municipio);
+                } else {
+                    return ResponseEntity.badRequest().body(
+                            "El municipio no existe o esta intentando eliminar una relación con municipio. " +
+                            "No se puede dejar un Municipio sin Zona"
+                    );
                 }
             }
-            zona.setMunicipios(nuevosMunicipios);
         }
 
-        boolean actualizada;
-
         try {
-            actualizada = zonaService.update(zona);
+            return ResponseEntity.ok(zonaService.update(zona));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        return ResponseEntity.ok(actualizada);
     }
 
     /**
@@ -125,12 +125,17 @@ public class ZonaControllerV3 {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
 
+        Zona zona = zonaService.findById(id);
+
+        if(zona == null){
+            return ResponseEntity.notFound().build();
+
+        }
+
         try{
-            zonaService.deleteById(id);
+            return ResponseEntity.ok(zonaService.deleteById(id));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        return ResponseEntity.ok(zonaService.deleteById(id));
     }
 }

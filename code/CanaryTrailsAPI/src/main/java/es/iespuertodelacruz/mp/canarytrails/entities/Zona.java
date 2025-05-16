@@ -1,6 +1,8 @@
 package es.iespuertodelacruz.mp.canarytrails.entities;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,6 +34,10 @@ public class Zona {
      */
     @OneToMany(mappedBy = "zona")
     private List<Municipio> municipios;
+
+    public Zona() {
+        this.municipios = new ArrayList<>();
+    }
 
     /**
      * Obtiene el identificador único de la zona.
