@@ -147,6 +147,7 @@ public class FaunaControllerV3Test {
 
     @Test
     public void deleteFaunaTest() throws Exception {
+        when(faunaService.findById(1)).thenReturn(fauna); // necesario
         when(faunaService.deleteById(1)).thenReturn(true);
 
         mockMvc.perform(delete("/api/v3/faunas/delete/1"))
@@ -154,17 +155,20 @@ public class FaunaControllerV3Test {
                 .andExpect(content().string("true"));
     }
 
+
     @Test
     public void createFaunaTest() throws Exception {
         List<Integer> idRutas = listaRutas.stream()
                 .map(Ruta::getId)
                 .toList();
 
-        FaunaEntradaCreateDto dto = new FaunaEntradaCreateDto("Lagarto Gigante", "Reptil endémico",    // descripcion
+        FaunaEntradaCreateDto dto = new FaunaEntradaCreateDto("Lagarto Gigante", "Reptil endémico",
                 true, usuario.getId(), idRutas);
 
 
         when(faunaMapper.toEntityCreate(any())).thenReturn(fauna);
+        when(usuarioService.findById(1)).thenReturn(usuario);
+        when(rutaService.findById(1)).thenReturn(listaRutas.get(0));
         when(faunaService.save(any())).thenReturn(fauna);
         when(faunaMapper.toDto(fauna)).thenReturn(faunaSalidaDto);
 
@@ -175,6 +179,7 @@ public class FaunaControllerV3Test {
                 .andExpect(jsonPath("$.id").value(fauna.getId()))
                 .andExpect(jsonPath("$.nombre").value(fauna.getNombre()));
     }
+
 
     @Test
     void shouldReturnFaunaById() throws Exception {
@@ -250,5 +255,54 @@ public class FaunaControllerV3Test {
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("No se pudo subir el archivo: fallo.jpg")))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("hola soy un error simulado")));
     }
+
+
+    @Test
+    public void createFaunaTest_NotFoundUser() throws Exception {
+        FaunaEntradaCreateDto dto = new FaunaEntradaCreateDto("Test Fauna", "Descripción", true, 999, List.of(1));
+
+        when(faunaMapper.toEntityCreate(any())).thenReturn(new Fauna());
+        when(usuarioService.findById(999)).thenReturn(null);
+
+        mockMvc.perform(post("/api/v3/faunas/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void updateFaunaTest_NotFoundUser() throws Exception {
+        FaunaEntradaUpdateDto dto = new FaunaEntradaUpdateDto(1, "Test Fauna", "Descripción", true, 999, List.of(1));
+
+        when(faunaMapper.toEntityUpdate(any())).thenReturn(new Fauna());
+        when(usuarioService.findById(999)).thenReturn(null);
+
+        mockMvc.perform(put("/api/v3/faunas/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void uploadFileTest_NotFoundFauna() throws Exception {
+        MockMultipartFile file = new MockMultipartFile("file", "missing.jpg", "image/jpeg", "data".getBytes());
+
+        when(fotoManagementService.save(any(), any())).thenReturn("missing.jpg");
+        when(faunaService.findById(999)).thenReturn(null);
+
+        mockMvc.perform(multipart("/api/v3/faunas/upload/999")
+                        .file(file)
+                        .param("id", "999"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void deleteFaunaTest_NotFound() throws Exception {
+        when(faunaService.findById(999)).thenReturn(null);
+
+        mockMvc.perform(delete("/api/v3/faunas/delete/999"))
+                .andExpect(status().isNotFound());
+    }
+
 
 }

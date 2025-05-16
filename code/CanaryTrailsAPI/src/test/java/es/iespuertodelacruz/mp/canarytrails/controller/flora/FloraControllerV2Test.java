@@ -235,12 +235,14 @@ public class FloraControllerV2Test {
 
     @Test
     public void deleteFloraTest() throws Exception {
+        when(floraService.findById(1)).thenReturn(new Flora());
         when(floraService.deleteById(1)).thenReturn(true);
 
         mockMvc.perform(delete("/api/v2/floras/delete/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
     }
+
 
     @Test
     public void createFloraTest() throws Exception {

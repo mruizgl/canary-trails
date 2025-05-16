@@ -224,6 +224,7 @@ public class FloraControllerV3Test {
 
     @Test
     public void deleteFloraTest() throws Exception {
+        when(floraService.findById(1)).thenReturn(new Flora());
         when(floraService.deleteById(1)).thenReturn(true);
 
         mockMvc.perform(delete("/api/v3/floras/delete/1"))
@@ -233,25 +234,34 @@ public class FloraControllerV3Test {
 
     @Test
     public void createFloraTest() throws Exception {
-        List<Integer> idRutas = List.of(1, 2);
+        List<Integer> idRutas = List.of(1);
 
-        FloraEntradaCreateDto dto = new FloraEntradaCreateDto("Rosa canaria", "Flor endémica",
-                "tipohojacreate", "salidaflorcreate", "Invierno", "caidaFlor", true,
-                usuario.getId(), idRutas);
+        FloraEntradaCreateDto dto = new FloraEntradaCreateDto(
+                "Rosa canaria", "Descripción", "tipohoja", "Primavera", "Invierno",
+                "tipohojacreate", true, usuario.getId(), idRutas
+        );
 
-        when(floraMapper.toEntityCreate(any())).thenReturn(flora);
-        when(rutaService.findById(1)).thenReturn(ruta1);
-        when(rutaService.findById(2)).thenReturn(ruta2);
-        when(floraService.save(any())).thenReturn(flora);
-        when(floraMapper.toDTO(flora)).thenReturn(floraSalidaDto);
+        Flora mockFlora = new Flora();
+        mockFlora.setId(1);
+        mockFlora.setNombre("Rosa canaria");
+
+        FloraSalidaDto salidaDto = new FloraSalidaDto(1, "Rosa canaria", "Descripción",
+                "tipohoja", "Primavera", "Invierno", "tipohojacreate", true, null, null);
+
+        when(floraMapper.toEntityCreate(any())).thenReturn(mockFlora);
+        when(usuarioService.findById(1)).thenReturn(new Usuario());
+        when(rutaService.findById(1)).thenReturn(new Ruta());
+        when(floraService.save(any())).thenReturn(mockFlora);
+        when(floraMapper.toDTO(mockFlora)).thenReturn(salidaDto);
 
         mockMvc.perform(post("/api/v3/floras/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(floraSalidaDto.id()))
-                .andExpect(jsonPath("$.nombre").value(floraSalidaDto.nombre()));
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.nombre").value("Rosa canaria"));
     }
+
 
     @Test
     void createFlora_shouldReturnBadRequestOnError() throws Exception {

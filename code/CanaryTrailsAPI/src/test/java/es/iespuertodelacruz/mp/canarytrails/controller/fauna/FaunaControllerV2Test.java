@@ -146,12 +146,14 @@ public class FaunaControllerV2Test {
 
     @Test
     public void deleteFaunaTest() throws Exception {
+        when(faunaService.findById(1)).thenReturn(new Fauna());
         when(faunaService.deleteById(1)).thenReturn(true);
 
         mockMvc.perform(delete("/api/v2/faunas/delete/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
     }
+
 
     @Test
     public void createFaunaTest() throws Exception {
