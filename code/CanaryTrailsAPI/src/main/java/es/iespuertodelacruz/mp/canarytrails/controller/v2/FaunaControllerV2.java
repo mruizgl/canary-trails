@@ -88,9 +88,8 @@ public class FaunaControllerV2 {
 
         Fauna fauna = faunaMapper.toEntityCreate(dto);
         fauna.setAprobada(false);
+        //fauna.setUsuario(); el que la está creado
 
-        Usuario usuario = usuarioService.findById(dto.usuario());
-        fauna.setUsuario(usuario);
 
         for( int id : dto.rutas()){
             Ruta ruta = rutaService.findById(id);
@@ -119,6 +118,7 @@ public class FaunaControllerV2 {
         //TODO: Comprobar si es el creador y si no está aprobada
         Fauna fauna = faunaMapper.toEntityUpdate(dto);
         fauna.setAprobada(false);
+        //fauna.setUsuario(); el dueño de la fauna
 
         if(dto.rutas() != null){
             for( int id : dto.rutas()){
@@ -160,6 +160,11 @@ public class FaunaControllerV2 {
 
             Fauna fauna = faunaService.findById(id);
 
+            if(fauna == null){
+                //No especifica si existe o no por seguridad
+                return ResponseEntity.notFound().build();
+            }
+
             fauna.setFoto(namefile);
             faunaService.update(fauna);
 
@@ -181,6 +186,13 @@ public class FaunaControllerV2 {
     public ResponseEntity<?> deleteFauna(@PathVariable("id") int id){
 
         //TODO: comprobar si ha sido creada por el usuario que quiere borrarla
+
+        Fauna fauna = faunaService.findById(id);
+
+        if(fauna ==  null){
+            //No especifica si existe o no por seguridad
+            return ResponseEntity.notFound().build();
+        }
 
         return ResponseEntity.ok(faunaService.deleteById(id));
     }

@@ -82,6 +82,11 @@ public class FloraControllerV3 {
         Flora flora = floraMapper.toEntityCreate(dto);
 
         Usuario usuario = usuarioService.findById(dto.usuario());
+
+        if(usuario == null){
+            return ResponseEntity.notFound().build();
+        }
+
         flora.setUsuario(usuario);
 
         for( int id : dto.rutas()){
@@ -112,6 +117,11 @@ public class FloraControllerV3 {
         Flora flora = floraMapper.toEntityUpdate(dto);
 
         Usuario usuario = usuarioService.findById(dto.usuario());
+
+        if(usuario == null){
+            return ResponseEntity.notFound().build();
+        }
+
         flora.setUsuario(usuario);
 
         if(dto.rutas() != null){
@@ -123,15 +133,11 @@ public class FloraControllerV3 {
             }
         }
 
-        boolean actualizada;
-
         try{
-            actualizada = floraService.update(flora);
+            return ResponseEntity.ok(floraService.update(flora));
         } catch (RuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        return ResponseEntity.ok(actualizada);
     }
 
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -145,6 +151,10 @@ public class FloraControllerV3 {
             mensaje = "" + namefile;
 
             Flora flora = floraService.findById(id);
+
+            if(flora == null){
+                return ResponseEntity.notFound().build();
+            }
 
             flora.setFoto(namefile);
             floraService.update(flora);
@@ -164,6 +174,11 @@ public class FloraControllerV3 {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
+
+        Flora flora = floraService.findById(id);
+        if (flora == null){
+            return ResponseEntity.notFound().build();
+        }
 
         return ResponseEntity.ok(floraService.deleteById(id));
     }

@@ -12,6 +12,7 @@ import es.iespuertodelacruz.mp.canarytrails.repository.RutaRepository;
 import es.iespuertodelacruz.mp.canarytrails.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -98,6 +99,7 @@ public class ComentarioService implements IServiceGeneric<Comentario, Integer> {
     }
 
     @Override
+    @Transactional
     public boolean deleteById(Integer id) {
        int cantidad = comentarioRepository.deleteComentarioById(id);
 

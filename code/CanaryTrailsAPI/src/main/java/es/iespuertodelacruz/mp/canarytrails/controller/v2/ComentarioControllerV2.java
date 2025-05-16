@@ -67,7 +67,16 @@ public class ComentarioControllerV2 {
 
         Comentario comentario = comentarioMapper.toEntityCreate(dto);
         Usuario usuario = usuarioService.findById(dto.usuario());
+
+        if(usuario == null){
+            return ResponseEntity.notFound().build();
+        }
+
         Ruta ruta = rutaService.findById(dto.ruta());
+
+        if(ruta == null){
+            return ResponseEntity.notFound().build();
+        }
 
         comentario.setUsuario(usuario);
         comentario.setRuta(ruta);
@@ -87,7 +96,7 @@ public class ComentarioControllerV2 {
      * @return true si se ha actualizado correctamente o false si no
      */
     @PutMapping("/update")
-    public ResponseEntity<?> editarComentario(@RequestBody ComentarioEntradaUpdateDto dto) {
+    public ResponseEntity<?> updateComentario(@RequestBody ComentarioEntradaUpdateDto dto) {
 
         //TODO: Comprobar si es el creador
         Comentario comentario = comentarioMapper.toEntityUpdate(dto);
@@ -112,6 +121,11 @@ public class ComentarioControllerV2 {
     public ResponseEntity<?> eliminarComentario(@PathVariable Integer id) {
 
         //TODO: comprobar si es el creador
+
+        if(comentarioService.findById(id) == null){
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(comentarioService.deleteById(id));
     }
 

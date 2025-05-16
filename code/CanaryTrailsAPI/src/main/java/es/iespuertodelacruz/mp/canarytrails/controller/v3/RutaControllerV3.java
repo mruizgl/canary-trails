@@ -90,6 +90,11 @@ public class RutaControllerV3 {
         Ruta ruta = rutaMapper.toEntityCreate(dto);
 
         Usuario usuario = usuarioService.findById(dto.usuario());
+
+        if(usuario == null){
+            return ResponseEntity.notFound().build();
+        }
+
         ruta.setUsuario(usuario);
 
         for( int id : dto.faunas()){

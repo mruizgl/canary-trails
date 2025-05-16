@@ -72,7 +72,11 @@ public class CoordenadaControllerV2 {
     public ResponseEntity<?> update(@RequestBody CoordenadaEntradaUpdateDto dto) {
         Coordenada coordenada = coordenadaMapper.toEntityUpdate(dto);
 
-        return ResponseEntity.ok(coordenadaService.update(coordenada));
+        try{
+            return ResponseEntity.ok(coordenadaService.update(coordenada));
+        } catch (Error e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }

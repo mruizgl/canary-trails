@@ -89,9 +89,9 @@ public class RutaControllerV2 {
     public ResponseEntity<?> createRuta(@RequestBody RutaEntradaCreateDto dto){
 
         Ruta ruta = rutaMapper.toEntityCreate(dto);
+        ruta.setAprobada(false);
 
-        Usuario usuario = usuarioService.findById(dto.usuario());
-        ruta.setUsuario(usuario);
+        //ruta.setUsuario el creador
 
         for( int id : dto.faunas()){
             Fauna fauna = faunaService.findById(id);
@@ -141,9 +141,9 @@ public class RutaControllerV2 {
         //TODO: comprobar que la ruta es la suya y no está aprobada
 
         Ruta ruta = rutaMapper.toEntityUpdate(dto);
+        ruta.setAprobada(false);
 
-        Usuario usuario = usuarioService.findById(dto.usuario());
-        ruta.setUsuario(usuario);
+        //ruta.setUsuario el creador
 
         if(dto.faunas() != null && !dto.faunas().isEmpty()) {
             for (int id : dto.faunas()) {
@@ -191,15 +191,11 @@ public class RutaControllerV2 {
             }
         }
 
-        boolean actualizada;
-
         try{
-            actualizada = rutaService.update(ruta);
+            return ResponseEntity.ok(rutaService.update(ruta));
         } catch (RuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        return ResponseEntity.ok(rutaService.update(ruta));
     }
 
     @PostMapping(value = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -215,6 +211,10 @@ public class RutaControllerV2 {
             mensaje = "" + namefile;
 
             Ruta ruta = rutaService.findById(id);
+
+            if(ruta == null){
+                return ResponseEntity.notFound().build();
+            }
 
             if(!ruta.getFotos().contains(namefile)){
                 ruta.getFotos().add(namefile);
@@ -241,6 +241,10 @@ public class RutaControllerV2 {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteRuta(@PathVariable("id") int id){
         //TODO: comprobar que la ruta es suya
+
+        if(rutaService.findById(id) == null){
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(rutaService.deleteById(id));
     }
 

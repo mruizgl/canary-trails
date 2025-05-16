@@ -82,9 +82,8 @@ public class FloraControllerV2 {
     public ResponseEntity<?> create(@RequestBody FloraEntradaCreateDto dto) {
 
         Flora flora = floraMapper.toEntityCreate(dto);
-
-        Usuario usuario = usuarioService.findById(dto.usuario());
-        flora.setUsuario(usuario);
+        flora.setAprobada(false);
+        //flora.setUsuario el que la está creando
 
         for( int id : dto.rutas()){
             Ruta ruta = rutaService.findById(id);
@@ -114,6 +113,9 @@ public class FloraControllerV2 {
         //TODO: comprobar si es el creador y si no está aprobada
 
         Flora flora = floraMapper.toEntityUpdate(dto);
+        flora.setAprobada(false);
+
+        //flora.setUsuario el que la está creando
 
         if(dto.rutas() != null){
             for( int id : dto.rutas()){
@@ -149,6 +151,10 @@ public class FloraControllerV2 {
 
             Flora flora = floraService.findById(id);
 
+            if(flora == null){
+                return ResponseEntity.notFound().build();
+            }
+
             flora.setFoto(namefile);
             floraService.update(flora);
 
@@ -169,6 +175,9 @@ public class FloraControllerV2 {
     public ResponseEntity<?> delete(@PathVariable Integer id) {
 
         //TODO: comprobar si es el creador
+        if(floraService.findById(id) == null){
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(floraService.deleteById(id));
     }
 

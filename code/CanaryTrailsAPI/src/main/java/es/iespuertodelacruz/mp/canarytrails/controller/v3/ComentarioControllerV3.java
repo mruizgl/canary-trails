@@ -77,7 +77,16 @@ public class ComentarioControllerV3 {
 
         Comentario comentario = comentarioMapper.toEntityCreate(dto);
         Usuario usuario = usuarioService.findById(dto.usuario());
+
+        if(usuario == null){
+            return ResponseEntity.notFound().build();
+        }
+
         Ruta ruta = rutaService.findById(dto.ruta());
+
+        if(ruta == null){
+            return ResponseEntity.notFound().build();
+        }
 
         comentario.setUsuario(usuario);
         comentario.setRuta(ruta);
@@ -101,7 +110,16 @@ public class ComentarioControllerV3 {
 
         Comentario comentario = comentarioMapper.toEntityUpdate(dto);
         Usuario usuario = usuarioService.findById(dto.usuario());
+
+        if(usuario == null){
+            return ResponseEntity.notFound().build();
+        }
+
         Ruta ruta = rutaService.findById(dto.ruta());
+
+        if(ruta == null){
+            return ResponseEntity.notFound().build();
+        }
 
         comentario.setUsuario(usuario);
         comentario.setRuta(ruta);
@@ -124,6 +142,10 @@ public class ComentarioControllerV3 {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> eliminarComentario(@PathVariable Integer id) {
+
+        if(comentarioService.findById(id) == null){
+            return ResponseEntity.notFound().build();
+        }
 
         return ResponseEntity.ok(comentarioService.deleteById(id));
     }

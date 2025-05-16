@@ -64,13 +64,6 @@ public class CoordenadaControllerV3 {
 
         Coordenada coordenada = coordenadaMapper.toEntityCreate(dto);
 
-       /* for( int id : dto.rutas()){
-            Ruta ruta = rutaService.findById(id);
-            if(ruta != null && !coordenada.getRutas().contains(ruta)){
-                coordenada.getRutas().add(ruta);
-            }
-        }*/
-
         try{
             coordenada = coordenadaService.save(coordenada);
         } catch (RuntimeException e){
@@ -89,15 +82,12 @@ public class CoordenadaControllerV3 {
     public ResponseEntity<?> update(@RequestBody CoordenadaEntradaUpdateDto dto) {
         Coordenada coordenada = coordenadaMapper.toEntityUpdate(dto);
 
-        /*if(dto.rutas() != null){
-            for( int id : dto.rutas()){
-                Ruta ruta = rutaService.findById(id);
-                if(ruta != null){
-                    coordenada.getRutas().add(ruta);
-                }
-            }
-        }*/
-        return ResponseEntity.ok(coordenadaService.update(coordenada));
+        try{
+            return ResponseEntity.ok(coordenadaService.update(coordenada));
+        } catch (Error e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     /**
@@ -107,13 +97,13 @@ public class CoordenadaControllerV3 {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
+
+        Coordenada coordenada = coordenadaService.findById(id);
+
+        if(coordenada ==  null){
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(coordenadaService.deleteById(id));
     }
-
-    /*@PostMapping("/lote")
-    public List<CoordenadaDTO> createBatch(@RequestBody List<CoordenadaDTO> coordenadasDTO) {
-        List<Coordenada> coordenadas = coordenadaMapper.toEntityList(coordenadasDTO);
-        List<Coordenada> saved = coordenadaService.saveAll(coordenadas);
-        return coordenadaMapper.toDTOList(saved);
-    }*/
 }

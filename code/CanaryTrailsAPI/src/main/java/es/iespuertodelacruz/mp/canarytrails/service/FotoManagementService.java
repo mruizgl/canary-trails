@@ -18,7 +18,7 @@ public class FotoManagementService {
 
     private final Path root = Paths.get("src/main/resources/uploads");
 
-    //@Transactional
+    @Transactional
     public String save(MultipartFile file, String categoria) {
 
         try {
