@@ -27,18 +27,18 @@ const Register = ({navigation, route}:PropsHome) => {
         }
 
         try {
-            const response = await axios.post(`http://10.0.2.2:8080/api/v1/auth/register`, {
-                datosRegister
-            });
+            const response = await axios.post(`http://10.0.2.2:8080/api/v1/auth/register`, datosRegister
+            );
             
             if (response.status === 200) {
-                saveToken(response.data);
+                navigation.navigate('Success');
             }
 
         } catch (error) {
             console.log("An error has occurred aqui" +error.message);
 
         }
+        
     }
   return (
     <>

@@ -6,8 +6,7 @@ import SearchRutas from '../../screens/SearchRutas';
 type Props = {}
 
 export type RoutesStackParamList = {
-    Inicio: undefined,
-    Otra: undefined,
+  SearchRoutes: undefined,
 };
 
 const Stack = createNativeStackNavigator<RoutesStackParamList>();
@@ -19,7 +18,7 @@ const SearchRutasStack = (props: Props) => {
           headerShown: false, // Oculta la cabecera para todas las pantallas
         }}
       >      
-      <Stack.Screen name="Otra" component={SearchRutas} />
+      <Stack.Screen name="SearchRoutes" component={SearchRutas} />
     
     </Stack.Navigator>
   )

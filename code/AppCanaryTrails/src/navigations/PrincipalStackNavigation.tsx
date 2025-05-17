@@ -6,13 +6,15 @@ import Register from '../screens/auth/Register';
 import PrincipalTabNavigation from './PrincipalTabNavigation';
 import { useJwt } from 'react-jwt';
 import { useAppContext } from '../context/AppContext';
+import Success from '../screens/auth/Success';
 
 type Props = {}
 
 export type PrincipalStackParamList = {
     Login: undefined,
     Register: undefined,
-    PrincipalTab: undefined
+    PrincipalTab: undefined,
+    Success: undefined
 };
 
 type tokenPlayload ={
@@ -37,7 +39,7 @@ const PrincipalStackNavigation = (props: Props) => {
             screenOptions={{
                 headerShown: false, // Oculta la cabecera para todas las pantallas
                 }}
-        >
+            >
 
         {
             (decodedToken) ?
@@ -48,6 +50,7 @@ const PrincipalStackNavigation = (props: Props) => {
             <>
                 <Stack.Screen name="Register" component={Register} />
                 <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Success" component={Success} />
             </>
         }
         

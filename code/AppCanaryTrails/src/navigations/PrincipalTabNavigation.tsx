@@ -22,19 +22,19 @@ function PrincipalTabNavigation (){
                 headerShown: false
             }}>
 
-            <Tab.Screen name='Home' component={HomeStack} 
+            <Tab.Screen name='HomeStack' component={HomeStack} 
                 options={{tabBarIcon: ({focused})=> <Icon name={(focused) ? 'home' : 'home-outline'} size={30}/> }}
             />
 
-            <Tab.Screen name='Rutas' component={RoutesStack} 
+            <Tab.Screen name='RutasStack' component={RoutesStack} 
                 options={{tabBarIcon: ({focused})=> <Icon name={(focused) ? 'map' : 'map-outline'} size={30}/> }}
             />
 
-            <Tab.Screen name='Enciclopedia' component={EnciclopediaStack} 
+            <Tab.Screen name='EnciclopediaStack' component={EnciclopediaStack} 
                 options={{tabBarIcon: ({focused})=> <Icon name={(focused) ? 'apps' : 'apps-outline'} size={30}/> }}
             />
 
-            <Tab.Screen name='Perfil' component={ProfileStack} 
+            <Tab.Screen name='PerfilStack' component={ProfileStack} 
                 options={{tabBarIcon: ({focused})=> <Icon name={(focused) ? 'person' : 'person-outline'} size={30}/> }}
             />
         </Tab.Navigator>

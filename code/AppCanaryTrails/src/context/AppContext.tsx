@@ -26,6 +26,7 @@ const AppContext = (props: any) => {
                 settoken(storedToken);
                 console.log(storedToken);
                 console.log("token obtenido del storage");
+                //removeToken();
             }
         })
     }, [])

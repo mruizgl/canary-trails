@@ -6,8 +6,7 @@ import Perfil from '../../screens/Perfil';
 type Props = {}
 
 export type ProfileStackParamList = {
-    Inicio: undefined,
-    Otra: undefined,
+  Perfil: undefined,
 };
 
 const Stack = createNativeStackNavigator<ProfileStackParamList>();
@@ -19,7 +18,7 @@ const ProfileStack = (props: Props) => {
           headerShown: false, // Oculta la cabecera para todas las pantallas
         }}
       >      
-      <Stack.Screen name="Otra" component={Perfil} />
+      <Stack.Screen name="Perfil" component={Perfil} />
   
   </Stack.Navigator>
   )
