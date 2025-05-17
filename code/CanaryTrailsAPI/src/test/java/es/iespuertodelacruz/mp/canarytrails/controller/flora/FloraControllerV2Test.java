@@ -299,11 +299,11 @@ public class FloraControllerV2Test {
         Usuario usuario = new Usuario();
         usuario.setNombre("Juan");
 
-        Comentario comentario = new Comentario();
-        comentario.setUsuario(usuario);
+        flora = new Flora();
+        flora.setUsuario(usuario);
 
 
-        Assertions.assertTrue(floraControllerV2.esPropietario(comentario));
+        Assertions.assertTrue(floraControllerV2.esPropietario(flora));
     }
 
     @Test
@@ -316,9 +316,9 @@ public class FloraControllerV2Test {
         Usuario usuario = new Usuario();
         usuario.setNombre("Juan");
 
-        Comentario comentario = new Comentario();
-        comentario.setUsuario(usuario);
+        flora = new Flora();
+        flora.setUsuario(usuario);
         //ponemos el comentario a nombre de juan, asi que no es el propietario de la persona autenticada.. debe ser false
-        Assertions.assertFalse(floraControllerV2.esPropietario(comentario));
+        Assertions.assertFalse(floraControllerV2.esPropietario(flora));
     }
 }

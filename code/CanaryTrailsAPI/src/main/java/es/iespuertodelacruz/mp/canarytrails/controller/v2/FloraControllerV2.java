@@ -41,6 +41,9 @@ public class FloraControllerV2 {
     RutaService rutaService;
 
     @Autowired
+    UsuarioService usuarioService;
+
+    @Autowired
     FotoManagementService fotoManagementService;
 
     /**
