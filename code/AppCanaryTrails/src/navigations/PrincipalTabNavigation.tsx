@@ -4,14 +4,16 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import React from 'react'
 import HomeStack from './stack/HomeStack';
 import ProfileStack from './stack/ProfileStack';
-import RoutesStack from './stack/RoutesStack';
+import RoutesStack from './stack/SearchRoutesStack';
 import EnciclopediaStack from './stack/EnciclopediaStack';
 
-type Props = {}
+type Props = {
+
+}
 
 const Tab = createBottomTabNavigator();
 
-const PrincipalTabNavigation = (props: Props) => {
+function PrincipalTabNavigation (){
 
 
     return (

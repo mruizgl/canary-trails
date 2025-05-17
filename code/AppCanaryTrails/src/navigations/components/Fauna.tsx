@@ -3,14 +3,14 @@ import React from 'react'
 
 type Props = {}
 
-const Rutas = (props: Props) => {
+const Fauna = (props: Props) => {
   return (
     <View>
-      <Text>Rutas</Text>
+      <Text>Fauna</Text>
     </View>
   )
 }
 
-export default Rutas
+export default Fauna
 
 const styles = StyleSheet.create({})
