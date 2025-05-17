@@ -27,29 +27,29 @@ public class AuthService {
     private MailService mailService;
 
 
-    public String register(Usuario usuario) {
+    public boolean register(Usuario usuario) {
 
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         usuario.setVerificado(false);
         usuario.setFoto("src/main/resources/uploads/usuario/default.png");
         usuario.setRol("ROLE_USER");
 
-        //TODO: set token del correo
-        /*String tokenVerifCorreo = UUID.randomUUID().toString();
+        String tokenVerifCorreo = UUID.randomUUID().toString();
         usuario.setTokenVerificacion(tokenVerifCorreo);
 
         Date fechaActual = new Date();
-        usuario.setFechaCreacion(fechaActual);*/
+        usuario.setFechaCreacion(fechaActual);
 
         Usuario saved = usuarioRepository.save(usuario);
 
         if(saved != null) {
-            /*String senders[] = {"apps.akameterindustries@gmail.com", email};
-            mailService.send(senders, "usuario creado: "+usuario.getNombre(),
-                    "http://localhost:8080/api/v1/confirmacion/?correo="+usuario.getCorreo()+"&token="+tokenVerifCorreo);*/
-            return jwtService.generateToken(usuario.getNombre(), usuario.getRol());
+            String senders[] = {"apps.akameterindustries@gmail.com", usuario.getCorreo()};
+            mailService.send(senders, "Usuario creado: "+usuario.getNombre(),
+                    "http://localhost:8080/api/v1/auth/confirmacion/?correo="+usuario.getCorreo()+"&token="+tokenVerifCorreo);
+            //return jwtService.generateToken(usuario.getNombre(), usuario.getRol());
+            return true;
         }else {
-            return null;
+            return false;
         }
     }
 
@@ -59,6 +59,11 @@ public class AuthService {
         Usuario usuario = usuarioRepository.findByNombre(username).orElse(null);
 
         if (usuario != null) {
+
+            if(!usuario.getVerificado()){
+                return generatedToken;
+            }
+
             if (passwordEncoder.matches(password, usuario.getPassword())) {
                 generatedToken = jwtService.generateToken(usuario.getNombre(), usuario.getRol());
             }

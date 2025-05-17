@@ -4,7 +4,6 @@ import java.util.List;
 
 public record UsuarioEntradaCreateDto (
         String nombre,
-        String apellidos,
         String correo,
         String password,
         boolean verificado,
