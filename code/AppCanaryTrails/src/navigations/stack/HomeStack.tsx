@@ -2,12 +2,13 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../../screens/Home';
+import RutasRecomendadas from '../../screens/RutasRecomendadas';
 
 type Props = {}
 
 export type HomeStackParamList = {
-    Inicio: undefined,
-    Otra: undefined,
+    Home: undefined,
+    RutasRecomentadas: undefined,
 };
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
@@ -50,7 +51,8 @@ const HomeStack = (props: Props) => {
           headerShown: false, // Oculta la cabecera para todas las pantallas
         }}
       >      
-      <Stack.Screen name="Otra" component={Home} />
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="RutasRecomentadas" component={RutasRecomendadas} />
     
     </Stack.Navigator>
   )

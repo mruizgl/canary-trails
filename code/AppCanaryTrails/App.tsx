@@ -7,6 +7,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import "reflect-metadata";
 import { dataSource } from './src/data/Database';
 import PrincipalTabNavigation from './src/navigations/PrincipalTabNavigation';
+import AppContext from './src/context/AppContext';
+import PrincipalStackNavigation from './src/navigations/PrincipalStackNavigation';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 function App(): React.JSX.Element {
@@ -36,11 +39,13 @@ function App(): React.JSX.Element {
     <>
       {
         dbInitilized? (
-          <NavigationContainer >
-          
-              <PrincipalTabNavigation />
-          
-          </NavigationContainer>
+          <GestureHandlerRootView>
+            <NavigationContainer >
+              <AppContext>
+                <PrincipalStackNavigation />
+              </AppContext>
+            </NavigationContainer>
+          </GestureHandlerRootView>
         ) : (
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Cargando...</Text>
