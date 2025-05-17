@@ -36,7 +36,6 @@ public class FloraRepositoryTest {
     void beforeEach() {
         Usuario usuario = new Usuario();
         usuario.setNombre("Test");
-        usuario.setApellidos("Usuario");
         usuario.setCorreo("test@example.com");
         usuario.setPassword("pass");
         usuario.setRol("USER");

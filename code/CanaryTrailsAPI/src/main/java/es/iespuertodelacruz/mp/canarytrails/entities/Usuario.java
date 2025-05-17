@@ -3,6 +3,7 @@ package es.iespuertodelacruz.mp.canarytrails.entities;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,14 +20,20 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(unique = true)
     private String nombre;
-
-    private String apellidos;
 
     @Column(unique = true)
     private String correo;
 
     private String password;
+
+    @Column(name="token_verificacion")
+    private String tokenVerificacion;
+
+    @Column(name="fecha_creacion")
+    @Convert(converter= DateToLongConverter.class)
+    private Date fechaCreacion;
 
     private Boolean verificado;
 
@@ -77,14 +84,6 @@ public class Usuario {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
     }
 
     public String getCorreo() {
@@ -167,6 +166,22 @@ public class Usuario {
         this.foto = foto;
     }
 
+    public String getTokenVerificacion() {
+        return tokenVerificacion;
+    }
+
+    public void setTokenVerificacion(String tokenVerificacion) {
+        this.tokenVerificacion = tokenVerificacion;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -184,9 +199,10 @@ public class Usuario {
         return "Usuario{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", apellidos='" + apellidos + '\'' +
                 ", correo='" + correo + '\'' +
                 ", password='" + password + '\'' +
+                ", tokenVerificacion='" + tokenVerificacion + '\'' +
+                ", fechaCreacion=" + fechaCreacion +
                 ", verificado=" + verificado +
                 ", rol='" + rol + '\'' +
                 ", rutas=" + rutas +

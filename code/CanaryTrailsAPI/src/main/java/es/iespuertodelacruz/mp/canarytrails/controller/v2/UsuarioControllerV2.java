@@ -79,8 +79,6 @@ public class UsuarioControllerV2 {
 
         usuario.setRol("ROLE_USER");
 
-        //TODO: comprobar que no pueda editar datos sensibles
-
         boolean actualizado;
         try {
             actualizado = usuarioService.update(usuario);

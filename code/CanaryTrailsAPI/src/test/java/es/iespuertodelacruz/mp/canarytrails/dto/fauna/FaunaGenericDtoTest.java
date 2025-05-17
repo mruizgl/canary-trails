@@ -38,7 +38,7 @@ public class FaunaGenericDtoTest {
     @Test
     void faunaSalidaDtoTest() {
         UsuarioSalidaFaunaDto usuarioDto = new UsuarioSalidaFaunaDto(1, "Nombre de Usuario", null, null,
-                null, true, null);
+                 true, null);
         RutaSalidaFaunaDto rutaDto = new RutaSalidaFaunaDto(1, "Ruta de prueba", null, 10L,
                 0f, 0f, true);
         List<RutaSalidaFaunaDto> rutas = List.of(rutaDto);
@@ -59,11 +59,11 @@ public class FaunaGenericDtoTest {
     @Test
     void usuarioSalidaFaunaDtoTest() {
         UsuarioSalidaFaunaDto dto = new UsuarioSalidaFaunaDto(
-                1, "nombre", "apellidos", "correo", "pass", true, "admin");
+                1, "nombre", "correo", "pass", true, "admin");
 
         Assertions.assertEquals(1, dto.id(), MESSAGE_ERROR);
         Assertions.assertEquals("nombre", dto.nombre(), MESSAGE_ERROR);
-        Assertions.assertEquals("apellidos", dto.apellidos(), MESSAGE_ERROR);
+
         Assertions.assertEquals("correo", dto.correo(), MESSAGE_ERROR);
         Assertions.assertEquals("pass", dto.password(), MESSAGE_ERROR);
         Assertions.assertTrue(dto.verificado(), MESSAGE_ERROR);

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailService {
 
-    /*@Autowired
+    @Autowired
     private JavaMailSender sender;
 
     @Value("${mail.from}") private String mailfrom;
@@ -23,6 +23,6 @@ public class MailService {
 
         sender.send(message);
 
-    }*/
+    }
 
 }

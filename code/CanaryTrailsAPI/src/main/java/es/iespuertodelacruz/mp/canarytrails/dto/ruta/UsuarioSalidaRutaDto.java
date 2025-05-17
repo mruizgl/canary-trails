@@ -4,7 +4,6 @@ package es.iespuertodelacruz.mp.canarytrails.dto.ruta;
  * Salida de Usuario que se carga en la salida de Ruta con el contenido que se necesita
  * @param id
  * @param nombre
- * @param apellidos
  * @param correo
  * @param password
  * @param verificado
@@ -13,7 +12,6 @@ package es.iespuertodelacruz.mp.canarytrails.dto.ruta;
 public record UsuarioSalidaRutaDto(
         int id,
         String nombre,
-        String apellidos,
         String correo,
         String password,
         boolean verificado,

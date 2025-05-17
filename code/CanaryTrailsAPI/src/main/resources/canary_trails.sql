@@ -38,9 +38,10 @@ CREATE TABLE municipios (
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL UNIQUE,
-    apellidos VARCHAR(100) NOT NULL,
-    correo VARCHAR(320) UNIQUE NOT NULL, -- tiene como máximo 320 caracteres
     password VARCHAR(255) NOT NULL,
+    correo VARCHAR(320) NOT NULL UNIQUE, -- tiene como máximo 320 caracteres
+    token_verificacion VARCHAR(255),
+    fecha_creacion BIGINT NOT NULL,
     verificado TINYINT(1) DEFAULT 0,
     rol VARCHAR(20),
     foto TEXT NOT NULL
@@ -160,9 +161,11 @@ CREATE TABLE ruta_fauna (
     FOREIGN KEY (fauna_id) REFERENCES faunas(id)
 );
 
-INSERT INTO `usuarios` (`nombre`, `apellidos`, `correo`, `password`, `verificado`, `rol`, `foto`) VALUES
-('Admin', 'Istrador', 'admin@mail.com', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', '1', 'ADMIN',
-'src/main/resources/uploads/usuario/default.png');
+INSERT INTO `usuarios` (`nombre`, `password`,  `correo`, `verificado`, `token_verificacion`, `fecha_creacion`, `rol`, `foto`) VALUES
+('usuario', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'user@email.com', 1,
+'token_de_verificacion_user', 1674825600, 'ROLE_ADMIN', 'src/main/resources/uploads/usuario/default.png'),
+('admin', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'admin@email.com', 1,
+'token_de_verificacion_admin', 1674825700, 'ROLE_USER', 'src/main/resources/uploads/usuario/default.png');
 
 INSERT INTO `faunas` (`nombre`, `descripcion`, `aprobada`, `usuario_id`) VALUES
 ('Phoenix Canariensis', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', '1', '1'),

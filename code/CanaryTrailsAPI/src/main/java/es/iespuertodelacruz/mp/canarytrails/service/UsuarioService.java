@@ -8,7 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
@@ -61,9 +63,11 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
             throw new RuntimeException("El usuario ha de tener nombre");
         }
 
-        if(object.getApellidos() == null){
-            throw new RuntimeException("El usuario ha de tener apellidos");
-        }
+        String tokenVerifCorreo = UUID.randomUUID().toString();
+        object.setTokenVerificacion(tokenVerifCorreo);
+
+        Date fechaActual = new Date();
+        object.setFechaCreacion(fechaActual);
 
         // Minimos y máximos recomendados por OWASP (Open Web Application Security Project)
         int min = 8;
@@ -103,10 +107,6 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
 
             if(object.getNombre() != null){
                 usuario.setNombre(object.getNombre());
-            }
-
-            if(object.getApellidos() != null){
-                usuario.setApellidos(object.getApellidos());
             }
 
             String regex = "^(?=.{6,320}$)([A-Za-z0-9._%+-]{1,64})@([A-Za-z0-9.-]{1,255})\\.[A-Za-z]{2,63}$";
@@ -159,7 +159,6 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
 
         if(usuario.getFaunas() != null || usuario.getRutas() != null || usuario.getFloras() != null || usuario.getComentarios() != null){
             usuario.setNombre("Usuario eliminado");
-            usuario.setApellidos(" - ");
             usuarioRepository.save(usuario);
             return true;
         }

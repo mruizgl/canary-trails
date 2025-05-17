@@ -80,7 +80,7 @@ public class FloraControllerV3Test {
 
     @BeforeEach
     public void beforeEach() {
-        usuarioSalidaFloraDto = new UsuarioSalidaFloraDto(1, "Nombre", "Apellidos",
+        usuarioSalidaFloraDto = new UsuarioSalidaFloraDto(1, "Nombre",
                 "email","password", true, "ADMIN");
 
 

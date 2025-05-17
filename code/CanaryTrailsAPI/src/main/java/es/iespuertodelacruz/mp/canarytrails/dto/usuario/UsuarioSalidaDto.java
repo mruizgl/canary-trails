@@ -1,5 +1,6 @@
 package es.iespuertodelacruz.mp.canarytrails.dto.usuario;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,9 +21,10 @@ import java.util.List;
 public record UsuarioSalidaDto (
         int id,
         String nombre,
-        String apellidos,
         String correo,
         String password,
+        String tokenVerificacion,
+        Date fechaCreacion,
         boolean verificado,
         String rol,
         List<FaunaSalidaUsuarioDto> faunas,
