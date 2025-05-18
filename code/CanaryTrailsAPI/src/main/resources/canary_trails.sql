@@ -162,10 +162,10 @@ CREATE TABLE ruta_fauna (
 );
 
 INSERT INTO `usuarios` (`nombre`, `password`,  `correo`, `verificado`, `token_verificacion`, `fecha_creacion`, `rol`, `foto`) VALUES
-('usuario', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'user@email.com', 1,
-'token_de_verificacion_user', 1674825600, 'ROLE_ADMIN', 'src/main/resources/uploads/usuario/default.png'),
 ('admin', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'admin@email.com', 1,
-'token_de_verificacion_admin', 1674825700, 'ROLE_USER', 'src/main/resources/uploads/usuario/default.png');
+'token_de_verificacion_admin', 1674825700, 'ROLE_ADMIN', 'src/main/resources/uploads/usuario/default.png'),
+('usuario', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'user@email.com', 1,
+'token_de_verificacion_user', 1674825600, 'ROLE_USER', 'src/main/resources/uploads/usuario/default.png');
 
 INSERT INTO `faunas` (`nombre`, `descripcion`, `aprobada`, `usuario_id`) VALUES
 ('Phoenix Canariensis', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', '1', '1'),
@@ -175,7 +175,14 @@ INSERT INTO `floras` (`nombre`, `especie`, `tipo_hoja`, `salida_flor`, `caida_fl
 ( 'Ejemplo', 'Especie', 'tipo 1', 'salida', 'caida', 'descripcion', '0', '1');
 
 INSERT INTO `rutas` (`nombre`, `dificultad`, `tiempo_duracion`, `distancia_metros`, `desnivel`, `aprobada`, `usuario_id`) VALUES
-('Paisaje Lunar', 'Intermedia', '5', '13090', '852.51', '1', '1');
+('Ruta 1', 'Dificil', '300', '13090', '852.51', '1', '1'),
+('Ruta 2', 'Facil', '30', '1309', '30.51', '1', '1'),
+('Ruta 3', 'Intermedia', '60', '3309', '20.51', '1', '1'),
+('Ruta 4', 'Facil', '20', '989', '10.51', '1', '1'),
+('Ruta 5', 'Extrema', '600', '50089', '20.51', '1', '1'),
+('Ruta 6', 'Facil', '20', '989', '10.51', '1', '1'),
+('Ruta 7', 'Facil', '15', '800', '24.51', '1', '1'),
+('Ruta 8', 'Intermedia', '53', '4011', '32.51', '1', '1');
 
 INSERT INTO `comentarios` (`titulo`, `descripcion`, `usuario_id`, `ruta_id`) VALUES
 ('Esto mola', 'Esto mola mucho', '1', '1'),

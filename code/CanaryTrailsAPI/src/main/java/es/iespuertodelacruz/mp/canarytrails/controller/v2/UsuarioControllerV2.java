@@ -39,10 +39,28 @@ public class UsuarioControllerV2 {
      * @param id del usuario que se quiere obtener
      * @return el usuario cuyo id coincide con el introducido
      */
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<?> findUsuarioById(@PathVariable Integer id) {
 
         Usuario usuario = usuarioService.findById(id);
+
+        if (usuario == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if(!esSuPerfil(usuario)){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No se pueden ver el perfil de otro usuario");
+        }
+
+        UsuarioSalidaDto dto = usuarioMapper.toDto(usuario);
+
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<?> findUsuarioByName(@PathVariable String nombre) {
+
+        Usuario usuario = usuarioService.findByUserName(nombre);
 
         if (usuario == null) {
             return ResponseEntity.notFound().build();

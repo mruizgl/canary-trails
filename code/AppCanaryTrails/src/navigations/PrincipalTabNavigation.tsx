@@ -23,19 +23,31 @@ function PrincipalTabNavigation (){
             }}>
 
             <Tab.Screen name='HomeStack' component={HomeStack} 
-                options={{tabBarIcon: ({focused})=> <Icon name={(focused) ? 'home' : 'home-outline'} size={30}/> }}
+                options={{
+                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'home' : 'home-outline'} size={30}/>, 
+                    tabBarShowLabel: false
+                }}
             />
 
             <Tab.Screen name='RutasStack' component={RoutesStack} 
-                options={{tabBarIcon: ({focused})=> <Icon name={(focused) ? 'map' : 'map-outline'} size={30}/> }}
+                options={{
+                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'map' : 'map-outline'} size={30}/> ,
+                    tabBarShowLabel: false
+                }}
             />
 
             <Tab.Screen name='EnciclopediaStack' component={EnciclopediaStack} 
-                options={{tabBarIcon: ({focused})=> <Icon name={(focused) ? 'apps' : 'apps-outline'} size={30}/> }}
+                options={{
+                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'apps' : 'apps-outline'} size={30}/> ,
+                    tabBarShowLabel: false
+                }}
             />
 
             <Tab.Screen name='PerfilStack' component={ProfileStack} 
-                options={{tabBarIcon: ({focused})=> <Icon name={(focused) ? 'person' : 'person-outline'} size={30}/> }}
+                options={{
+                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'person' : 'person-outline'} size={30}/> ,
+                    tabBarShowLabel: false
+                }}
             />
         </Tab.Navigator>
     )
