@@ -6,8 +6,7 @@ import Enciclopedia from '../../screens/Enciclopedia';
 type Props = {}
 
 export type EnciclopediaStackParamList = {
-    Inicio: undefined,
-    Otra: undefined,
+    Enciclopedia: undefined,
 };
 
 const Stack = createNativeStackNavigator<EnciclopediaStackParamList>();
@@ -19,7 +18,7 @@ const EnciclopediaStack = (props: Props) => {
           headerShown: false, // Oculta la cabecera para todas las pantallas
         }}
     >      
-      <Stack.Screen name="Otra" component={Enciclopedia} />
+      <Stack.Screen name="Enciclopedia" component={Enciclopedia} />
     
     </Stack.Navigator>
   )

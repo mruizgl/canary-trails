@@ -129,7 +129,7 @@ public class UsuarioControllerV3 {
             }
 
             usuario.setFoto(namefile);
-            usuarioService.update(usuario);
+            usuarioService.uploadFoto(usuario);
 
             return ResponseEntity.ok(mensaje);
         } catch (Exception e) {

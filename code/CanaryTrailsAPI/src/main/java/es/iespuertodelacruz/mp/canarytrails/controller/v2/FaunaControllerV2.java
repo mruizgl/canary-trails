@@ -138,7 +138,7 @@ public class FaunaControllerV2 {
             }
 
             fauna.setFoto(namefile);
-            faunaService.update(fauna);
+            faunaService.uploadFoto(fauna);
 
             return ResponseEntity.ok(mensaje);
         } catch (Exception e) {

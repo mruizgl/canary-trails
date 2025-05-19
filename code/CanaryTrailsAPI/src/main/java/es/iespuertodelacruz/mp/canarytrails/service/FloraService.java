@@ -127,6 +127,12 @@ public class FloraService implements IServiceGeneric<Flora, Integer> {
         }
     }
 
+    @Transactional
+    public boolean uploadFoto(Flora flora){
+        floraRepository.save(flora);
+        return true;
+    }
+
     // Borra a partir de la id recibida. Devuelve el numero de lineas modificadas
     // Si se ha borrado alguna, es un true, si no es un false
     @Override

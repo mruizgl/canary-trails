@@ -2,6 +2,7 @@ package es.iespuertodelacruz.mp.canarytrails.service;
 
 import es.iespuertodelacruz.mp.canarytrails.common.IServiceGeneric;
 import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
+import es.iespuertodelacruz.mp.canarytrails.entities.Flora;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
 import es.iespuertodelacruz.mp.canarytrails.repository.FaunaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,6 +114,12 @@ public class FaunaService implements IServiceGeneric<Fauna, Integer> {
             return false;
         }
         
+    }
+
+    @Transactional
+    public boolean uploadFoto(Fauna fauna){
+        faunaRepository.save(fauna);
+        return true;
     }
 
     @Override

@@ -17,25 +17,48 @@ function PrincipalTabNavigation (){
 
 
     return (
-        <Tab.Navigator id={undefined}
+        <Tab.Navigator 
+            id={undefined}
             screenOptions={{ 
-                headerShown: false
+                headerShown: false,
+                tabBarStyle: {
+                    backgroundColor: '#4E4187',      // Color de fondo del tab
+                    //borderTopWidth: 0,            // Sin borde superior
+                    height: 54,                   // Altura del tab
+                },
+                tabBarIconStyle: {
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                },
             }}>
 
-            <Tab.Screen name='Home' component={HomeStack} 
-                options={{tabBarIcon: ({focused})=> <Icon name={(focused) ? 'home' : 'home-outline'} size={30}/> }}
+            <Tab.Screen name='HomeStack' component={HomeStack} 
+                options={{
+                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'home' : 'home-outline'} size={30} color={'white'}/>, 
+                    tabBarShowLabel: false
+                }}
             />
 
-            <Tab.Screen name='Rutas' component={RoutesStack} 
-                options={{tabBarIcon: ({focused})=> <Icon name={(focused) ? 'map' : 'map-outline'} size={30}/> }}
+            <Tab.Screen name='RutasStack' component={RoutesStack} 
+                options={{
+                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'map' : 'map-outline'} size={30} color={'white'}/> ,
+                    tabBarShowLabel: false
+                }}
             />
 
-            <Tab.Screen name='Enciclopedia' component={EnciclopediaStack} 
-                options={{tabBarIcon: ({focused})=> <Icon name={(focused) ? 'apps' : 'apps-outline'} size={30}/> }}
+            <Tab.Screen name='EnciclopediaStack' component={EnciclopediaStack} 
+                options={{
+                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'apps' : 'apps-outline'} size={30} color={'white'}/> ,
+                    tabBarShowLabel: false
+                }}
             />
 
-            <Tab.Screen name='Perfil' component={ProfileStack} 
-                options={{tabBarIcon: ({focused})=> <Icon name={(focused) ? 'person' : 'person-outline'} size={30}/> }}
+            <Tab.Screen name='PerfilStack' component={ProfileStack} 
+                options={{
+                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'person' : 'person-outline'} size={30} color={'white'}/> ,
+                    tabBarShowLabel: false
+                }}
             />
         </Tab.Navigator>
     )

@@ -41,7 +41,7 @@ public class SecurityConfiguration {
                                 "/configuration/**", "/swagger*/**",
 
                                 "/v2/**", "/v3/**", "/webjars/**",
-                                "/websocket*/**", "/api/v1/**"
+                                "/websocket*/**", "/api/v1/**", "/api/v1/imagenes/ruta/**"
                         ).permitAll()
                         .requestMatchers("/api/v3/**").hasRole("ADMIN")
                         .anyRequest().authenticated()

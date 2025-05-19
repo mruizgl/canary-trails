@@ -6,6 +6,7 @@ import es.iespuertodelacruz.mp.canarytrails.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.UUID;
@@ -26,7 +27,7 @@ public class AuthService {
     @Autowired
     private MailService mailService;
 
-
+    @Transactional
     public boolean register(Usuario usuario) {
 
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));

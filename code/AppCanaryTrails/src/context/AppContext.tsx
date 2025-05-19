@@ -1,16 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { createContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Usuario } from '../globals/Types';
 
 
 type Props = {}
 
 type ContextType = {
-    //idPartidaActual: number,
-    //saveIdPartida: (id: number) => void,
+
     token : string,
     saveToken: (token: string) => void,
-    removeToken: () => void
+    removeToken: () => void,
+    usuarioLogueado: Usuario,
+    setUsuarioLogueado: (usuario : Usuario) => void,
 }
 
 const Context = createContext<ContextType>({} as ContextType);
@@ -18,6 +20,7 @@ const Context = createContext<ContextType>({} as ContextType);
 const AppContext = (props: any) => {
 
     const [token, settoken] = useState<string>();
+    const [usuarioLogueado, setusuarioLogueado] = useState<Usuario>()
     
     useEffect(() => {
         AsyncStorage.getItem("token")
@@ -26,6 +29,7 @@ const AppContext = (props: any) => {
                 settoken(storedToken);
                 console.log(storedToken);
                 console.log("token obtenido del storage");
+                //removeToken();
             }
         })
     }, [])
@@ -42,10 +46,17 @@ const AppContext = (props: any) => {
         console.log("token eliminado");
     }
 
+    const setUsuarioLogueado = (usuario : Usuario) => {
+        setusuarioLogueado(usuario);
+        console.log("usuario seteado");
+    }
+
     const contextValues = {
         token,
         saveToken,
-        removeToken
+        removeToken,
+        usuarioLogueado,
+        setUsuarioLogueado,
     }
 
   return (

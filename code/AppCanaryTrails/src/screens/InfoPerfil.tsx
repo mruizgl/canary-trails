@@ -3,14 +3,14 @@ import React from 'react'
 
 type Props = {}
 
-const Enciclopedia = (props: Props) => {
+const InfoPerfil = (props: Props) => {
   return (
-    <View style={{flex:1, backgroundColor:'#9D8DF1'}}>
-      <Text>Enciclopedia</Text>
+    <View>
+      <Text>InfoPerfil</Text>
     </View>
   )
 }
 
-export default Enciclopedia
+export default InfoPerfil
 
 const styles = StyleSheet.create({})

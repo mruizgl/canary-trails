@@ -1,8 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../../screens/Home';
 import RutasRecomendadas from '../../screens/RutasRecomendadas';
+import {useAppContext } from '../../context/AppContext';
+import { useJwt } from 'react-jwt';
+import axios from 'axios';
 
 type Props = {}
 
@@ -15,7 +18,24 @@ const Stack = createNativeStackNavigator<HomeStackParamList>();
 
 const HomeStack = (props: Props) => {
 
-  /*
+  return (
+    <Stack.Navigator id={undefined}
+      screenOptions={{
+          headerShown: false, // Oculta la cabecera para todas las pantallas
+        }}
+      >      
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="RutasRecomentadas" component={RutasRecomendadas} />
+    
+    </Stack.Navigator>
+  )
+}
+
+export default HomeStack
+
+const styles = StyleSheet.create({})
+
+/*
   useEffect(() => {
     console.log("PruebaStack");
   
@@ -44,20 +64,3 @@ const HomeStack = (props: Props) => {
     grabarYcargar();
   }, []);
   */
-
-  return (
-    <Stack.Navigator id={undefined}
-      screenOptions={{
-          headerShown: false, // Oculta la cabecera para todas las pantallas
-        }}
-      >      
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="RutasRecomentadas" component={RutasRecomendadas} />
-    
-    </Stack.Navigator>
-  )
-}
-
-export default HomeStack
-
-const styles = StyleSheet.create({})

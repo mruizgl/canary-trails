@@ -3,14 +3,14 @@ import React from 'react'
 
 type Props = {}
 
-const Enciclopedia = (props: Props) => {
+const RutasFavoritas = (props: Props) => {
   return (
-    <View style={{flex:1, backgroundColor:'#9D8DF1'}}>
-      <Text>Enciclopedia</Text>
+    <View>
+      <Text>RutasFavoritas</Text>
     </View>
   )
 }
 
-export default Enciclopedia
+export default RutasFavoritas
 
 const styles = StyleSheet.create({})

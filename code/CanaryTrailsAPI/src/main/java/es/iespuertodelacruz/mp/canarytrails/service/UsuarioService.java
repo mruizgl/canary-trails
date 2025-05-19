@@ -1,6 +1,7 @@
 package es.iespuertodelacruz.mp.canarytrails.service;
 
 import es.iespuertodelacruz.mp.canarytrails.common.IServiceGeneric;
+import es.iespuertodelacruz.mp.canarytrails.entities.Flora;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
 import es.iespuertodelacruz.mp.canarytrails.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,6 +150,12 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
         } else{
             return false;
         }
+    }
+
+    @Transactional
+    public boolean uploadFoto(Usuario usuario){
+        usuarioRepository.save(usuario);
+        return true;
     }
 
     @Override

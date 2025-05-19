@@ -2,12 +2,13 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SearchRutas from '../../screens/SearchRutas';
+import InfoRuta from '../../screens/InfoRuta';
 
 type Props = {}
 
 export type RoutesStackParamList = {
-    Inicio: undefined,
-    Otra: undefined,
+  SearchRoutes: undefined,
+  InfoRuta: undefined,
 };
 
 const Stack = createNativeStackNavigator<RoutesStackParamList>();
@@ -19,7 +20,8 @@ const SearchRutasStack = (props: Props) => {
           headerShown: false, // Oculta la cabecera para todas las pantallas
         }}
       >      
-      <Stack.Screen name="Otra" component={SearchRutas} />
+      <Stack.Screen name="SearchRoutes" component={SearchRutas} />
+      <Stack.Screen name="InfoRuta" component={InfoRuta} />
     
     </Stack.Navigator>
   )

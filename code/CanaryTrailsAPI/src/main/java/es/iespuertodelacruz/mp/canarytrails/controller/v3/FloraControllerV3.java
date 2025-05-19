@@ -159,7 +159,7 @@ public class FloraControllerV3 {
             }
 
             flora.setFoto(namefile);
-            floraService.update(flora);
+            floraService.uploadFoto(flora);
 
             return ResponseEntity.ok(mensaje);
         } catch (Exception e) {
