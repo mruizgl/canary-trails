@@ -5,7 +5,7 @@ type Props = {}
 
 const Enciclopedia = (props: Props) => {
   return (
-    <View>
+    <View style={{flex:1, backgroundColor:'#9D8DF1'}}>
       <Text>Enciclopedia</Text>
     </View>
   )

@@ -1,10 +1,11 @@
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 import React, { useEffect } from 'react'
-import { tokenPlayload, useAppContext, Usuario } from '../context/AppContext'
+import {useAppContext} from '../context/AppContext'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { ProfileStackParamList } from '../navigations/stack/ProfileStack'
 import axios from 'axios'
 import { useJwt } from 'react-jwt'
+import { tokenPlayload, Usuario } from '../globals/Types'
 
 type Props = {}
 
@@ -58,7 +59,7 @@ const Perfil = ({navigation, route}:PropsProfile) => {
   
 
   return (
-    <View style={{flex:1}}>
+    <View style={{flex:1, backgroundColor: '#9D8DF1'}}>
       <View style={styles.contenedorFoto}>
         <View style={styles.foto}>
           <Text>{usuarioLogueado?.foto}</Text>
@@ -66,7 +67,7 @@ const Perfil = ({navigation, route}:PropsProfile) => {
       </View>
       <View style={styles.opciones}>
 
-        <View style={styles.opcion}>
+        <View style={styles.opcionTop}>
           <TouchableHighlight onPress={()=> navigation.navigate('Info')}>
             <Text>Información de la Cuenta</Text>
           </TouchableHighlight>
@@ -84,7 +85,7 @@ const Perfil = ({navigation, route}:PropsProfile) => {
           </TouchableHighlight>
         </View>
 
-        <View style={styles.opcion}>
+        <View style={styles.opcionBottom}>
         {/* <TouchableHighlight onPress={}> */}
             <Text>Otro</Text>
           {/* </TouchableHighlight> */}
@@ -106,9 +107,20 @@ export default Perfil
 const styles = StyleSheet.create({
 
   contenedorFoto: {
-    flex: 1,
+    //flex: 1,
     //backgroundColor: 'blue',
-    justifyContent: 'center'
+    margin: 10,
+    marginTop: 60,
+
+    height: 100,
+    width: 100,
+
+    justifyContent: 'center',
+    alignSelf:'center',
+
+    borderRadius: 100,
+    borderStyle: 'solid',
+    borderWidth: 3,
   },
 
   foto:{
@@ -122,10 +134,10 @@ const styles = StyleSheet.create({
     flex: 2,
     alignSelf: 'center',
     
-    //backgroundColor: 'red',
+    backgroundColor: '#B8CDF8',
 
-    justifyContent: 'space-around',
-    width: 300,
+    justifyContent: 'space-between',
+    width: 360,
 
     borderStyle:'solid',
     borderWidth: 3,
@@ -133,14 +145,41 @@ const styles = StyleSheet.create({
   },
 
   opcion:{
+    flex: 1,
     //backgroundColor: 'purple',
     justifyContent: 'center',
 
     borderStyle: 'solid',
-    borderTopWidth: 2,
     borderBottomWidth: 2,
-    height: 99,
+    
+    height: 60,
     padding: 10,
+  },
+
+  opcionTop:{
+    flex: 1,
+    //backgroundColor: 'purple',
+    justifyContent: 'center',
+
+    borderStyle: 'solid',
+    borderBottomWidth: 2,
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6,
+    
+    height: 60,
+    padding: 10,
+  },
+
+  opcionBottom:{
+    flex: 1,
+    //backgroundColor: 'purple',
+    justifyContent: 'center',
+
+    height: 60,
+    padding: 10,
+
+    borderBottomLeftRadius: 6,
+    borderBottomRightRadius: 6,
   },
 
   bottomSpace:{

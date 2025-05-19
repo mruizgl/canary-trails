@@ -158,7 +158,7 @@ public class RutaControllerV2 {
                 return ResponseEntity.badRequest().body(mensajeFotoDuplicada);
             }
 
-            rutaService.update(ruta);
+            rutaService.uploadFotoRuta(ruta);
 
             return ResponseEntity.ok(mensaje);
         } catch (Exception e) {

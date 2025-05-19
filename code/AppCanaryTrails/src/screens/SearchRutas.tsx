@@ -1,16 +1,146 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import MapView from 'react-native-maps'
+import axios from 'axios'
+import { useAppContext } from '../context/AppContext'
+import { RutaType, tokenPlayload } from '../globals/Types'
+import { useJwt } from 'react-jwt'
+import RutaCardSmall from '../navigations/components/RutaCardSmall'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { RoutesStackParamList } from '../navigations/stack/SearchRoutesStack'
 
 type Props = {}
 
-const SearchRutas = (props: Props) => {
+type PropsSearch = NativeStackScreenProps<RoutesStackParamList, 'SearchRoutes'>
+
+const SearchRutas = ({navigation, route}:PropsSearch) => {
+
+  const context = useAppContext();
+  const { decodedToken } = useJwt<tokenPlayload>(context.token);
+
+  const [busqueda, setbusqueda] = useState<string>("");
+
+  const [allRutas, setallRutas] = useState<Array<RutaType>>([]);
+  const [rutasBuqueda, setrutasBuqueda] = useState<Array<RutaType>>([]);
+
+  useEffect(() => {
+    async function cargarTodasRutas(){
+
+      try{
+
+        const response = await axios.get(`http://10.0.2.2:8080/api/v2/rutas`,
+          {
+            headers: {
+              'Authorization': `Bearer ${context.token}`, // Token JWT
+              'Content-Type': 'application/json', // Tipo de contenido
+            }
+          }
+        );
+
+        setallRutas(response.data);
+
+      } catch (error) {
+        console.log("An error has occurred aqui" +error.message);
+      }
+    }
+
+    cargarTodasRutas();
+  }, [])
+
+  function realizarBusqueda(texto: string){
+
+    let rutasAux : Array<RutaType>= [];
+
+    rutasAux = allRutas.filter((ruta: RutaType) => ruta.nombre.toLowerCase().includes(texto.toLowerCase()));
+    console.log(rutasAux);
+    console.log(texto);
+    setrutasBuqueda(rutasAux);
+  }
+  
+
   return (
-    <View>
-      <Text>Rutas</Text>
+    <View style={{flex:1, backgroundColor:'#9D8DF1'}}>
+
+      
+      <View style={styles.mapaContenedor}>
+
+        <View style={styles.busqueda}>
+          <TextInput placeholder='Buscar...' 
+            onChangeText={(texto) => {
+                setbusqueda(texto); 
+                realizarBusqueda(texto);
+            }} 
+          />
+        </View>
+
+        <FlatList 
+          data={rutasBuqueda}
+          renderItem={({ item, index }) => {
+              return (
+              <View style={{alignSelf: 'center', marginVertical: 10}}>
+                  <TouchableOpacity onPress={()=> navigation.navigate('InfoRuta')}>
+                      <RutaCardSmall
+                        nombre={item.nombre} 
+                        distancia={item.distanciaMetros}
+                        dificultad={item.dificultad}
+                        tiempo={item.tiempoDuracion}
+                        desnivel={item.desnivel}
+                        fotos={item.fotos}
+                        municipios={item.municipios}
+                      />
+                  </TouchableOpacity>
+              </View>
+              )
+          }}
+          keyExtractor={(item, index) => 'partida ' + index}
+        />
+        
+        {/* <MapView
+          style={styles.mapa}
+          initialRegion={{
+            latitude: 28.2789829,
+            longitude: -16.5523792,
+            latitudeDelta: 1.0,
+            longitudeDelta: 1.0,
+          }}
+        /> */}
+      </View>
     </View>
   )
 }
 
 export default SearchRutas
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  busqueda:{
+
+    height: 70,
+    marginTop: 240,
+    marginHorizontal: 20,
+    padding: 10,
+
+    borderStyle: 'solid',
+    borderWidth: 2,
+    borderRadius: 50,
+    borderColor: '#B8CDF8',
+
+    elevation: 20,
+
+    backgroundColor: '#B8CDF8',
+
+    justifyContent: 'center',
+    zIndex: 1,
+  },
+
+  mapaContenedor:{
+    //backgroundColor: 'blue',
+    flex: 1,
+    //margin: 20,
+  },
+
+  mapa:{
+    flex:1,
+  
+    //AIzaSyClzqiUJRIP831x2twIzfbCFh0BRRN9UEE
+  }
+})

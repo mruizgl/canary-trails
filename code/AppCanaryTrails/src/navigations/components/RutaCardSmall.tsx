@@ -13,12 +13,11 @@ type Props = {
   municipios: Array<Municipio>
 }
 
-const RutaCard = (props: Props) => {
+const RutaCardSmall = (props: Props) => {
 
   const [distanciaKm, setdistanciaKm] = useState<number>(0)
   const [horas, sethoras] = useState<number>(0)
   const [minutos, setminutos] = useState<number>(0)
-  let fotoProcesada = 'http://10.0.2.2:8080/images/'+props.fotos[1];
 
   //const [municipio, setmunicipio] = useState<Array<Municipio> | string>()
 
@@ -50,62 +49,23 @@ const RutaCard = (props: Props) => {
           }
         </View>
       </View>
-
-      <View>
-        <Image  
-          source={{ uri: 'http://10.0.2.2:8080/api/v1/imagenes/ruta/' + props.fotos[0] }}
-          style={{ width: 100, height: 80 }}
-        />
-      </View>
-
-      <View style={styles.stats}>
-        <View>
-          <Text>Distancia: </Text>
-          <Text>{distanciaKm}</Text>
-        </View>
-
-        <View>
-          <Text>Desnivel: </Text>
-          <Text>{props.desnivel} m</Text>
-        </View>
-
-        <View>
-          <Text>Tiempo: </Text>
-          <Text>{horas}h {minutos}min</Text>
-        </View>
-        
-      </View>
     </View>
   )
 }
 
-export default RutaCard
+export default RutaCardSmall
 
 const styles = StyleSheet.create({
   card:{
     width: 380,
-    height: 200,
+    height: 90,
 
     borderRadius: 10,
 
-    overflow: 'hidden',
+    //overflow: 'hidden',
     backgroundColor: '#EAEAEA',
 
     padding: 15,
     justifyContent: 'space-between'
   },
-
-  nombre:{
-
-  },
-
-  municipio:{
-
-  },
-
-  stats:{
-    
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  }
 })

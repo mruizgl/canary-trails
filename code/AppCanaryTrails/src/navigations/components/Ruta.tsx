@@ -4,6 +4,7 @@ import React from 'react'
 type Props = {}
 
 const Ruta = (props: Props) => {
+
   return (
     <View>
       <Text>Ruta</Text>

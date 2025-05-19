@@ -16,6 +16,6 @@ public record RutaSalidaDto(
         List<FloraSalidaRutaDto> floras,
         List<CoordenadaSalidaRutaDto> coordenadas,
         List<MunicipioSalidaRutaDto> municipios,  //Municipio sin información adicional
-        String foto
+        List<String> fotos
 ) {
 }

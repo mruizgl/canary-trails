@@ -210,6 +210,12 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
         }
     }
 
+    @Transactional
+    public boolean uploadFotoRuta(Ruta ruta){
+        rutaRepository.save(ruta);
+        return true;
+    }
+
     @Override
     @Transactional
     public boolean deleteById(Integer id) {

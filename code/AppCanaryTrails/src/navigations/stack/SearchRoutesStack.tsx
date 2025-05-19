@@ -2,11 +2,13 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SearchRutas from '../../screens/SearchRutas';
+import InfoRuta from '../../screens/InfoRuta';
 
 type Props = {}
 
 export type RoutesStackParamList = {
   SearchRoutes: undefined,
+  InfoRuta: undefined,
 };
 
 const Stack = createNativeStackNavigator<RoutesStackParamList>();
@@ -19,6 +21,7 @@ const SearchRutasStack = (props: Props) => {
         }}
       >      
       <Stack.Screen name="SearchRoutes" component={SearchRutas} />
+      <Stack.Screen name="InfoRuta" component={InfoRuta} />
     
     </Stack.Navigator>
   )

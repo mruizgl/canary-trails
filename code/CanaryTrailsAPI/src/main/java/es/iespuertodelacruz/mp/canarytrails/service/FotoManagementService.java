@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 @Service
 public class FotoManagementService {
 
-    private final Path root = Paths.get("src/main/resources/uploads");
+    private final Path root = Paths.get("./images");
 
     @Transactional
     public String save(MultipartFile file, String categoria) {
@@ -44,35 +44,24 @@ public class FotoManagementService {
     private Path getFilenameFree(Path directorio, String filename){
 
         Path pathCompleto = directorio.resolve(filename);
-        String nombre="";
+        String nombre = filename;
         String extension = "";
 
-        //Si contiene punto, desglosa por punto y extension
-        if( filename.contains(".")) {
-            extension = filename.substring(filename.lastIndexOf(".") + 1);
-            nombre = filename.substring(0, filename.length() -
-                    extension.length() -1);
-        } else {
-            //Si no, el nombre es tal cual
-            nombre = filename;
+        int index = filename.lastIndexOf(".");
+        if (index != -1) {
+            nombre = filename.substring(0, index);
+            extension = filename.substring(index); // incluye el punto
         }
 
-        int contador=1;
+        int contador = 1;
 
-        //Mientras exista el path completo, se va a actualizar con el contador para que se cree un archivo con nombre nuevo
-        while(Files.exists(pathCompleto)) {
-            String nuevoNombre = nombre + "_" + contador;
-
-            //Solo le añade la extension si tiene una establecida
-            if (!extension.isEmpty()) {
-                nuevoNombre += "." + extension;
-            }
-
+        while (Files.exists(pathCompleto)) {
+            String nuevoNombre = nombre + "_" + contador + extension;
             pathCompleto = directorio.resolve(nuevoNombre);
             contador++;
         }
 
-        return(pathCompleto);
+        return pathCompleto;
     }
 
 

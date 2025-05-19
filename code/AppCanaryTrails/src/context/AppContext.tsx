@@ -1,30 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { createContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Usuario } from '../globals/Types';
 
 
 type Props = {}
 
-export type tokenPlayload ={
-  sub: string;
-  rol: string;
-}
-
-export type Usuario = {
-    id: number,
-    nombre: string,
-    correo: string,
-    password: string,
-    foto: string
-}
-
 type ContextType = {
-    //idPartidaActual: number,
-    //saveIdPartida: (id: number) => void,
+
     token : string,
     saveToken: (token: string) => void,
     removeToken: () => void,
-    usuarioLogueado: Usuario ,
+    usuarioLogueado: Usuario,
     setUsuarioLogueado: (usuario : Usuario) => void,
 }
 
