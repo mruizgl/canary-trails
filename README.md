@@ -3,7 +3,7 @@
 __Autores: Melissa Ruiz González y Pedro Martín Escuela__
 
 <div align=center>
-    <img src="./designs/resources/portada-cc.jpg">
+    <img src="./documentation/designs/resources/portada-cc.jpg">
 </div>
 
 <br>
@@ -11,6 +11,27 @@ __Autores: Melissa Ruiz González y Pedro Martín Escuela__
 En este repositorio realizaremos nuestro __Proyecto Final__ del __CFGS de Desarrollo de Aplicaciones Multiplataforma__. 
 
 El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil__ para __descubrir rutas de senderismo__ en __Canarias__, con __información detallada__ de los __senderos y la flora y fauna__ presente en cada zona. 
+
+## Índice 
+
+- [Manual del Usuario](./documentation/manual-de-usuario.MD)
+
+- [Documentacion](./documentation/)
+
+    - [Anteproyecto](./documentation/anteproyecto/)
+
+    - [Documentacion de Diseño](./documentation/documentacion-de-diseno.MD)
+
+    - [Documentacion del Codigo](./documentation/documentacion-de-codigo.MD)
+
+        - [Api REST](./code/CanaryTrailsAPI/)
+
+        - [App React Native](./code/AppCanaryTrails/)
+
+        - [Sistema de Gestion Administrador](#gestion)
+
+- [Manual de Uso y Configuracion](./documentation/manual-de-uso.MD)
+
 
 ## 🚀 Tecnologías
 - **Frontend:** React Native  
@@ -37,26 +58,5 @@ El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil
     cd canary-trails
 ```
 
-## Índice 
-
-- [Manual del Usuario](./documentation/manual-de-usuario.MD)
-
-- [Documentacion del Diseño](./documentation/documentacion-de-diseno.MD)
-
-    - [Diagramas](#diagrams)
-
-    - [Wireframe](#wireframe)
-
-- [Documentacion del Codigo](./documentation/documentacion-de-codigo.MD)
-
-    - [Api REST](./code/CanaryTrailsAPI/)
-
-    - [App React Native](./code/AppCanaryTrails/)
-
-    - [Sistema de Gestion Administrador](#gestion)
-
-- [Despliegue](#despliegue)
-
-- [Manual de Uso y Configuracion](./documentation/manual-de-uso.MD)
 
 

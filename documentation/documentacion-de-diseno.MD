@@ -1,1 +1,7 @@
-X
+## Diseño
+
+- [Mockup](#diagrams)
+
+- [Wireframe](#wireframe)
+
+### 
