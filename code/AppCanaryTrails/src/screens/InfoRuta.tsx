@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Comentario, Coordenada, CoordenadaMaps, Fauna, Flora, Municipio, Usuario } from '../globals/Types'
 import { useRoute } from '@react-navigation/native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
@@ -8,6 +8,7 @@ import MapView, { Marker, Polyline } from 'react-native-maps'
 import { FlatList, TextInput } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios'
+import { useAppContext } from '../context/AppContext'
 
 
 // type Props = {
@@ -32,6 +33,8 @@ type PropsSearch = NativeStackScreenProps<RoutesStackParamList, 'InfoRuta'>
 const InfoRuta = ({navigation, route}:PropsSearch) => {
 
   const { ruta } = route.params;
+  const context = useAppContext();
+  
 
   const [distanciaKm, setdistanciaKm] = useState<number>(0)
   const [horas, sethoras] = useState<number>(0)
@@ -45,6 +48,7 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
+    console.log(ruta);
       let nuevaDistancia = ruta.distanciaMetros/1000;
       const horasProcesadas = Math.floor(ruta.tiempoDuracion / 60);
       const minutosRestantes = ruta.tiempoDuracion % 60;
@@ -63,18 +67,19 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
       setdistanciaKm(nuevaDistancia);
       sethoras(horasProcesadas);
       setminutos(minutosRestantes);
-  }, [])
 
-  
-
-  useEffect(() => {
-    if (mapRef.current) {
-        mapRef.current.fitToCoordinates(coordenadasRuta, {
-        edgePadding: { top: 40, right: 30, bottom: 40, left: 40 },
-        animated: true,
-      });
-    }
-  }, [coordenadasRuta]);
+      const timer = setTimeout(() => {
+        if (mapRef.current && arrayCoordenadasAux.length > 0) {
+          //Se hace fit a las coordenadas, dejando los espacios establecidos para que se vea
+          mapRef.current.fitToCoordinates(arrayCoordenadasAux, {
+            edgePadding: { top: 40, right: 30, bottom: 40, left: 40 },
+            animated: true,
+          });
+        }
+      }, 100);
+    
+      return () => clearTimeout(timer);
+  }, [])  
 
   const getDificultadColor = (dificultad: string) => {
 
@@ -95,7 +100,7 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
   //   async function publicar (){
   //     try{
 
-  //       const response = await axios.get(`http://10.0.2.2:8080/api/v2/rutas`,
+  //       const response = await axios.put(`http://10.0.2.2:8080/api/v2/comentarios/`, descripcion, 
   //         {
   //           headers: {
   //             'Authorization': `Bearer ${context.token}`, // Token JWT
@@ -113,6 +118,31 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
   //   publicar();
   // }
 
+  // function aniadirFavoritas(){
+
+  //   async function aniadir (){
+  //     try{
+
+  //       const response = await axios.put(`http://10.0.2.2:8080/api/v2/usuarios/nombre/`, ruta.usuario.nombre, 
+  //         {
+  //           headers: {
+  //             'Authorization': `Bearer ${context.token}`, // Token JWT
+  //             'Content-Type': 'application/json', // Tipo de contenido
+  //           }
+  //         }
+  //       );
+  
+  //       if(response.data === true){
+  //         console.log("aniadido favs");
+  //       }
+  //     } catch (error) {
+  //       console.log("An error has occurred aqui" +error.message);
+  //     }
+  //   }
+    
+  //   aniadir();
+  // }
+
   
 
   return (
@@ -120,8 +150,17 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
       <View style={styles.rutaInfo}>
 
         <View style={styles.header}>
-          <View style={{marginLeft: 3}}>
-            <Text style={{fontSize: 25}}>{ruta.nombre}</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
+
+            <View style={{marginLeft: 3}}>
+              <Text style={{fontSize: 25}}>{ruta.nombre}</Text>
+            </View>
+            {/* <View style={{marginTop: 2}}>
+              <TouchableOpacity onPress={() => aniadirFavoritas()}>
+                <Icon name={'heart-outline'} size={30} color={'red'} /> 
+              </TouchableOpacity>
+            </View> */}
+
           </View>
 
           <View style={styles.underline}/>
@@ -130,10 +169,12 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
             <View style={[styles.dificultad, { borderColor: getDificultadColor(ruta.dificultad), backgroundColor:getDificultadColor(ruta.dificultad)}]}>
               <Text>{ruta.dificultad}</Text>
             </View>
+
             <View style={styles.creador}>
               <Text>Creado por: </Text>
               <Text style={{color: 'blue'}}>{ruta.usuario.nombre}</Text>
             </View>
+
           </View>
         </View>
 
@@ -192,13 +233,12 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
                   return (
                   <View style={{marginVertical: 10}}>
                       <TouchableOpacity>
-                          <View>
-                            <Text>{item.nombre}</Text>
-                            <Image  
-                              source={{ uri: 'http://10.0.2.2:8080/api/v1/imagenes/ruta/' + item.foto }}
-                              style={{ width: 100, height: 80, backgroundColor: 'red' }}
-                            />
-                          </View>
+                        <View>
+                          <Image  
+                            source={{ uri: 'http://10.0.2.2:8080/api/v1/imagenes/fauna/' + item.foto }}
+                            style={{ width: 100, height: 80}}
+                          />
+                        </View>
                       </TouchableOpacity>
                   </View>
                   )
@@ -211,7 +251,7 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
           </View>
         </View>
 
-        <View style={{flex: 1, marginTop: 20}}>
+        <View style={{flex: 1, marginTop: 30}}>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Flora: </Text>
 
           <View>
@@ -224,7 +264,7 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
                             <View>
                               <Image  
                                 source={{ uri: 'http://10.0.2.2:8080/api/v1/imagenes/flora/' + item.foto }}
-                                style={{ width: 100, height: 80, backgroundColor: 'red', borderRadius: 10, borderWidth: 2 }}
+                                style={{ width: 100, height: 80}}
                               />
                             </View>
                         </TouchableOpacity>
@@ -237,7 +277,7 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
           </View>
         </View>
 
-        <View style={{flex: 1, marginTop: 20}}>
+        {/* <View style={{flex: 1, marginTop: 30}}>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>Comentarios: </Text>
 
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -252,33 +292,21 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
                 </TouchableOpacity>
               </View>
           </View>
-
-          <View style={{flex: 1}}>
-            <FlatList 
-              data={ruta.comentarios}
-              renderItem={({ item, index }) => {
-                  return (
-                    <View style={{ marginVertical: 10}}>
-                        <TouchableOpacity>
-                            <View style={styles.comentario}>
-                              <View style={{flexDirection: 'row'}}>
-                                <Text style={{fontWeight: 'bold'}}>{item.usuario.nombre} </Text>
-                                <Text>dice:</Text>
-                              </View>
-
-                              <View style={styles.underline}/>
-
-                              {/* <Text style={{fontWeight: 'bold', marginTop: 5}}>{item.titulo}</Text> */}
-                              <Text>{item.descripcion}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                  )
-              }}
-              keyExtractor={(item, index) => 'fauna ' + index}
-            />  
-          </View>
-        </View>
+          
+          {
+            ruta.comentarios.map((comentario, index) => (
+              <View key={index}>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontWeight: 'bold'}}>{comentario.usuario.nombre} </Text>
+                  <Text>dice:</Text>
+                </View>
+                <Text>{comentario.descripcion}</Text>
+              </View>
+            ))
+          }
+          
+        </View> */}
+        
       </View>
     </View>
   )
@@ -300,8 +328,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#B8CDF8',
 
     margin: 30,
+    //marginBottom: 0,
     padding: 15,
     borderRadius: 10,
+    overflow: 'scroll'
   },
 
   dificultad:{
@@ -329,10 +359,11 @@ const styles = StyleSheet.create({
 
   contenedorMapa:{
     marginTop: 20, 
-    flex: 1,
+    //flex: 1,
     borderStyle: 'solid',
     borderWidth: 2,
-    borderRadius: 5
+    borderRadius: 5,
+    height: 200
   },
 
   mapa:{

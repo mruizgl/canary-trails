@@ -41,9 +41,7 @@ const RutaCard = (props: Props) => {
           {
             (props.municipios.length > 1) ?
               props.municipios.map((municipio, index) => (
-                <div key={index}>
-                  {municipio.nombre}
-                </div>
+                <p key={index}>, {municipio.nombre}</p>
               ))
             :
             <Text>{props.municipios[0].nombre}</Text>
@@ -54,7 +52,7 @@ const RutaCard = (props: Props) => {
       <View>
         <Image  
           source={{ uri: 'http://10.0.2.2:8080/api/v1/imagenes/ruta/' + props.fotos[0] }}
-          style={{ width: 100, height: 80 }}
+          style={{ width: '100%', height: 100 }}
         />
       </View>
 
@@ -84,7 +82,7 @@ export default RutaCard
 const styles = StyleSheet.create({
   card:{
     width: 380,
-    height: 200,
+    height: 240,
 
     borderRadius: 10,
 
@@ -95,6 +93,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
 
+  stats:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
   nombre:{
 
   },
@@ -102,10 +105,4 @@ const styles = StyleSheet.create({
   municipio:{
 
   },
-
-  stats:{
-    
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  }
 })

@@ -161,19 +161,22 @@ CREATE TABLE ruta_fauna (
 );
 
 INSERT INTO `usuarios` (`nombre`, `password`,  `correo`, `verificado`, `token_verificacion`, `fecha_creacion`, `rol`, `foto`) VALUES
-('admin', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'admin@email.com', 1,
+('Admin', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'admin@email.com', 1,
 'token_de_verificacion_admin', 1674825700, 'ROLE_ADMIN', 'default.png'),
-('usuario', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'user@email.com', 1,
+('Usuario', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'user@email.com', 1,
 'token_de_verificacion_user', 1674825600, 'ROLE_USER', 'default.png'),
 ('Pedro', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'petermartesc@gmail.com', 1,
-'e082424a-e6d9-4f45-b6ee-16273ba6a6e3', 1747635123718, 'ROLE_USER', 'default.png');
-
-INSERT INTO `faunas` (`nombre`, `descripcion`, `aprobada`, `usuario_id`) VALUES
-('Phoenix Canariensis', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', '1', '1'),
-('Ejemplo', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ', '0', '1');
-
-INSERT INTO `floras` (`nombre`, `especie`, `tipo_hoja`, `salida_flor`, `caida_flor`, `descripcion`, `aprobada`, `usuario_id`) VALUES
-( 'Ejemplo', 'Especie', 'tipo 1', 'salida', 'caida', 'descripcion', '0', '1');
+'e082424a-e6d9-4f45-b6ee-16273ba6a6e3', 1747635123718, 'ROLE_USER', 'default.png'),
+('Maria', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'maria@email.com', 1, 'token_maria', 1674825800, 'ROLE_USER', 'default.png'),
+('Juan', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'juan@email.com', 1, 'token_juan', 1674825900, 'ROLE_USER', 'default.png'),
+('Laura', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'laura@email.com', 1, 'token_laura', 1674826000, 'ROLE_USER', 'default.png'),
+('Carlos', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'carlos@email.com', 1, 'token_carlos', 1674826100, 'ROLE_USER', 'default.png'),
+('Ana', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'ana@email.com', 1, 'token_ana', 1674826200, 'ROLE_USER', 'default.png'),
+('David', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'david@email.com', 1, 'token_david', 1674826300, 'ROLE_USER', 'default.png'),
+('Sofia', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'sofia@email.com', 1, 'token_sofia', 1674826400, 'ROLE_USER', 'default.png'),
+('Pablo', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'pablo@email.com', 1, 'token_pablo', 1674826500, 'ROLE_USER', 'default.png'),
+('Elena', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'elena@email.com', 1, 'token_elena', 1674826600, 'ROLE_USER', 'default.png'),
+('Javier', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'javier@email.com', 1, 'token_javier', 1674826700, 'ROLE_USER', 'default.png');
 
 INSERT INTO `rutas` (`nombre`, `dificultad`, `tiempo_duracion`, `distancia_metros`, `desnivel`, `aprobada`, `usuario_id`) VALUES
 ('Sendero de los Sentidos', 'Fácil', '45', 1300, 80, true, 1), -- La Laguna
@@ -246,126 +249,184 @@ INSERT INTO `comentarios` (`titulo`, `descripcion`, `usuario_id`, `ruta_id`) VAL
 ('Esto mola', 'Esto mola mucho', '1', '1'),
 ('Esto no mola', 'Esto no mola nada', '1', '1');
 
-INSERT INTO `coordenadas` (`latitud`, `longitud`) VALUES
--- Sendero de los Sentidos
-(28.5563, -16.2634),
-(28.5570, -16.2628),
-(28.5577, -16.2622),
+-- Insertamos nuevas coordenadas más detalladas para cada ruta
+INSERT INTO coordenadas (latitud, longitud) VALUES
+-- Sendero de los Sentidos (Ruta 1) - 5 puntos (inicio, 3 giros, fin)
+(28.5563, -16.2634), -- Inicio
+(28.5568, -16.2630), -- Giro suave derecha
+(28.5572, -16.2625), -- Giro pronunciado izquierda
+(28.5575, -16.2620), -- Giro derecha hacia final
+(28.5577, -16.2618), -- Fin
 
--- Pico del Teide
-(28.2726, -16.6425),
-(28.2710, -16.6410),
-(28.2695, -16.6395),
+-- Pico del Teide (Ruta 2) - 7 puntos (ruta más larga con más giros)
+(28.2726, -16.6425), -- Inicio
+(28.2720, -16.6420), -- Primer giro izquierda
+(28.2715, -16.6415), -- Continuación
+(28.2710, -16.6410), -- Giro derecha
+(28.2705, -16.6405), -- Zigzag
+(28.2700, -16.6400), -- Último giro
+(28.2695, -16.6395), -- Fin
 
--- Barranco del Infierno
-(28.1182, -16.7260),
-(28.1167, -16.7250),
-(28.1150, -16.7240),
+-- Barranco del Infierno (Ruta 3) - 6 puntos
+(28.1182, -16.7260), -- Inicio
+(28.1178, -16.7255), -- Primer giro
+(28.1173, -16.7252), -- Descenso pronunciado
+(28.1167, -16.7250), -- Giro en U
+(28.1160, -16.7245), -- Último tramo
+(28.1155, -16.7240), -- Fin
 
--- Paisaje Lunar
-(28.1495, -16.6350),
-(28.1480, -16.6335),
-(28.1465, -16.6320),
+-- Paisaje Lunar (Ruta 4) - 8 puntos (ruta con muchos cambios)
+(28.1495, -16.6350), -- Inicio
+(28.1492, -16.6348), -- Primer giro
+(28.1488, -16.6345), -- Cambio dirección
+(28.1485, -16.6342), -- Giro izquierda
+(28.1482, -16.6338), -- Curva derecha
+(28.1478, -16.6335), -- Zona rocosa
+(28.1472, -16.6330), -- Último tramo
+(28.1465, -16.6320), -- Fin
 
--- Rambla de Castro
-(28.3889, -16.5730),
-(28.3900, -16.5720),
-(28.3912, -16.5710),
+-- Rambla de Castro (Ruta 5) - 5 puntos
+(28.3889, -16.5730), -- Inicio
+(28.3892, -16.5725), -- Giro junto al mar
+(28.3895, -16.5720), -- Curva izquierda
+(28.3905, -16.5715), -- Subida
+(28.3912, -16.5710), -- Fin
 
--- Chinyero Circular
-(28.2980, -16.7930),
-(28.2965, -16.7920),
-(28.2950, -16.7910),
+-- Chinyero Circular (Ruta 6) - 6 puntos (ruta circular)
+(28.2980, -16.7930), -- Inicio
+(28.2975, -16.7928), -- Primer giro
+(28.2970, -16.7925), -- Curva derecha
+(28.2965, -16.7922), -- Punto más alto
+(28.2960, -16.7918), -- Regreso
+(28.2955, -16.7915), -- Fin (mismo que inicio)
 
--- Cueva del Viento
-(28.3745, -16.7060),
-(28.3752, -16.7050),
-(28.3759, -16.7040),
+-- Cueva del Viento (Ruta 7) - 4 puntos (ruta corta)
+(28.3745, -16.7060), -- Inicio
+(28.3748, -16.7055), -- Giro entrada cueva
+(28.3752, -16.7050), -- Dentro cueva
+(28.3755, -16.7045), -- Fin
 
--- Arenas Negras
-(28.3610, -16.7630),
-(28.3595, -16.7615),
-(28.3580, -16.7600),
+-- Arenas Negras (Ruta 8) - 7 puntos
+(28.3610, -16.7630), -- Inicio
+(28.3605, -16.7625), -- Primer giro
+(28.3600, -16.7620), -- Zona de lava
+(28.3595, -16.7618), -- Giro pronunciado
+(28.3590, -16.7615), -- Subida
+(28.3585, -16.7610), -- Último tramo
+(28.3580, -16.7605), -- Fin
 
--- Malpaís de Güímar
-(28.2931, -16.3830),
-(28.2940, -16.3820),
-(28.2950, -16.3810),
+-- Malpaís de Güímar (Ruta 9) - 5 puntos
+(28.2931, -16.3830), -- Inicio
+(28.2935, -16.3825), -- Primer giro
+(28.2940, -16.3822), -- Zona de malpaís
+(28.2945, -16.3818), -- Curva final
+(28.2950, -16.3815), -- Fin
 
--- Anaga - Taganana
-(28.5620, -16.1900),
-(28.5605, -16.1885),
-(28.5590, -16.1870);
+-- Anaga - Taganana (Ruta 10) - 9 puntos (ruta más larga)
+(28.5620, -16.1900), -- Inicio
+(28.5615, -16.1895), -- Primer giro
+(28.5610, -16.1890), -- Bajada pronunciada
+(28.5605, -16.1888), -- Curva cerrada
+(28.5600, -16.1885), -- Zona boscosa
+(28.5595, -16.1882), -- Última subida
+(28.5592, -16.1878), -- Mirador
+(28.5590, -16.1875), -- Bajada final
+(28.5588, -16.1870); -- Fin
 
+-- Asociamos las nuevas coordenadas a las rutas
 INSERT INTO coordenada_ruta (ruta_id, coordenada_id) VALUES
--- Sendero de los Sentidos (ruta_id = 1)
-(1, 1),
-(1, 2),
-(1, 3),
+-- Sendero de los Sentidos (5 puntos)
+(1, 1), (1, 2), (1, 3), (1, 4), (1, 5),
 
--- Pico del Teide (ruta_id = 2)
-(2, 4),
-(2, 5),
-(2, 6),
+-- Pico del Teide (7 puntos)
+(2, 6), (2, 7), (2, 8), (2, 9), (2, 10), (2, 11), (2, 12),
 
--- Barranco del Infierno (ruta_id = 3)
-(3, 7),
-(3, 8),
-(3, 9),
+-- Barranco del Infierno (6 puntos)
+(3, 13), (3, 14), (3, 15), (3, 16), (3, 17), (3, 18),
 
--- Paisaje Lunar (ruta_id = 4)
-(4, 10),
-(4, 11),
-(4, 12),
+-- Paisaje Lunar (8 puntos)
+(4, 19), (4, 20), (4, 21), (4, 22), (4, 23), (4, 24), (4, 25), (4, 26),
 
--- Rambla de Castro (ruta_id = 5)
-(5, 13),
-(5, 14),
-(5, 15),
+-- Rambla de Castro (5 puntos)
+(5, 27), (5, 28), (5, 29), (5, 30), (5, 31),
 
--- Chinyero Circular (ruta_id = 6)
-(6, 16),
-(6, 17),
-(6, 18),
+-- Chinyero Circular (6 puntos)
+(6, 32), (6, 33), (6, 34), (6, 35), (6, 36), (6, 37),
 
--- Cueva del Viento (ruta_id = 7)
-(7, 19),
-(7, 20),
-(7, 21),
+-- Cueva del Viento (4 puntos)
+(7, 38), (7, 39), (7, 40), (7, 41),
 
--- Arenas Negras (ruta_id = 8)
-(8, 22),
-(8, 23),
-(8, 24),
+-- Arenas Negras (7 puntos)
+(8, 42), (8, 43), (8, 44), (8, 45), (8, 46), (8, 47), (8, 48),
 
--- Malpaís de Güímar (ruta_id = 9)
-(9, 25),
-(9, 26),
-(9, 27),
+-- Malpaís de Güímar (5 puntos)
+(9, 49), (9, 50), (9, 51), (9, 52), (9, 53),
 
--- Anaga - Taganana (ruta_id = 10)
-(10, 28),
-(10, 29),
-(10, 30);
+-- Anaga - Taganana (9 puntos)
+(10, 54), (10, 55), (10, 56), (10, 57), (10, 58), (10, 59), (10, 60), (10, 61), (10, 62);
 
 -- Comentarios adicionales para rutas existentes
 INSERT INTO comentarios (titulo, descripcion, usuario_id, ruta_id) VALUES
-('Impresionante paisaje', 'La vista desde la cima es espectacular, lo recomiendo mucho.', 2, 2),
-('Perfecta para principiantes', 'Ruta sencilla y bien señalizada, ideal para familias.', 3, 1),
-('Tramos difíciles', 'Algunos tramos requieren buen calzado y resistencia.', 1, 4),
-('Mucha vegetación', 'Me encantó la flora autóctona que se puede observar.', 2, 5),
-('Rápida y entretenida', 'Buena ruta para hacer en una mañana.', 3, 7),
-('Un reto para los amantes de la montaña', 'El desnivel es considerable, pero vale la pena.', 2, 10),
-('Ambiente tranquilo', 'Perfecto para desconectar y disfrutar de la naturaleza.', 1, 3);
+-- Sendero de los Sentidos (Ruta 1)
+('Experiencia sensorial', 'Los paneles explicativos hacen que aprecies cada detalle del bosque.', 1, 1),
+('Ideal con niños', 'Mis hijos disfrutaron mucho con los juegos didácticos del recorrido.', 3, 1),
+('Bien mantenido', 'El camino está impecable y muy bien cuidado todo el año.', 2, 1),
+
+-- Pico del Teide (Ruta 2)
+('Vistas increíbles', 'Ver el amanecer desde la cumbre es una experiencia única.', 3, 2),
+('Preparación necesaria', 'Lleva ropa de abrigo aunque haga calor abajo, en la cima hace mucho frío.', 1, 2),
+('Recompensa merecida', 'El esfuerzo de la subida vale totalmente por las panorámicas.', 2, 2),
+
+-- Barranco del Infierno (Ruta 3)
+('Cascada espectacular', 'El salto de agua al final del barranco es impresionante en invierno.', 2, 3),
+('Reserva con antelación', 'Recuerden que necesitan permiso y hay cupos limitados diarios.', 1, 3),
+('Zapatos antideslizantes', 'Algunas piedras pueden estar resbaladizas, mejor calzado adecuado.', 3, 3),
+
+-- Paisaje Lunar (Ruta 4)
+('Parece otro planeta', 'Las formaciones geológicas son únicas en la isla.', 3, 4),
+('Mejor al atardecer', 'Los colores de las rocas con la luz del sol bajo son mágicos.', 2, 4),
+('Lleva agua suficiente', 'No hay fuentes en todo el recorrido y hace mucho calor.', 1, 4),
+
+-- Rambla de Castro (Ruta 5)
+('Paseo costero precioso', 'Las vistas a los acantilados y al mar son impresionantes.', 1, 5),
+('Fácil acceso', 'Muy bien comunicada con aparcamiento cerca del inicio.', 3, 5),
+('Gofio millo recomendado', 'No dejen de probar el gofio en el puesto al final del camino.', 2, 5),
+
+-- Chinyero Circular (Ruta 6)
+('Naturaleza volcánica', 'Se aprecia muy bien el contraste entre lava y pinar.', 2, 6),
+('Sombra escasa', 'Llevar protección solar ya que hay pocos árboles.', 1, 6),
+('Perfecta para running', 'El terreno es ideal para corredores de trail.', 3, 6),
+
+-- Cueva del Viento (Ruta 7)
+('Guía imprescindible', 'La explicación del guía hace que la visita cobre vida.', 3, 7),
+('No para claustrofóbicos', 'Algunos pasos son estrechos, mejor informarse antes.', 2, 7),
+('Frío en el interior', 'Llevar alguna chaqueta aunque fuera haga calor.', 1, 7),
+
+-- Arenas Negras (Ruta 8)
+('Túnel de lava impresionante', 'La sección del tubo volcánico es lo más destacado.', 1, 8),
+('Mejor con guía local', 'Aprendimos mucho sobre la erupción del Chinyero.', 3, 8),
+('Cuidado al bajar', 'Algunas pendientes de ceniza son traicioneras.', 2, 8),
+
+-- Malpaís de Güímar (Ruta 9)
+('Paisaje lunar costero', 'El contraste entre el malpaís y el mar es espectacular.', 2, 9),
+('Caminos bien marcados', 'Aunque parece un laberinto de lava, está bien señalizado.', 1, 9),
+('Zona de nidificación', 'Vimos varias aves protegidas anidando en los riscos.', 3, 9),
+
+-- Anaga - Taganana (Ruta 10)
+('Bosque encantado', 'La laurisilva parece sacada de un cuento de hadas.', 3, 10),
+('Niebla frecuente', 'Es común que se nuble, llevar ropa impermeable.', 2, 10),
+('Vistas a Taganana', 'El mirador sobre el pueblo es de postal.', 1, 10),
+('Ruta exigente', 'Los desniveles son constantes, buena forma física requerida.', 2, 10),
+('Tesoro escondido', 'Una de las rutas más auténticas y menos masificadas.', 3, 10);
 
 -- Faunas relacionadas con rutas
 INSERT INTO faunas (nombre, descripcion, aprobada, usuario_id, foto) VALUES
-('Lagarto tizón', 'Reptil endémico que se puede observar en zonas rocosas.', 1, 1, 'lagarto_tizon.jpg'),
-('Pájaro carpintero canario', 'Ave típica de la isla con un característico tamborileo.', 1, 2, 'pajaro_carpintero.jpg'),
-('Murciélago de herradura', 'Mamífero nocturno que habita en cuevas y bosques.', 1, 3, 'murcielago_herradura.jpg'),
-('Gineta canaria', 'Pequeño mamífero carnívoro que habita en los bosques.', 1, 2, 'gineta_canaria.jpg'),
-('Cernícalo vulgar', 'Ave rapaz común en zonas abiertas y rocosas.', 1, 1, 'cernicalo_vulgar.jpg'),
-('Tortuga mora', 'Reptil que se encuentra en áreas semiáridas de Tenerife.', 1, 3, 'tortuga_mora.jpg');
+('Lagarto tizón', 'Reptil endémico que se puede observar en zonas rocosas.', 1, 1, 'fauna_default.jpg'),
+('Pájaro carpintero canario', 'Ave típica de la isla con un característico tamborileo.', 1, 2, 'fauna_default.jpg'),
+('Murciélago de herradura', 'Mamífero nocturno que habita en cuevas y bosques.', 1, 3, 'fauna_default.jpg'),
+('Gineta canaria', 'Pequeño mamífero carnívoro que habita en los bosques.', 1, 2, 'fauna_default.jpg'),
+('Cernícalo vulgar', 'Ave rapaz común en zonas abiertas y rocosas.', 1, 1, 'fauna_default.jpg'),
+('Tortuga mora', 'Reptil que se encuentra en áreas semiáridas de Tenerife.', 1, 3, 'fauna_default.jpg');
 
 -- Asociación de faunas con rutas
 INSERT INTO ruta_fauna (ruta_id, fauna_id) VALUES
@@ -378,12 +439,12 @@ INSERT INTO ruta_fauna (ruta_id, fauna_id) VALUES
 
 -- Floras relacionadas con rutas
 INSERT INTO floras (nombre, especie, tipo_hoja, salida_flor, caida_flor, descripcion, aprobada, usuario_id, foto) VALUES
-('Pino canario', 'Pinus canariensis', 'Aciculada', 'Abril', 'Septiembre', 'Pino autóctono de Canarias que domina las zonas altas.', 1, 1, 'pino_canario.jpg'),
-('Retama del Teide', 'Spartocytisus supranubius', 'Pequeñas hojas', 'Mayo', 'Octubre', 'Arbusto endémico que crece en las cumbres del Teide.', 1, 2, 'retama_teide.jpg'),
-('Cardón', 'Euphorbia canariensis', 'Sustentacular', 'Marzo', 'Julio', 'Cactus típico de las zonas secas de Tenerife.', 1, 3, 'cardon.jpg'),
-('Bejeque', 'Euphorbia balsamifera', 'Sustentacular', 'Abril', 'Septiembre', 'Planta suculenta típica de zonas costeras y secas.', 1, 1, 'bejeque.jpg'),
-('Faya', 'Myrica faya', 'Perennifolia', 'Mayo', 'Noviembre', 'Árbol típico de los bosques húmedos de Canarias.', 1, 2, 'faya.jpg'),
-('Malpaís', 'Launaea arborescens', 'Lanceolada', 'Abril', 'Agosto', 'Planta resistente que crece en terrenos volcánicos.', 1, 3, 'malpais.jpg');
+('Pino canario', 'Pinus canariensis', 'Aciculada', 'Abril', 'Septiembre', 'Pino autóctono de Canarias que domina las zonas altas.', 1, 1, 'flora_default.jpg'),
+('Retama del Teide', 'Spartocytisus supranubius', 'Pequeñas hojas', 'Mayo', 'Octubre', 'Arbusto endémico que crece en las cumbres del Teide.', 1, 2, 'flora_default.jpg'),
+('Cardón', 'Euphorbia canariensis', 'Sustentacular', 'Marzo', 'Julio', 'Cactus típico de las zonas secas de Tenerife.', 1, 3, 'flora_default.jpg'),
+('Bejeque', 'Euphorbia balsamifera', 'Sustentacular', 'Abril', 'Septiembre', 'Planta suculenta típica de zonas costeras y secas.', 1, 1, 'flora_default.jpg'),
+('Faya', 'Myrica faya', 'Perennifolia', 'Mayo', 'Noviembre', 'Árbol típico de los bosques húmedos de Canarias.', 1, 2, 'flora_default.jpg'),
+('Malpaís', 'Launaea arborescens', 'Lanceolada', 'Abril', 'Agosto', 'Planta resistente que crece en terrenos volcánicos.', 1, 3, 'flora_default.jpg');
 
 -- Asociación de floras con rutas
 INSERT INTO ruta_flora (ruta_id, flora_id) VALUES
@@ -393,3 +454,17 @@ INSERT INTO ruta_flora (ruta_id, flora_id) VALUES
 (5, 4), -- Bejeque en Rambla de Castro
 (3, 5), -- Faya en Barranco del Infierno
 (8, 6); -- Malpaís en Arenas Negras
+
+-- Hacer que la ruta 2 (Pico del Teide) tenga 12 favoritos
+INSERT INTO usuario_ruta_favorita (usuario_id, ruta_id) VALUES
+(1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2),
+-- Hacer que la ruta 1 (Sendero de los Sentidos) tenga 11 favoritos
+(1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 1),
+(1, 3), (2, 3), (3, 3), (4, 3), (5, 3),  -- 5 para ruta 3
+(1, 4), (2, 4), (3, 4),                   -- 3 para ruta 4
+(1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), -- 6 para ruta 5
+(1, 6), (2, 6),                            -- 2 para ruta 6
+(1, 7), (2, 7), (3, 7), (4, 7),           -- 4 para ruta 7
+(1, 8), (2, 8), (3, 8), (4, 8), (5, 8), (6, 8), (7, 8), -- 7 para ruta 8
+(1, 9), (2, 9), (3, 9), (4, 9),           -- 4 para ruta 9
+(1, 10), (2, 10), (3, 10), (4, 10), (5, 10), (6, 10); -- 6 para ruta 10

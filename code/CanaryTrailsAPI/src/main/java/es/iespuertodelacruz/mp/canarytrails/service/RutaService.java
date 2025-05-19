@@ -40,6 +40,10 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
         return rutaRepository.findAll();
     }
 
+    public List<Ruta> findAllPopulares() {
+        return rutaRepository.findRutasConMasDe10Favoritos();
+    }
+
     @Override
     public Ruta findById(Integer id) {
         return rutaRepository.findById(id).orElse(null);
