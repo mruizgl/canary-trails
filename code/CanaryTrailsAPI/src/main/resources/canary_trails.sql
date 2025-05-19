@@ -247,5 +247,149 @@ INSERT INTO `comentarios` (`titulo`, `descripcion`, `usuario_id`, `ruta_id`) VAL
 ('Esto no mola', 'Esto no mola nada', '1', '1');
 
 INSERT INTO `coordenadas` (`latitud`, `longitud`) VALUES
-('34.762203', '-35.112988'),
-('-27.333332', '50.000000');
+-- Sendero de los Sentidos
+(28.5563, -16.2634),
+(28.5570, -16.2628),
+(28.5577, -16.2622),
+
+-- Pico del Teide
+(28.2726, -16.6425),
+(28.2710, -16.6410),
+(28.2695, -16.6395),
+
+-- Barranco del Infierno
+(28.1182, -16.7260),
+(28.1167, -16.7250),
+(28.1150, -16.7240),
+
+-- Paisaje Lunar
+(28.1495, -16.6350),
+(28.1480, -16.6335),
+(28.1465, -16.6320),
+
+-- Rambla de Castro
+(28.3889, -16.5730),
+(28.3900, -16.5720),
+(28.3912, -16.5710),
+
+-- Chinyero Circular
+(28.2980, -16.7930),
+(28.2965, -16.7920),
+(28.2950, -16.7910),
+
+-- Cueva del Viento
+(28.3745, -16.7060),
+(28.3752, -16.7050),
+(28.3759, -16.7040),
+
+-- Arenas Negras
+(28.3610, -16.7630),
+(28.3595, -16.7615),
+(28.3580, -16.7600),
+
+-- Malpaís de Güímar
+(28.2931, -16.3830),
+(28.2940, -16.3820),
+(28.2950, -16.3810),
+
+-- Anaga - Taganana
+(28.5620, -16.1900),
+(28.5605, -16.1885),
+(28.5590, -16.1870);
+
+INSERT INTO coordenada_ruta (ruta_id, coordenada_id) VALUES
+-- Sendero de los Sentidos (ruta_id = 1)
+(1, 1),
+(1, 2),
+(1, 3),
+
+-- Pico del Teide (ruta_id = 2)
+(2, 4),
+(2, 5),
+(2, 6),
+
+-- Barranco del Infierno (ruta_id = 3)
+(3, 7),
+(3, 8),
+(3, 9),
+
+-- Paisaje Lunar (ruta_id = 4)
+(4, 10),
+(4, 11),
+(4, 12),
+
+-- Rambla de Castro (ruta_id = 5)
+(5, 13),
+(5, 14),
+(5, 15),
+
+-- Chinyero Circular (ruta_id = 6)
+(6, 16),
+(6, 17),
+(6, 18),
+
+-- Cueva del Viento (ruta_id = 7)
+(7, 19),
+(7, 20),
+(7, 21),
+
+-- Arenas Negras (ruta_id = 8)
+(8, 22),
+(8, 23),
+(8, 24),
+
+-- Malpaís de Güímar (ruta_id = 9)
+(9, 25),
+(9, 26),
+(9, 27),
+
+-- Anaga - Taganana (ruta_id = 10)
+(10, 28),
+(10, 29),
+(10, 30);
+
+-- Comentarios adicionales para rutas existentes
+INSERT INTO comentarios (titulo, descripcion, usuario_id, ruta_id) VALUES
+('Impresionante paisaje', 'La vista desde la cima es espectacular, lo recomiendo mucho.', 2, 2),
+('Perfecta para principiantes', 'Ruta sencilla y bien señalizada, ideal para familias.', 3, 1),
+('Tramos difíciles', 'Algunos tramos requieren buen calzado y resistencia.', 1, 4),
+('Mucha vegetación', 'Me encantó la flora autóctona que se puede observar.', 2, 5),
+('Rápida y entretenida', 'Buena ruta para hacer en una mañana.', 3, 7),
+('Un reto para los amantes de la montaña', 'El desnivel es considerable, pero vale la pena.', 2, 10),
+('Ambiente tranquilo', 'Perfecto para desconectar y disfrutar de la naturaleza.', 1, 3);
+
+-- Faunas relacionadas con rutas
+INSERT INTO faunas (nombre, descripcion, aprobada, usuario_id, foto) VALUES
+('Lagarto tizón', 'Reptil endémico que se puede observar en zonas rocosas.', 1, 1, 'lagarto_tizon.jpg'),
+('Pájaro carpintero canario', 'Ave típica de la isla con un característico tamborileo.', 1, 2, 'pajaro_carpintero.jpg'),
+('Murciélago de herradura', 'Mamífero nocturno que habita en cuevas y bosques.', 1, 3, 'murcielago_herradura.jpg'),
+('Gineta canaria', 'Pequeño mamífero carnívoro que habita en los bosques.', 1, 2, 'gineta_canaria.jpg'),
+('Cernícalo vulgar', 'Ave rapaz común en zonas abiertas y rocosas.', 1, 1, 'cernicalo_vulgar.jpg'),
+('Tortuga mora', 'Reptil que se encuentra en áreas semiáridas de Tenerife.', 1, 3, 'tortuga_mora.jpg');
+
+-- Asociación de faunas con rutas
+INSERT INTO ruta_fauna (ruta_id, fauna_id) VALUES
+(1, 1), -- Lagarto tizón en Sendero de los Sentidos
+(2, 2), -- Pájaro carpintero en Pico del Teide
+(7, 3), -- Murciélago de herradura en Cueva del Viento
+(4, 4), -- Gineta canaria en Paisaje Lunar
+(5, 5), -- Cernícalo vulgar en Rambla de Castro
+(9, 6); -- Tortuga mora en Malpaís de Güímar
+
+-- Floras relacionadas con rutas
+INSERT INTO floras (nombre, especie, tipo_hoja, salida_flor, caida_flor, descripcion, aprobada, usuario_id, foto) VALUES
+('Pino canario', 'Pinus canariensis', 'Aciculada', 'Abril', 'Septiembre', 'Pino autóctono de Canarias que domina las zonas altas.', 1, 1, 'pino_canario.jpg'),
+('Retama del Teide', 'Spartocytisus supranubius', 'Pequeñas hojas', 'Mayo', 'Octubre', 'Arbusto endémico que crece en las cumbres del Teide.', 1, 2, 'retama_teide.jpg'),
+('Cardón', 'Euphorbia canariensis', 'Sustentacular', 'Marzo', 'Julio', 'Cactus típico de las zonas secas de Tenerife.', 1, 3, 'cardon.jpg'),
+('Bejeque', 'Euphorbia balsamifera', 'Sustentacular', 'Abril', 'Septiembre', 'Planta suculenta típica de zonas costeras y secas.', 1, 1, 'bejeque.jpg'),
+('Faya', 'Myrica faya', 'Perennifolia', 'Mayo', 'Noviembre', 'Árbol típico de los bosques húmedos de Canarias.', 1, 2, 'faya.jpg'),
+('Malpaís', 'Launaea arborescens', 'Lanceolada', 'Abril', 'Agosto', 'Planta resistente que crece en terrenos volcánicos.', 1, 3, 'malpais.jpg');
+
+-- Asociación de floras con rutas
+INSERT INTO ruta_flora (ruta_id, flora_id) VALUES
+(2, 1), -- Pino canario en Pico del Teide
+(4, 2), -- Retama del Teide en Paisaje Lunar
+(9, 3), -- Cardón en Malpaís de Güímar
+(5, 4), -- Bejeque en Rambla de Castro
+(3, 5), -- Faya en Barranco del Infierno
+(8, 6); -- Malpaís en Arenas Negras
