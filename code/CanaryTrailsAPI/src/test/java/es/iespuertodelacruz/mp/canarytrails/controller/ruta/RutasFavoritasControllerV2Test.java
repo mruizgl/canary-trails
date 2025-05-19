@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,6 +36,7 @@ public class RutasFavoritasControllerV2Test {
 
     private Usuario usuario;
     private Ruta ruta;
+    private List<String> fotos = new ArrayList<>();
 
     @BeforeEach
     public void setUp() {
@@ -45,6 +47,9 @@ public class RutasFavoritasControllerV2Test {
         ruta = new Ruta();
         ruta.setId(1);
         ruta.setNombre("Ruta 1");
+
+        fotos.add("foto");
+        fotos.add("foto");
 
         Authentication auth = mock(Authentication.class);
         lenient().when(auth.getName()).thenReturn("user");
@@ -60,7 +65,7 @@ public class RutasFavoritasControllerV2Test {
         when(rutaService.findRutasFavoritasByUserId(1)).thenReturn(List.of(ruta));
         when(rutaMapper.toDto(ruta)).thenReturn(new RutaSalidaDto(
                 1, "Ruta 1", "media", 3600L, 12.5f, 200f,
-                true, null, null, null, null, null, null, "foto.jpg"
+                true, null, null, null, null, null, null, fotos
         ));
 
         ResponseEntity<?> response = controller.findRutasFavoritasByUserId(1);

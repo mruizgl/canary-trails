@@ -38,6 +38,7 @@ public class RutaControllerV2Test {
 
     private Ruta ruta;
     private Usuario usuario;
+    private List<String> fotos = new ArrayList<>();
 
     @BeforeEach
     public void setUp() {
@@ -56,6 +57,9 @@ public class RutaControllerV2Test {
         usuario.setNombre("user");
         ruta.setUsuario(usuario);
 
+        fotos.add("foto");
+        fotos.add("foto");
+
         Authentication auth = mock(Authentication.class);
         lenient().when(auth.getName()).thenReturn("user");
         SecurityContext context = mock(SecurityContext.class);
@@ -66,7 +70,7 @@ public class RutaControllerV2Test {
     private RutaSalidaDto mockRutaSalidaDto() {
         return new RutaSalidaDto(
                 1, "ruta", "media", 0L, 0.0f, 0.0f, false,
-                null, null, null, null, null, null, "foto"
+                null, null, null, null, null, null, fotos
         );
     }
 

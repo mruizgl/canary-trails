@@ -1,5 +1,6 @@
-package es.iespuertodelacruz.mp.canarytrails.controller.v2;
+package es.iespuertodelacruz.mp.canarytrails.controller.usuario;
 
+import es.iespuertodelacruz.mp.canarytrails.controller.v2.UsuarioControllerV2;
 import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.usuario.UsuarioSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
@@ -126,7 +127,7 @@ public class UsuarioControllerV2Test {
         MockMultipartFile file = new MockMultipartFile("file", "foto.jpg", "image/jpeg", "data".getBytes());
         when(fotoManagementService.save(file, "usuario")).thenReturn("usuario/foto.jpg");
         when(usuarioService.findById(1)).thenReturn(usuario);
-        when(usuarioService.update(usuario)).thenReturn(true);
+        when(usuarioService.uploadFoto(usuario)).thenReturn(true);
 
         ResponseEntity<?> response = controller.uploadFile(1, file);
         assertEquals(200, response.getStatusCodeValue());
