@@ -24,12 +24,12 @@ const RutaCard = (props: Props) => {
 
   useEffect(() => {
     let nuevaDistancia = props.distancia/1000;
-    const horasProcesadas = Math.floor(minutos / 60);
-    const minutosRestantes = minutos % 60;
+    const horasProcesadas = Math.floor(props.tiempo / 60);
+    const minutosRestantes = props.tiempo % 60;
     
     setdistanciaKm(nuevaDistancia);
-    sethoras(horas);
-    setminutos(minutos);
+    sethoras(horasProcesadas);
+    setminutos(minutosRestantes);
   }, [])
   
 
@@ -61,7 +61,7 @@ const RutaCard = (props: Props) => {
       <View style={styles.stats}>
         <View>
           <Text>Distancia: </Text>
-          <Text>{distanciaKm}</Text>
+          <Text>{distanciaKm} km</Text>
         </View>
 
         <View>
