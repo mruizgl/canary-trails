@@ -1,13 +1,11 @@
 package es.iespuertodelacruz.mp.canarytrails;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class CanaryTrailsApplicationTests {
+class CanaryTrailsApplicationMainTest {
 
 	@Test
-	void contextLoads() {
+	void mainMethodShouldRunWithoutExceptions() {
+		CanaryTrailsApplication.main(new String[] {});
 	}
-
 }
