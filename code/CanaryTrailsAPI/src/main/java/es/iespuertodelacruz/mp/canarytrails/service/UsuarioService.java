@@ -124,7 +124,7 @@ public class UsuarioService implements IServiceGeneric<Usuario, Integer> {
             int max = 255;
 
             if(object.getPassword() != null){
-                if(!(object.getPassword().length() < min) || !(object.getPassword().length() > max)){
+                if(object.getPassword().length() < min || object.getPassword().length() > max){
                     throw new RuntimeException("La contraseña no es valida");
                 }
                 usuario.setPassword(object.getPassword());
