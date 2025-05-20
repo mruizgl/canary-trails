@@ -9,7 +9,7 @@
 **ORM:** Spring Data JPA  
 **Documentación:** Swagger
 
-### 🔧 Paquetes principales
+### Paquetes principales
 - `controller`: Controladores REST.
 - `entities`: Entidades JPA del modelo de datos.
 - `dto`: Data Transfer Objects para entrada/salida.
