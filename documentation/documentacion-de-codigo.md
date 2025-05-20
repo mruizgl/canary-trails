@@ -100,9 +100,9 @@ En el futuro:
 
 ## Enlaces útiles
 
-- [Manual de uso](./manual-de-uso.MD)
-- [Manual de usuario](./manual-de-usuario.MD)
-- [Diseño UI/UX](./documentacion-de-diseno.MD)
+- [Manual de uso](./manual-de-uso.md)
+- [Manual de usuario](./manual-de-usuario.md)
+- [Diseño UI/UX](./documentacion-de-diseno.md)
 
 
 ---
