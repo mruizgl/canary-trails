@@ -37,6 +37,16 @@ public class RutasFavoritasControllerV3 {
         return ResponseEntity.ok(rutaSalidaDtos);
     }
 
+    @GetMapping("/populares")
+    public ResponseEntity<?> findRutasPopularesById() {
+
+        List<Ruta> rutasPopularesById = rutaService.findAllPopulares();
+        List<RutaSalidaDto> rutaSalidaDtos = rutasPopularesById.stream()
+                .map(rutaMapper::toDto).toList();
+
+        return ResponseEntity.ok(rutaSalidaDtos);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<?> createRutaFavorita(@RequestBody ModificarRutaFavoritaDto dto){
         return ResponseEntity.ok(rutaService.aniadirRutaFavorita(dto.idUsuario(), dto.idRuta()));

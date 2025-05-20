@@ -48,21 +48,20 @@ public class JwtFilter extends OncePerRequestFilter {
 
                 "/v2/", "/v3/", "/webjars/",
                 "/websocket/", "/api/v1/",
-                "/api/v1/imagenes/ruta/",
-                "/api/v1/imagenes/fauna/",
-                "/api/v1/imagenes/flora/",
-                "/api/v1/imagenes/usuario/"
+                "/error"
         };
 
 
         for (String ruta : rutasPermitidas) {
             if (path.startsWith(ruta)) {
                 // Permitir la solicitud sin autenticación
-                //System.out.println("EMPIEZA POR ESE COSO "+path);
+                //System.out.println("EMPIEZA POR ESE COSO "+path+ " " +ruta);
                 filterChain.doFilter(request, response);
                 return;
+            } else {
+                //System.out.println("NO EMPIEZA POR ESE COSO "+path+ " " +ruta);
             }
-            //System.out.println("NO EMPIEZA POR ESE COSO "+path);
+
         }
 
         //el token viene en un header Authorization

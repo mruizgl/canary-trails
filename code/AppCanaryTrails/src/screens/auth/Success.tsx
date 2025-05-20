@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { PrincipalStackParamList } from '../../navigations/PrincipalStackNavigation'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
@@ -15,9 +15,9 @@ const Success = ({navigation, route}:PropsHome) => {
         </View>
         <View style={styles.descripcion}>
             <Text>Revisa tu correo para validarla y poder iniciar sesión</Text>
-            <TouchableHighlight onPress={()=> navigation.replace('Login')}>
+            <TouchableOpacity onPress={()=> navigation.replace('Login')}>
                 <Text style={{color: 'blue', textAlign: 'center', margin: 20}}>Volver al Login</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
         </View>
     </View>
   )

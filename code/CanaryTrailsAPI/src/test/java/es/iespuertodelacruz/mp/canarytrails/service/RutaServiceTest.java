@@ -59,7 +59,7 @@ public class RutaServiceTest {
         rutaValida.setCoordenadas(List.of(coordenada, coordenada, coordenada, coordenada, coordenada));
     }
 
-    /* en el beforeeach he puesto 5 coordenadas y aun asi me esta dando el mensaje de que hay que tener al menos coordenadas
+
     @Test
     public void saveRutaValidaTest() {
         when(rutaRepository.save(rutaValida)).thenReturn(rutaValida);
@@ -70,7 +70,7 @@ public class RutaServiceTest {
         assertEquals("Ruta Test", saved.getNombre());
     }
 
-     */
+
     @Test
     public void saveRutaSinNombre_LanzaExcepcion() {
         rutaValida.setNombre(null);

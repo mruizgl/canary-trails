@@ -66,10 +66,10 @@ class RutaMapperTest {
                         new UsuarioSalidaRutaDto(10, "Usuario", "correo@test.com", "pass", true, "USER"))
         );
         when(relacionesMapper.toSalidaRutaDto(fauna)).thenReturn(
-                new FaunaSalidaRutaDto(1, "Fauna", "Descripción", true)
+                new FaunaSalidaRutaDto(1, "Fauna", "Descripción", true, "foto")
         );
         when(relacionesMapper.toSalidaRutaDto(flora)).thenReturn(
-                new FloraSalidaRutaDto(1, "Flora", "Especie", "Hoja", "Primavera", "Verano", "Desc", true)
+                new FloraSalidaRutaDto(1, "Flora", "Especie", "Hoja", "Primavera", "Verano", "Desc", true, "foto")
         );
         when(relacionesMapper.toSalidaRutaDto(coord)).thenReturn(
                 new CoordenadaSalidaRutaDto(1, null, null)
@@ -149,7 +149,7 @@ class RutaMapperTest {
     @Test
     void faunaListToDtoList_mapsCorrectly() {
         Fauna fauna = new Fauna();
-        when(relacionesMapper.toSalidaRutaDto(fauna)).thenReturn(new FaunaSalidaRutaDto(2, "Lagarto", "Reptil", true));
+        when(relacionesMapper.toSalidaRutaDto(fauna)).thenReturn(new FaunaSalidaRutaDto(2, "Lagarto", "Reptil", true, "foto"));
 
         List<FaunaSalidaRutaDto> result = rutaMapper.faunaListToFaunaSalidaRutaDtoList(List.of(fauna));
         assertThat(result).hasSize(1);
@@ -159,7 +159,7 @@ class RutaMapperTest {
     void floraListToDtoList_mapsCorrectly() {
         Flora flora = new Flora();
         when(relacionesMapper.toSalidaRutaDto(flora)).thenReturn(
-                new FloraSalidaRutaDto(3, "Pino", "Pinus", "Agujas", "Ene", "Jun", "Descripción", true)
+                new FloraSalidaRutaDto(3, "Pino", "Pinus", "Agujas", "Ene", "Jun", "Descripción", true, "foto")
         );
 
         List<FloraSalidaRutaDto> result = rutaMapper.floraListToFloraSalidaRutaDtoList(List.of(flora));

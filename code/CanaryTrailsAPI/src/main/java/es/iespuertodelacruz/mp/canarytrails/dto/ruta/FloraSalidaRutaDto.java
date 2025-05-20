@@ -19,6 +19,7 @@ public record FloraSalidaRutaDto(
          String salidaFlor,
          String caidaFlor,
          String descripcion,
-         boolean aprobada
+         boolean aprobada,
+         String foto
 ) {
 }

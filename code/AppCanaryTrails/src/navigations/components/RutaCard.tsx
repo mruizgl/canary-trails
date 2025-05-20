@@ -18,18 +18,18 @@ const RutaCard = (props: Props) => {
   const [distanciaKm, setdistanciaKm] = useState<number>(0)
   const [horas, sethoras] = useState<number>(0)
   const [minutos, setminutos] = useState<number>(0)
-  let fotoProcesada = 'http://10.0.2.2:8080/images/'+props.fotos[1];
+  // let fotoProcesada = 'http://10.0.2.2:8080/images/'+props.fotos[1];
 
   //const [municipio, setmunicipio] = useState<Array<Municipio> | string>()
 
   useEffect(() => {
     let nuevaDistancia = props.distancia/1000;
-    const horasProcesadas = Math.floor(minutos / 60);
-    const minutosRestantes = minutos % 60;
+    const horasProcesadas = Math.floor(props.tiempo / 60);
+    const minutosRestantes = props.tiempo % 60;
     
     setdistanciaKm(nuevaDistancia);
-    sethoras(horas);
-    setminutos(minutos);
+    sethoras(horasProcesadas);
+    setminutos(minutosRestantes);
   }, [])
   
 
@@ -41,9 +41,7 @@ const RutaCard = (props: Props) => {
           {
             (props.municipios.length > 1) ?
               props.municipios.map((municipio, index) => (
-                <div key={index}>
-                  {municipio.nombre}
-                </div>
+                <p key={index}>, {municipio.nombre}</p>
               ))
             :
             <Text>{props.municipios[0].nombre}</Text>
@@ -54,14 +52,14 @@ const RutaCard = (props: Props) => {
       <View>
         <Image  
           source={{ uri: 'http://10.0.2.2:8080/api/v1/imagenes/ruta/' + props.fotos[0] }}
-          style={{ width: 100, height: 80 }}
+          style={{ width: '100%', height: 100 }}
         />
       </View>
 
       <View style={styles.stats}>
         <View>
           <Text>Distancia: </Text>
-          <Text>{distanciaKm}</Text>
+          <Text>{distanciaKm} km</Text>
         </View>
 
         <View>
@@ -84,7 +82,7 @@ export default RutaCard
 const styles = StyleSheet.create({
   card:{
     width: 380,
-    height: 200,
+    height: 240,
 
     borderRadius: 10,
 
@@ -95,6 +93,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
 
+  stats:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
   nombre:{
 
   },
@@ -102,10 +105,4 @@ const styles = StyleSheet.create({
   municipio:{
 
   },
-
-  stats:{
-    
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  }
 })

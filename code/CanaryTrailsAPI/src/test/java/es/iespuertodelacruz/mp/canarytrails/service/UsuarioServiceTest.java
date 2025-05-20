@@ -102,7 +102,7 @@ public class UsuarioServiceTest {
         assertThrows(RuntimeException.class, () -> usuarioService.save(usuario));
     }
 
-    /*
+
     @Test
     public void updateUsuarioExistenteTest() {
         when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuario));
@@ -117,7 +117,7 @@ public class UsuarioServiceTest {
         assertTrue(result);
     }
 
-     */
+
 
     @Test
     public void updateUsuarioInexistente_LanzaExcepcion() {

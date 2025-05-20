@@ -78,7 +78,8 @@ const SearchRutas = ({navigation, route}:PropsSearch) => {
           renderItem={({ item, index }) => {
               return (
               <View style={{alignSelf: 'center', marginVertical: 10}}>
-                  <TouchableOpacity onPress={()=> navigation.navigate('InfoRuta')}>
+                  <TouchableOpacity 
+                      onPress={()=> navigation.navigate('InfoRuta', {ruta: item})}>
                       <RutaCardSmall
                         nombre={item.nombre} 
                         distancia={item.distanciaMetros}
@@ -92,18 +93,9 @@ const SearchRutas = ({navigation, route}:PropsSearch) => {
               </View>
               )
           }}
-          keyExtractor={(item, index) => 'partida ' + index}
+          keyExtractor={(item, index) => 'ruta ' + index}
         />
-        
-        {/* <MapView
-          style={styles.mapa}
-          initialRegion={{
-            latitude: 28.2789829,
-            longitude: -16.5523792,
-            latitudeDelta: 1.0,
-            longitudeDelta: 1.0,
-          }}
-        /> */}
+      
       </View>
     </View>
   )

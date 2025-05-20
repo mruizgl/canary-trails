@@ -31,6 +31,16 @@ public interface RutaRepository extends JpaRepository<Ruta, Integer> {
     ) //Native Query
     List<Integer> findFavoritasByUserId(@Param("usuario_id") int id);
 
+    @Query(value = """
+        SELECT r.* 
+        FROM rutas r
+        JOIN usuario_ruta_favorita urf ON r.id = urf.ruta_id
+        GROUP BY r.id
+        HAVING COUNT(urf.usuario_id) >= 10
+        ORDER BY COUNT(urf.usuario_id) DESC
+        """, nativeQuery = true)
+    List<Ruta> findRutasConMasDe10Favoritos();
+
 
 
 

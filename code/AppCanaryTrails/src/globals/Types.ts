@@ -10,7 +10,14 @@ export type Usuario = {
   nombre: string,
   correo: string,
   password: string,
-  foto: string
+  rol: string,
+  fechaCreacion: Date,
+  foto: string,
+  faunas: Array<Fauna>,
+  floras: Array<Flora>,
+  rutas: Array<RutaType>,
+  comentarios: Array<Comentario>,
+  rutasFavoritas: Array<RutaType>
 }
 
 export type Municipio ={
@@ -29,15 +36,28 @@ export type Comentario ={
 }
 
 export type Fauna ={
-
+  id: number,
+  nombre: string,
+  descripcion: string,
+  foto: string
 }
 
 export type Flora ={
-
+  id: number,
+  nombre: string,
+  descripcion: string,
+  foto: string
 }
 
 export type Coordenada ={
+  id: number,
+  latitud: number,
+  longitud: number,
+}
 
+export type CoordenadaMaps ={
+  latitude: number,
+  longitude: number,
 }
 
 export type RutaType = {

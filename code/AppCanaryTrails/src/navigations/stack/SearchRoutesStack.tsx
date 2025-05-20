@@ -3,12 +3,13 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SearchRutas from '../../screens/SearchRutas';
 import InfoRuta from '../../screens/InfoRuta';
+import { RutaType } from '../../globals/Types';
 
 type Props = {}
 
 export type RoutesStackParamList = {
   SearchRoutes: undefined,
-  InfoRuta: undefined,
+  InfoRuta: {ruta: RutaType},
 };
 
 const Stack = createNativeStackNavigator<RoutesStackParamList>();

@@ -2,16 +2,17 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../../screens/Home';
-import RutasRecomendadas from '../../screens/RutasRecomendadas';
 import {useAppContext } from '../../context/AppContext';
 import { useJwt } from 'react-jwt';
 import axios from 'axios';
+import { RutaType } from '../../globals/Types';
+import InfoRuta from '../../screens/InfoRuta';
 
 type Props = {}
 
 export type HomeStackParamList = {
     Home: undefined,
-    RutasRecomentadas: undefined,
+    InfoRuta: {ruta: RutaType},
 };
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
@@ -25,7 +26,7 @@ const HomeStack = (props: Props) => {
         }}
       >      
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="RutasRecomentadas" component={RutasRecomendadas} />
+      <Stack.Screen name="InfoRuta" component={InfoRuta} />
     
     </Stack.Navigator>
   )

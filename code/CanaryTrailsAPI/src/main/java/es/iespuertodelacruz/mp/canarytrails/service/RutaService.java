@@ -40,6 +40,10 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
         return rutaRepository.findAll();
     }
 
+    public List<Ruta> findAllPopulares() {
+        return rutaRepository.findRutasConMasDe10Favoritos();
+    }
+
     @Override
     public Ruta findById(Integer id) {
         return rutaRepository.findById(id).orElse(null);
@@ -78,7 +82,7 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
             throw new RuntimeException("La ruta ha de tener al menos un municipio asociado");
         }
 
-        if(object.getCoordenadas() == null || !(object.getCoordenadas().size() < 5)){
+        if(object.getCoordenadas() == null || object.getCoordenadas().size() < 5){
             throw new RuntimeException("La ruta ha de tener al menos 5 coordenadas asociada");
         }
 

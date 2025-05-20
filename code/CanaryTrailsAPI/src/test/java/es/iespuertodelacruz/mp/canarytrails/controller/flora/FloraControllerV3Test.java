@@ -105,7 +105,7 @@ public class FloraControllerV3Test {
         flora.setNombre("Rosa canaria");
 
          floraSalidaDto = new FloraSalidaDto(1, "Rosa canaria", "Rosa",
-                "tipoHoja", "Invierno", null, null, true, usuarioSalidaFloraDto, listaRutas
+                "tipoHoja", "Invierno", null, null, true, usuarioSalidaFloraDto, listaRutas, "foto"
         );
 
         floraEntradaUpdateDto = new FloraEntradaUpdateDto(1, "Lagarto Gigante", "Reptil",
@@ -132,7 +132,7 @@ public class FloraControllerV3Test {
 
         FloraSalidaDto dto = new FloraSalidaDto(1, "Rosa canaria", "Flor endémica",
                 "tipohoja", "salidaflor", "caidaflor", "descripcion", true,
-                usuarioSalidaFloraDto, listaRutas);
+                usuarioSalidaFloraDto, listaRutas, "foto");
 
         when(floraService.findById(1)).thenReturn(flora);
         when(floraMapper.toDTO(flora)).thenReturn(dto);

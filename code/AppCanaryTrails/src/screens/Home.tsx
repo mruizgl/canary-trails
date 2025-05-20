@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { RutaType, tokenPlayload } from '../globals/Types';
+import { RutaType, tokenPlayload, Usuario } from '../globals/Types';
 import axios from 'axios';
 import { useAppContext } from '../context/AppContext';
 import { useJwt } from 'react-jwt';
@@ -10,21 +10,23 @@ import RutaCard from '../navigations/components/RutaCard';
 import RutaCardSmall from '../navigations/components/RutaCardSmall';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { PrincipalStackParamList } from '../navigations/PrincipalStackNavigation';
+import { HomeStackParamList } from '../navigations/stack/HomeStack';
 
 type Props = {}
 
-type PropsHome = NativeStackScreenProps<PrincipalStackParamList, 'Login'>
+type PropsHome = NativeStackScreenProps<HomeStackParamList, 'Home'>
+
 const Home = ({navigation, route}:PropsHome) => {
 
   const context = useAppContext();
   const { decodedToken } = useJwt<tokenPlayload>(context.token);
   const [listaRutasRandom, setlistaRutasRandom] = useState<Array<RutaType>>([])
+  const [listaRutasPopulares, setlistaRutasPopulares] = useState<Array<RutaType>>([])
 
   useEffect(() => {
 
-    async function obtenerRutasRandom(){
+    async function obtenerRutas(){
 
-      let contador : number = 1;
       let rutas : Array<RutaType> = [];
 
       try{
@@ -59,24 +61,53 @@ const Home = ({navigation, route}:PropsHome) => {
 
     }
 
-    obtenerRutasRandom();
+    obtenerRutas();
+
+    async function obtenerRutasPopulares(){
+
+      let rutas : Array<RutaType> = [];
+
+    
+      try{
+
+        const response = await axios.get(`http://10.0.2.2:8080/api/v2/rutas_favoritas/populares`,
+          {
+            headers: {
+              'Authorization': `Bearer ${context.token}`, // Token JWT
+              'Content-Type': 'application/json', // Tipo de contenido
+            }
+          }
+        );
+
+        rutas = response.data;
+
+      } catch (error) {
+        console.log("An error has occurred aqui" +error.message);
+      }
+
+      setlistaRutasPopulares(rutas);
+    }
+
+    obtenerRutasPopulares();
     
   }, [])
 
   return (
     <>
       <View style={{flex: 1, backgroundColor: '#9D8DF1'}}>
+
         <View style={styles.titulo}>
           <Text style={{fontSize: 20}}>Canary Trails</Text>
           <View style={styles.underline}/>
         </View>
+
         <View style={styles.containerRandoms}>
           <FlatList 
               data={listaRutasRandom}
               renderItem={({ item, index }) => {
                   return (
                   <View>
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={()=> navigation.navigate('InfoRuta', {ruta: item})}>
                           <RutaCard 
                             nombre={item.nombre} 
                             distancia={item.distanciaMetros}
@@ -111,11 +142,11 @@ const Home = ({navigation, route}:PropsHome) => {
 
             <View style={{}}>
                 <FlatList 
-                  data={listaRutasRandom}
+                  data={listaRutasPopulares}
                   renderItem={({ item, index }) => {
                       return (
                       <View style={{alignSelf: 'center', marginVertical: 10}}>
-                          <TouchableOpacity>
+                          <TouchableOpacity onPress={()=> navigation.navigate('InfoRuta', {ruta: item})}>
                               <RutaCardSmall 
                                 nombre={item.nombre} 
                                 distancia={item.distanciaMetros}
@@ -145,9 +176,9 @@ const styles = StyleSheet.create({
   containerRandoms:{
     flex: 2,
 
-    //backgroundColor:'blue',
+    //backgroundColor:'red',
 
-    paddingVertical: 20,
+    //paddingVertical: 5,
     //marginTop: 20
   },
 
@@ -164,7 +195,7 @@ const styles = StyleSheet.create({
   },
 
   underline: {
-    marginTop: 4,
+    marginTop: 2,
     height: 2,
     width: '100%', // ancho de la raya
     backgroundColor: 'white',

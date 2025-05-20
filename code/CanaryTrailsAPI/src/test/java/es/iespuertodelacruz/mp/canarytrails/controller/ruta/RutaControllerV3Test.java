@@ -141,7 +141,7 @@ public class RutaControllerV3Test {
         MockMultipartFile file = new MockMultipartFile("file", "foto.jpg", "image/jpeg", "contenido".getBytes());
         when(fotoManagementService.save(file, "ruta")).thenReturn("ruta/foto.jpg");
         when(rutaService.findById(1)).thenReturn(ruta);
-        when(rutaService.update(any())).thenReturn(true);
+        when(rutaService.uploadFotoRuta(any())).thenReturn(true);
 
         ResponseEntity<?> response = controller.uploadFile(1, file);
         assertEquals(200, response.getStatusCodeValue());

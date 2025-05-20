@@ -1,11 +1,12 @@
-import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
-import React, { useEffect } from 'react'
+import { Image, Linking, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import {useAppContext} from '../context/AppContext'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { ProfileStackParamList } from '../navigations/stack/ProfileStack'
 import axios from 'axios'
 import { useJwt } from 'react-jwt'
 import { tokenPlayload, Usuario } from '../globals/Types'
+import Icon from 'react-native-vector-icons/Ionicons';
 
 type Props = {}
 
@@ -19,6 +20,7 @@ const Perfil = ({navigation, route}:PropsProfile) => {
   const { decodedToken } = useJwt<tokenPlayload>(context.token);
 
   const {setUsuarioLogueado, usuarioLogueado} = useAppContext();
+  const [fotoUsuario, setfotoUsuario] = useState<string>("")
 
   useEffect(() => {
     if(decodedToken == null){
@@ -26,6 +28,7 @@ const Perfil = ({navigation, route}:PropsProfile) => {
     }
 
     const nombre = decodedToken?.sub;
+
     async function obtenerUsuario(){
 
         try{
@@ -43,7 +46,14 @@ const Perfil = ({navigation, route}:PropsProfile) => {
             nombre: response.data.nombre,
             correo: response.data.correo,
             password: response.data.password,
-            foto: response.data.foto
+            foto: response.data.foto,
+            rol: response.data.rol,
+            fechaCreacion: response.data.fechaCreacion,
+            faunas: response.data.faunas,
+            floras: response.data.floras,
+            rutas: response.data.rutas,
+            comentarios: response.data.comentarios,
+            rutasFavoritas: response.data.rutasFavoritas
           }
 
           setUsuarioLogueado(usuario);
@@ -57,40 +67,61 @@ const Perfil = ({navigation, route}:PropsProfile) => {
     obtenerUsuario();
   }, [decodedToken])
   
+  
 
   return (
     <View style={{flex:1, backgroundColor: '#9D8DF1'}}>
       <View style={styles.contenedorFoto}>
         <View style={styles.foto}>
-          <Text>{usuarioLogueado?.foto}</Text>
+          {usuarioLogueado?.foto ? (
+            <Image  
+              source={{ uri: `http://10.0.2.2:8080/api/v1/imagenes/usuario/${usuarioLogueado.foto}` }}
+              style={{ width: 100, height: 100, overflow: 'hidden' }}
+            />
+          ) : (
+            <Text>Cargando foto...</Text>
+          )}
         </View>
       </View>
       <View style={styles.opciones}>
 
         <View style={styles.opcionTop}>
-          <TouchableHighlight onPress={()=> navigation.navigate('Info')}>
-            <Text>Información de la Cuenta</Text>
+          <TouchableHighlight onPress={()=> navigation.navigate('InfoPerfil', {usuario: usuarioLogueado})}>
+            <View style={{flexDirection: 'row'}}>
+              <Icon name={'person-circle-outline'} size={30}/>
+              <Text style={{marginTop: 5, marginLeft: 5}}>Información de la Cuenta</Text>
+            </View>
           </TouchableHighlight>
         </View>
 
-        <View style={styles.opcion}>
-        <TouchableHighlight onPress={()=> navigation.navigate('EditPerfil')}>
+        {/* <View style={styles.opcionBottom}>
+        <TouchableHighlight onPress={()=> navigation.navigate('EditPerfil' , {usuario: usuarioLogueado})}>
             <Text>Editar Perfil</Text>
           </TouchableHighlight>
-        </View>
+        </View> */}
 
-        <View style={styles.opcion}>
+        {/* <View style={styles.opcion}>
         <TouchableHighlight onPress={()=> navigation.navigate('RutasFavoritas')}>
             <Text>Rutas Favoritas</Text>
           </TouchableHighlight>
-        </View>
+        </View> */}
+
+        {/* <View style={styles.opcionBottom}>
+        <TouchableHighlight onPress={}>
+            <Text>Otro</Text>
+          </TouchableHighlight>
+        </View> */}
 
         <View style={styles.opcionBottom}>
-        {/* <TouchableHighlight onPress={}> */}
-            <Text>Otro</Text>
-          {/* </TouchableHighlight> */}
+          <TouchableHighlight onPress={()=> Linking.openURL('https://github.com/mruizgl/canary-trails')}>
+            <View style={{flexDirection: 'row'}}>
+              <Icon name={'information-circle-outline'} size={30}/>
+              <Text style={{marginTop: 5, marginLeft: 5}}>Info</Text>
+            </View>
+          </TouchableHighlight>
         </View>
       </View>
+
       <View style={styles.bottomSpace}>
         <View style={styles.cerrarSesion}>
           <TouchableHighlight onPress={removeToken}>
@@ -107,8 +138,8 @@ export default Perfil
 const styles = StyleSheet.create({
 
   contenedorFoto: {
-    //flex: 1,
-    //backgroundColor: 'blue',
+
+    backgroundColor: 'white',
     margin: 10,
     marginTop: 60,
 
@@ -121,17 +152,19 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderStyle: 'solid',
     borderWidth: 3,
+
+    overflow: 'hidden'
   },
 
   foto:{
-
+    // flex: 1,
     alignSelf: 'center',
     
   },
 
   opciones:{
 
-    flex: 2,
+    flex: 1,
     alignSelf: 'center',
     
     backgroundColor: '#B8CDF8',
@@ -183,7 +216,7 @@ const styles = StyleSheet.create({
   },
 
   bottomSpace:{
-    flex: 1,
+    flex: 2,
     //backgroundColor: 'yellow'
   },
 

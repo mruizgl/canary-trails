@@ -11,6 +11,7 @@ public record FaunaSalidaRutaDto(
         int id,
         String nombre,
         String descripcion,
-        boolean aprobada
+        boolean aprobada,
+        String foto
 ) {
 }
