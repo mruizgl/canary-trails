@@ -7,12 +7,6 @@
 
 ---
 
-## Diagramas
-### Diagrama de paquetes 
-<img src= "../anteproyecto/diagrama-paquetes/paquete1.png">
-<img src= "../anteproyecto/diagrama-paquetes/paquete2.png">
-
-
 ## Introducción
 
 Este documento recoge el planteamiento y diseño inicial del proyecto **CanaryTrails**, una aplicación multiplataforma para la planificación, exploración y disfrute de rutas de senderismo en las Islas Canarias. Incluye funcionalidades relacionadas con fauna y flora, navegación GPS, y opciones offline.
@@ -24,6 +18,162 @@ Este documento recoge el planteamiento y diseño inicial del proyecto **CanaryTr
 Diseñar y desarrollar una **aplicación móvil** especializada en rutas de senderismo por Canarias, integrando información sobre **flora y fauna autóctona** y fomentando el turismo local mediante funcionalidades interactivas y educativas.
 
 ---
+
+## Diagramas
+### Diagrama de paquetes 
+<img src= "../anteproyecto/diagrama-paquetes/paquete1.png">
+<img src= "../anteproyecto/diagrama-paquetes/paquete2.png"> 
+
+## Casos de Uso  
+# 📌 Diagrama de Casos de Uso – CanaryTrails
+
+### Índice
+
+- [Especificación](#especificacion)
+- [Actores](#actores)
+- [Casos de uso](#casos-de-uso)
+- [Diagrama de casos de uso](#diagrama-de-casos-de-uso)
+
+---
+
+## Especificación
+
+### Especificación de Actores
+
+| Actor     | Usuario común                                                 |
+|-----------|----------------------------------------------------------------|
+| Descripción | Persona que explora rutas, comenta y guarda favoritas         |
+| Características | Rol básico de uso sin privilegios administrativos         |
+| Relajaciones | No puede validar contenido ni gestionar usuarios             |
+| Referencias | C.U.1 – C.U.7                                                 |
+| Notas      |                                                               |
+| Autores      | Melissa Ruiz, Pedro Martín                                   |
+| Fecha      | 20/05/2025                                                         |
+
+| Atributo            | Descripción                        | Tipo     |
+|---------------------|------------------------------------|----------|
+| `id`                | Identificador del usuario          | int      |
+| `nombre`            | Nombre completo del usuario        | String   |
+| `correo`            | Correo electrónico único           | String   |
+| `rol`               | Rol del usuario (`USER`)           | String   |
+
+| Actor     | Administrador                                                  |
+|-----------|----------------------------------------------------------------|
+| Descripción | Usuario con privilegios para aprobar rutas, flora y fauna     |
+| Características | Acceso completo al panel de gestión                       |
+| Relajaciones | Solo accede a funcionalidades administrativas                |
+| Referencias | C.U.8 – C.U.10                                                |
+| Notas      |                                                               |
+| Autores      | Melissa Ruiz, Pedro Martín                                   |
+| Fecha      | 20/05/2025                                                         |
+
+| Atributo            | Descripción                        | Tipo     |
+|---------------------|------------------------------------|----------|
+| `id`                | Identificador del admin            | int      |
+| `nombre`            | Nombre del administrador           | String   |
+| `rol`               | Rol (`ADMIN`)                      | String   |
+
+---
+
+## Casos de uso <a name="casos-de-uso"></a>
+
+### C.U.1 – Registrarse  
+**Actor:** Usuario  
+**Descripción:** El usuario se registra proporcionando sus datos.  
+**Requisitos:** No estar previamente registrado.  
+**Postcondición:** Usuario creado, en espera de verificación.
+
+---
+
+### C.U.2 – Iniciar sesión  
+**Actor:** Usuario  
+**Descripción:** El usuario accede con correo y contraseña.  
+**Requisitos:** Debe estar registrado y verificado.  
+**Postcondición:** Token generado para acceso.
+
+---
+
+### C.U.3 – Explorar rutas  
+**Actor:** Usuario  
+**Descripción:** Filtra y visualiza rutas según ubicación, dificultad y duración.  
+**Postcondición:** Se muestran rutas que coinciden.
+
+---
+
+### C.U.4 – Guardar ruta como favorita  
+**Actor:** Usuario  
+**Descripción:** Guarda una ruta en su lista personal de favoritas.  
+**Postcondición:** Relación usuario-ruta guardada en BBDD.
+
+---
+
+### C.U.5 – Iniciar una ruta GPS  
+**Actor:** Usuario  
+**Descripción:** Activa navegación GPS y seguimiento de coordenadas.  
+**Precondición:** Ruta descargada (modo offline o no).  
+**Postcondición:** Se registran puntos de paso.
+
+---
+
+### C.U.6 – Proponer una ruta / flora / fauna  
+**Actor:** Usuario  
+**Descripción:** Envía nueva entrada que queda pendiente de aprobación.  
+**Postcondición:** Entrada almacenada con estado `aprobada=false`.
+
+---
+
+### C.U.7 – Comentar y valorar rutas  
+**Actor:** Usuario  
+**Descripción:** Escribe comentarios o puntuaciones en una ruta concreta.  
+**Postcondición:** Comentario visible en la ficha de ruta.
+
+---
+
+### C.U.8 – Aprobar rutas  
+**Actor:** Administrador  
+**Descripción:** Valida o rechaza rutas propuestas por los usuarios.  
+**Precondición:** Ruta pendiente de aprobación.  
+**Postcondición:** Estado `aprobada=true`.
+
+---
+
+### C.U.9 – Aprobar flora / fauna  
+**Actor:** Administrador  
+**Descripción:** Gestiona especies propuestas por la comunidad.  
+**Postcondición:** Quedan visibles al resto de usuarios.
+
+---
+
+### C.U.10 – Eliminar o editar contenido  
+**Actor:** Administrador  
+**Descripción:** Puede borrar rutas o editar datos incorrectos.  
+**Postcondición:** Cambios reflejados en la base de datos.
+
+---
+
+## Diagrama de casos de uso <a name="diagrama-de-casos-de-uso"></a>
+
+```
+[Usuario] --> (Registrarse)
+[Usuario] --> (Iniciar sesión)
+[Usuario] --> (Explorar rutas)
+[Usuario] --> (Guardar ruta como favorita)
+[Usuario] --> (Iniciar una ruta GPS)
+[Usuario] --> (Proponer una ruta / flora / fauna)
+[Usuario] --> (Comentar y valorar rutas)
+
+[Administrador] --> (Aprobar rutas)
+[Administrador] --> (Aprobar flora / fauna)
+[Administrador] --> (Eliminar o editar contenido)
+```
+
+<img src= "../anteproyecto/diagrama-caso-uso/use-case.png"> 
+
+## Diarama de clases  
+![alt text](image.png)
+
+
+
 
 ## Descripción del proyecto (alcance)
 
