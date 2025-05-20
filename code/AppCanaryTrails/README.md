@@ -1,79 +1,42 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+## App Móvil – React Native
 
-# Getting Started
+**Lenguaje:** JavaScript / TypeScript  
+**Framework:** React Native  
+**Gestor de paquetes:** npm  
+**Ecosistema:** Android
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+---
 
-## Step 1: Start the Metro Server
-
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
+### Estructura de Carpetas Principal  
+```
+AppCanaryTrails/
+│
+├── src/
+│ ├── api/ → Configuración de Axios y peticiones a la API
+│ ├── components/ → Componentes reutilizables (cards, botones, etc.)
+│ ├── constants/ → Estilos globales, colores, iconos, traducciones
+│ ├── navigation/ → Stack, tab y drawer navigators
+│ ├── screens/ → Pantallas principales (Inicio, Ruta, Perfil, etc.)
+│ ├── store/ → Gestión de estado (Redux, Context API u otra)
+│ └── utils/ → Funciones auxiliares, validaciones, helpers
+│
+├── assets/ → Imágenes, iconos, fuentes
+├── App.js → Punto de entrada de la app
+├── .env → Variables de entorno
+└── package.json
 ```
 
-## Step 2: Start your Application
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+---
 
-### For Android
+### Comunicación con el Backend
 
-```bash
-# using npm
-npm run android
+- Se usa **Axios** como cliente HTTP (`/src/api/api.js`).
+- Las rutas de la API están centralizadas en un archivo para facilitar su gestión y multientorno.
+- La variable `API_BASE_URL` se carga desde `.env`.
 
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+```js
+import axios from "axios";
+const API = axios.create({
+  baseURL: process.env.API_BASE_URL || "http://localhost:8080/api/",
+});
