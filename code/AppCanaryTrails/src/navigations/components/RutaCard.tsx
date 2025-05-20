@@ -18,7 +18,7 @@ const RutaCard = (props: Props) => {
   const [distanciaKm, setdistanciaKm] = useState<number>(0)
   const [horas, sethoras] = useState<number>(0)
   const [minutos, setminutos] = useState<number>(0)
-  let fotoProcesada = 'http://10.0.2.2:8080/images/'+props.fotos[1];
+  // let fotoProcesada = 'http://10.0.2.2:8080/images/'+props.fotos[1];
 
   //const [municipio, setmunicipio] = useState<Array<Municipio> | string>()
 

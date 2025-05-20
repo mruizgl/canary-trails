@@ -47,12 +47,12 @@ function PrincipalTabNavigation (){
                 }}
             />
 
-            <Tab.Screen name='EnciclopediaStack' component={EnciclopediaStack} 
+            {/* <Tab.Screen name='EnciclopediaStack' component={EnciclopediaStack} 
                 options={{
                     tabBarIcon: ({focused})=> <Icon name={(focused) ? 'apps' : 'apps-outline'} size={30} color={'white'}/> ,
                     tabBarShowLabel: false
                 }}
-            />
+            /> */}
 
             <Tab.Screen name='PerfilStack' component={ProfileStack} 
                 options={{

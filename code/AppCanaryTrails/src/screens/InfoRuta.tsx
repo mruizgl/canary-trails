@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { Comentario, Coordenada, CoordenadaMaps, Fauna, Flora, Municipio, Usuario } from '../globals/Types'
+import { Comentario, Coordenada, CoordenadaMaps, Fauna, Flora, Municipio, RutaType, tokenPlayload, Usuario } from '../globals/Types'
 import { useRoute } from '@react-navigation/native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RoutesStackParamList } from '../navigations/stack/SearchRoutesStack'
@@ -9,6 +9,7 @@ import { FlatList, TextInput } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios'
 import { useAppContext } from '../context/AppContext'
+import { useJwt } from 'react-jwt'
 
 
 // type Props = {
@@ -34,16 +35,19 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
 
   const { ruta } = route.params;
   const context = useAppContext();
-  
+  const { decodedToken } = useJwt<tokenPlayload>(context.token);
 
   const [distanciaKm, setdistanciaKm] = useState<number>(0)
   const [horas, sethoras] = useState<number>(0)
   const [minutos, setminutos] = useState<number>(0)
 
+  const {setUsuarioLogueado, usuarioLogueado} = useAppContext();
   const [coordenadasRuta, setcoordenadasRuta] = useState<Array<CoordenadaMaps>>([]);
 
-  const [tituloComentario, settituloComentario] = useState("");
-  const [descripcion, setdescripcion] = useState("");
+  // const [rutaFavorita, setRutaFavorita] = useState<boolean>()
+
+  // const [tituloComentario, settituloComentario] = useState("");
+  // const [descripcion, setdescripcion] = useState("");
 
   const mapRef = useRef(null);
 
@@ -79,7 +83,91 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
       }, 100);
     
       return () => clearTimeout(timer);
-  }, [])  
+  }, [])
+
+  useEffect(() => {
+    if(decodedToken == null){
+      return;
+    }
+
+    const nombre = decodedToken?.sub;
+
+    async function obtenerUsuario(){
+
+        try{
+          const response = await axios.get(`http://10.0.2.2:8080/api/v2/usuarios/nombre/${nombre}`,
+            {
+              headers: {
+                'Authorization': `Bearer ${context.token}`, // Token JWT
+                'Content-Type': 'application/json', // Tipo de contenido
+              }
+            }
+          );
+
+          const usuario : Usuario = {
+            id: response.data.id,
+            nombre: response.data.nombre,
+            correo: response.data.correo,
+            password: response.data.password,
+            foto: response.data.foto,
+            rol: response.data.rol,
+            fechaCreacion: response.data.fechaCreacion,
+            faunas: response.data.faunas,
+            floras: response.data.floras,
+            rutas: response.data.rutas,
+            comentarios: response.data.comentarios,
+            rutasFavoritas: response.data.rutasFavoritas
+          }
+
+          setUsuarioLogueado(usuario);
+
+        } catch (error) {
+          console.log("An error has occurred aqui" +error.message);
+        }
+
+    }
+
+    obtenerUsuario();
+  }, [decodedToken])
+
+  // useEffect(() => {
+
+  //   if(usuarioLogueado == null){
+  //     return;
+  //   }
+
+  //   async function obtenerFavoritas(){
+
+  //     try{
+
+  //       const response = await axios.get(`http://10.0.2.2:8080/api/v2/rutas_favoritas/${usuarioLogueado.id}`,
+  //         {
+  //           headers: {
+  //             'Authorization': `Bearer ${context.token}`, // Token JWT
+  //             'Content-Type': 'application/json', // Tipo de contenido
+  //           }
+  //         }
+  //       );
+
+  //       let favoritas : Array<RutaType> = response.data;
+  //       let rutasAux : Array<RutaType> = []
+
+  //       if(!(favoritas.length == 0)){
+  //         rutasAux = favoritas.filter((rutaActual: RutaType) => rutaActual.id === ruta.id);
+  //         if(rutasAux.length > 0){
+  //           setRutaFavorita(true);
+  //         }
+  //       }
+
+  //     } catch (error) {
+  //       console.log("An error has occurred aqui" +error.message);
+  //     }
+  //   }
+
+  //   obtenerFavoritas();
+    
+  // }, [usuarioLogueado])
+  
 
   const getDificultadColor = (dificultad: string) => {
 
@@ -120,10 +208,22 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
 
   // function aniadirFavoritas(){
 
+  //   if(rutaFavorita){
+        
+  //   } else {
+  //     aniadir();
+  //   }
+
   //   async function aniadir (){
+
   //     try{
 
-  //       const response = await axios.put(`http://10.0.2.2:8080/api/v2/usuarios/nombre/`, ruta.usuario.nombre, 
+        
+
+  //       const response = await axios.put(`http://10.0.2.2:8080/api/v2/rutas_favoritas/add`, 
+
+  //         {idUsuario: usuarioLogueado.id,  idRuta: ruta.id} , 
+
   //         {
   //           headers: {
   //             'Authorization': `Bearer ${context.token}`, // Token JWT
@@ -133,14 +233,22 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
   //       );
   
   //       if(response.data === true){
+  //         //Para que se refresque el estado del icono
+  //         let auxUsuario = usuarioLogueado;
+  //         setUsuarioLogueado(auxUsuario);
   //         console.log("aniadido favs");
   //       }
+
   //     } catch (error) {
   //       console.log("An error has occurred aqui" +error.message);
   //     }
   //   }
-    
-  //   aniadir();
+
+  //   async function eliminar(){
+
+  //   }
+
+
   // }
 
   
@@ -157,7 +265,12 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
             </View>
             {/* <View style={{marginTop: 2}}>
               <TouchableOpacity onPress={() => aniadirFavoritas()}>
-                <Icon name={'heart-outline'} size={30} color={'red'} /> 
+                {
+                  (rutaFavorita) ?
+                  <Icon name={'heart-outline'} size={30} color={'red'} /> 
+                  :
+                  <Icon name={'heart'} size={30} color={'red'} /> 
+                }
               </TouchableOpacity>
             </View> */}
 

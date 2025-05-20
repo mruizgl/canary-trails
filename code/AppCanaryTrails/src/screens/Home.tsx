@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { RutaType, tokenPlayload } from '../globals/Types';
+import { RutaType, tokenPlayload, Usuario } from '../globals/Types';
 import axios from 'axios';
 import { useAppContext } from '../context/AppContext';
 import { useJwt } from 'react-jwt';

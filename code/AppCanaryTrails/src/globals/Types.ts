@@ -10,7 +10,14 @@ export type Usuario = {
   nombre: string,
   correo: string,
   password: string,
-  foto: string
+  rol: string,
+  fechaCreacion: Date,
+  foto: string,
+  faunas: Array<Fauna>,
+  floras: Array<Flora>,
+  rutas: Array<RutaType>,
+  comentarios: Array<Comentario>,
+  rutasFavoritas: Array<RutaType>
 }
 
 export type Municipio ={
