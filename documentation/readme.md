@@ -2,6 +2,6 @@
 
 - [Anteproyecto](./anteproyecto/)
 
-    - [Documentacion de Diseño](./documentacion-de-diseno.MD)
+    - [Documentacion de Diseño](./documentacion-de-diseno.md)
 
-    - [Documentacion del Codigo](./documentacion-de-codigo.MD)
+    - [Documentacion del Codigo](./documentacion-de-codigo.md)
