@@ -1,4 +1,4 @@
-# 📍 Canary Trails
+# Canary Trails
 
 __Autores: Melissa Ruiz González y Pedro Martín Escuela__
 
@@ -12,18 +12,18 @@ En este repositorio realizaremos nuestro __Proyecto Final__ del __CFGS de Desarr
 
 El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil__ para __descubrir rutas de senderismo__ en __Canarias__, con __información detallada__ de los __senderos y la flora__ presente en cada zona. 
 
-## 🚀 Tecnologías
+## Tecnologías
 - **Frontend:** React Native  
 - **Backend:** Java  
 - **Base de datos:** MySQL y MongoDB 
 
-## 🔥 Características
+## Características
 - Explora rutas de senderismo en Canarias con mapas interactivos.
 - Consulta información sobre la flora en cada sendero.
 - Guarda y comparte rutas favoritas.
 - Sistema de geolocalización y recomendaciones.
 
-## 📌 Instalación (inicial)
+## Instalación (inicial)
 
 ### Requisitos
 - Node.js y npm
