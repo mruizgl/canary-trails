@@ -170,10 +170,10 @@ Diseñar y desarrollar una **aplicación móvil** especializada en rutas de send
 <img src= "../anteproyecto/diagrama-caso-uso/use-case.png"> 
 
 ## Diarama de clases  
-![alt text](image.png)
+<img src= "../anteproyecto/diagrama-de-clases/image.png"> 
 
-
-
+## Diarama de Entidad Relacion  
+<img src= "../anteproyecto/diagrama-entidad-relacion/entity-relation.jpg"> 
 
 ## Descripción del proyecto (alcance)
 
