@@ -44,7 +44,7 @@ El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil
 - Guarda y comparte rutas favoritas.
 - Sistema de geolocalización y recomendaciones.
 
-## 📌 Instalación (inicial)
+## Instalación (inicial)
 
 ### Requisitos
 - Node.js y npm
