@@ -189,6 +189,7 @@ public class RutaControllerV2 {
 
     public boolean esPropietario(Ruta ruta) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("EEEEY: "+ruta.getUsuario().getNombre()+ " ---- " +username);
         return ruta.getUsuario().getNombre().equals(username);
     }
 }

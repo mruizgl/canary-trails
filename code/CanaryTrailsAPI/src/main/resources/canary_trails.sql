@@ -165,7 +165,7 @@ INSERT INTO `usuarios` (`nombre`, `password`,  `correo`, `verificado`, `token_ve
 'token_de_verificacion_admin', 1674825700, 'ROLE_ADMIN', 'default.png'),
 ('Usuario', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'user@email.com', 1,
 'token_de_verificacion_user', 1674825600, 'ROLE_USER', 'default.png'),
-('Pedro', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'petermartesc@gmail.com', 1,
+('Pedro', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'pedro@email.com', 1,
 'e082424a-e6d9-4f45-b6ee-16273ba6a6e3', 1747635123718, 'ROLE_USER', 'default.png'),
 ('Maria', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'maria@email.com', 1, 'token_maria', 1674825800, 'ROLE_USER', 'default.png'),
 ('Juan', '$2a$12$qyXWzEJL0yBYTIeMhvwUEOBGP7MY5yXkiQq6I66KtX3b//i2daYVm', 'juan@email.com', 1, 'token_juan', 1674825900, 'ROLE_USER', 'default.png'),
