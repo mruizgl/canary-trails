@@ -84,10 +84,26 @@ Se utiliza una iconografía limpia basada en vectores (Material Icons / Lucide R
 
 ## 8. Wireframes y Prototipos
 
-Los siguientes prototipos fueron diseñados en **Figma**:
+Protipo de Figma
+- Login y register en Figma
 
-- [Prototipo Navegación App (Usuario)](https://figma.com/file/xxx) 
-- [Pantallas principales](./wireframes/)
+![alt text](<../documentation/designs/figma.png>)
+
+
+
+Wireframes
+- Home   
+
+![alt text](<../documentation/designs/Home.png>)  
+
+- Profile 
+
+![alt text](<../documentation/designs/Profile.jpeg>)
+
+- Routes and games 
+
+![alt text](<../documentation/designs/Routes&Games.jpeg>)
+
 
 Los wireframes contemplan:
 
