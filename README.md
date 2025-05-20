@@ -3,19 +3,40 @@
 __Autores: Melissa Ruiz González y Pedro Martín Escuela__
 
 <div align=center>
-    <img src="./resources/portada-cc.jpg">
+    <img src="./documentation/designs/resources/portada-cc.jpg">
 </div>
 
 <br>
 
 En este repositorio realizaremos nuestro __Proyecto Final__ del __CFGS de Desarrollo de Aplicaciones Multiplataforma__. 
 
-El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil__ para __descubrir rutas de senderismo__ en __Canarias__, con __información detallada__ de los __senderos y la flora__ presente en cada zona. 
+El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil__ para __descubrir rutas de senderismo__ en __Canarias__, con __información detallada__ de los __senderos y la flora y fauna__ presente en cada zona. 
+
+## Índice 
+
+- [Manual del Usuario](./documentation/manual-de-usuario.MD)
+
+- [Documentacion](./documentation/)
+
+    - [Anteproyecto](./documentation/anteproyecto/)
+
+    - [Documentacion de Diseño](./documentation/documentacion-de-diseno.MD)
+
+    - [Documentacion del Codigo](./documentation/documentacion-de-codigo.MD)
+
+        - [Api REST](./code/CanaryTrailsAPI/)
+
+        - [App React Native](./code/AppCanaryTrails/)
+
+        - [Sistema de Gestion Administrador](#gestion)
+
+- [Manual de Uso y Configuracion](./documentation/manual-de-uso.MD)
+
 
 ## Tecnologías
 - **Frontend:** React Native  
 - **Backend:** Java  
-- **Base de datos:** MySQL y MongoDB 
+- **Base de datos:** MySQL
 
 ## Características
 - Explora rutas de senderismo en Canarias con mapas interactivos.
@@ -23,7 +44,7 @@ El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil
 - Guarda y comparte rutas favoritas.
 - Sistema de geolocalización y recomendaciones.
 
-## Instalación (inicial)
+## 📌 Instalación (inicial)
 
 ### Requisitos
 - Node.js y npm
@@ -37,26 +58,5 @@ El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil
     cd canary-trails
 ```
 
-## Índice 
-
-- [Manual del Usuario](#manual)
-
-- [Documentacion del Diseño](#docudis)
-
-    - [Diagramas](#diagrams)
-
-    - [Wireframe](#wireframe)
-
-- [Documentacion del Codigo](#docucode)
-
-    - [Api REST](#api)
-
-    - [App React Native](#app)
-
-    - [Sistema de Gestion Administrador](#gestion)
-
-- [Despliegue](#despliegue)
-
-- [Manual de Uso y Configuracion](#manual)
 
 
