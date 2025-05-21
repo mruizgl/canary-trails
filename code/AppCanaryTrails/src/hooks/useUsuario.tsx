@@ -169,6 +169,7 @@ const useUsuario = () => {
     return {
         usuarioLogueado,
         rutasFavoritasByUsuario,
+        obtenerRutasFavoritasByUsuario,
         esFavoritaDeUser,
         actualizarRutaFavoritas,
     }

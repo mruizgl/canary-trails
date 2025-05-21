@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useAppContext } from '../context/AppContext'
 import { RutaType, tokenPlayload } from '../globals/Types'
 import { useJwt } from 'react-jwt'
-import RutaCardSmall from '../navigations/components/RutaCardSmall'
+import RutaCardSmall from '../components/RutaCardSmall'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RoutesStackParamList } from '../navigations/stack/SearchRoutesStack'
 
