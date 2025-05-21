@@ -1,15 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { RutaType, tokenPlayload, Usuario } from '../globals/Types';
-import axios from 'axios';
 import { useAppContext } from '../context/AppContext';
 import { useJwt } from 'react-jwt';
 import { FlatList } from 'react-native-gesture-handler';
-import { time } from 'console';
 import RutaCard from '../navigations/components/RutaCard';
 import RutaCardSmall from '../navigations/components/RutaCardSmall';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { PrincipalStackParamList } from '../navigations/PrincipalStackNavigation';
 import { HomeStackParamList } from '../navigations/stack/HomeStack';
 import useRutas from '../hooks/useRutas';
 
