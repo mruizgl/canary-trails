@@ -5,9 +5,8 @@ import { useJwt } from 'react-jwt';
 import { RutaType, tokenPlayload, Usuario } from '../globals/Types';
 import axios from 'axios';
 
-type Props = {}
 
-const useUser = (props: Props) => {
+const useUsuario = () => {
 
     const context = useAppContext();
     const { decodedToken } = useJwt<tokenPlayload>(context.token);
@@ -115,6 +114,6 @@ const useUser = (props: Props) => {
     }
 }
 
-export default useUser
+export default useUsuario
 
 const styles = StyleSheet.create({})
