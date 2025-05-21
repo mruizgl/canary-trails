@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Municipio } from '../../globals/Types'
+import { Municipio } from '../globals/Types'
 
 
 type Props = {
@@ -35,6 +35,7 @@ const RutaCard = (props: Props) => {
 
   return (
     <View style={styles.card}>
+
       <View>
         <Text style={{fontSize: 25, fontWeight: 'bold'}}>{props.nombre}</Text>
         <View>
@@ -96,13 +97,5 @@ const styles = StyleSheet.create({
   stats:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-
-  nombre:{
-
-  },
-
-  municipio:{
-
   },
 })

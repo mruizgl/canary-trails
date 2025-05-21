@@ -61,7 +61,7 @@ public class RutasFavoritasControllerV2 {
         return ResponseEntity.ok(rutaService.aniadirRutaFavorita(dto.idUsuario(), dto.idRuta()));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete")
     public ResponseEntity<?> deleteRutaFavorita(@RequestBody ModificarRutaFavoritaDto dto){
 
         if(!esSuPerfil(usuarioService.findById(dto.idUsuario()))){

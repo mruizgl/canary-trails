@@ -11,8 +11,6 @@ type ContextType = {
     token : string,
     saveToken: (token: string) => void,
     removeToken: () => void,
-    usuarioLogueado: Usuario,
-    setUsuarioLogueado: (usuario : Usuario) => void,
 }
 
 const Context = createContext<ContextType>({} as ContextType);
@@ -20,7 +18,6 @@ const Context = createContext<ContextType>({} as ContextType);
 const AppContext = (props: any) => {
 
     const [token, settoken] = useState<string>();
-    const [usuarioLogueado, setusuarioLogueado] = useState<Usuario>(undefined)
     
     useEffect(() => {
         AsyncStorage.getItem("token")
@@ -32,16 +29,6 @@ const AppContext = (props: any) => {
                 //removeToken();
             }
         })
-
-        // AsyncStorage.getItem("usuario")
-        // .then((usuarioStored) => {
-        //     if (usuarioStored) {
-        //         setusuarioLogueado(usuarioStored);
-        //         console.log(usuarioStored);
-        //         console.log("token obtenido del storage");
-        //         //removeToken();
-        //     }
-        // })
     }, [])
 
     const saveToken = (token: string) => {
@@ -56,17 +43,10 @@ const AppContext = (props: any) => {
         console.log("token eliminado");
     }
 
-    const setUsuarioLogueado = (usuario : Usuario) => {
-        setusuarioLogueado(usuario);
-        console.log("usuario seteado " + usuario.foto);
-    }
-
     const contextValues = {
         token,
         saveToken,
         removeToken,
-        usuarioLogueado,
-        setUsuarioLogueado,
     }
 
   return (
