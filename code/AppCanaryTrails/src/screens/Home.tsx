@@ -11,6 +11,7 @@ import RutaCardSmall from '../navigations/components/RutaCardSmall';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { PrincipalStackParamList } from '../navigations/PrincipalStackNavigation';
 import { HomeStackParamList } from '../navigations/stack/HomeStack';
+import useRutas from '../hooks/useRutas';
 
 type Props = {}
 
@@ -20,77 +21,8 @@ const Home = ({navigation, route}:PropsHome) => {
 
   const context = useAppContext();
   const { decodedToken } = useJwt<tokenPlayload>(context.token);
-  const [listaRutasRandom, setlistaRutasRandom] = useState<Array<RutaType>>([])
-  const [listaRutasPopulares, setlistaRutasPopulares] = useState<Array<RutaType>>([])
-
-  useEffect(() => {
-
-    async function obtenerRutas(){
-
-      let rutas : Array<RutaType> = [];
-
-      try{
-
-        const response = await axios.get(`http://10.0.2.2:8080/api/v2/rutas`,
-          {
-            headers: {
-              'Authorization': `Bearer ${context.token}`, // Token JWT
-              'Content-Type': 'application/json', // Tipo de contenido
-            }
-          }
-        );
-
-        rutas = response.data;
-
-      } catch (error) {
-        console.log("An error has occurred aqui" +error.message);
-      }
-
-      //let idRutaRandom = 0;
-      let rutasRandom : Array<RutaType>= [];
-      rutas = rutas.filter((ruta: RutaType) => ruta.aprobada === true); //Filtrado si la ruta esá aprobada se muestra
-
-      if (rutas.length >= 5) {
-        const rutasMezcladas = rutas.sort(() => 0.5 - Math.random()); //Genera un valor random entre -0.5 y 0.5 
-        rutasRandom = rutasMezcladas.slice(0, 5); //Mete los 5 primeros elementos en el array (del 0 al 4)
-      } else {
-        rutasRandom = rutas;
-      }
-
-      setlistaRutasRandom(rutasRandom);
-
-    }
-
-    obtenerRutas();
-
-    async function obtenerRutasPopulares(){
-
-      let rutas : Array<RutaType> = [];
-
-    
-      try{
-
-        const response = await axios.get(`http://10.0.2.2:8080/api/v2/rutas_favoritas/populares`,
-          {
-            headers: {
-              'Authorization': `Bearer ${context.token}`, // Token JWT
-              'Content-Type': 'application/json', // Tipo de contenido
-            }
-          }
-        );
-
-        rutas = response.data;
-
-      } catch (error) {
-        console.log("An error has occurred aqui" +error.message);
-      }
-
-      setlistaRutasPopulares(rutas);
-    }
-
-    obtenerRutasPopulares();
-    
-  }, [])
+  
+  const {allRutas, rutasPopulares, rutasRandom} = useRutas();
 
   return (
     <>
@@ -103,7 +35,7 @@ const Home = ({navigation, route}:PropsHome) => {
 
         <View style={styles.containerRandoms}>
           <FlatList 
-              data={listaRutasRandom}
+              data={rutasRandom}
               renderItem={({ item, index }) => {
                   return (
                   <View>
@@ -142,7 +74,7 @@ const Home = ({navigation, route}:PropsHome) => {
 
             <View style={{}}>
                 <FlatList 
-                  data={listaRutasPopulares}
+                  data={rutasPopulares}
                   renderItem={({ item, index }) => {
                       return (
                       <View style={{alignSelf: 'center', marginVertical: 10}}>

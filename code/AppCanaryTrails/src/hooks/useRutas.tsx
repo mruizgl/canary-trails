@@ -5,9 +5,8 @@ import axios from 'axios'
 import { useAppContext } from '../context/AppContext'
 import { useJwt } from 'react-jwt'
 
-type Props = {}
 
-const useRutas = (props: Props) => {
+const useRutas = () => {
 
     const context = useAppContext();
     const { decodedToken } = useJwt<tokenPlayload>(context.token);
