@@ -59,7 +59,7 @@ const SearchRutas = ({navigation, route}:PropsSearch) => {
   
 
   return (
-    <View style={{flex:1, backgroundColor:'#9D8DF1'}}>
+    <View style={{flex:1, backgroundColor:'#889584'}}>
 
       
       <View style={styles.mapaContenedor}>
@@ -114,11 +114,11 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 2,
     borderRadius: 50,
-    borderColor: '#B8CDF8',
+    borderColor: '#F3F5E8',
 
     elevation: 20,
 
-    backgroundColor: '#B8CDF8',
+    backgroundColor: '#F3F5E8',
 
     justifyContent: 'center',
     zIndex: 1,

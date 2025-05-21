@@ -6,6 +6,8 @@ import HomeStack from './stack/HomeStack';
 import ProfileStack from './stack/ProfileStack';
 import RoutesStack from './stack/SearchRoutesStack';
 import EnciclopediaStack from './stack/EnciclopediaStack';
+import CrearRutas from '../screens/CrearRutas';
+import CrearRutasStack from './stack/CrearRutasStack';
 
 type Props = {
 
@@ -22,7 +24,7 @@ function PrincipalTabNavigation (){
             screenOptions={{ 
                 headerShown: false,
                 tabBarStyle: {
-                    backgroundColor: '#4E4187',      // Color de fondo del tab
+                    backgroundColor: '#41463D',      // Color de fondo del tab
                     //borderTopWidth: 0,            // Sin borde superior
                     height: 54,                   // Altura del tab
                 },
@@ -30,19 +32,26 @@ function PrincipalTabNavigation (){
                     flex: 1,
                     justifyContent: 'center',
                     alignItems: 'center',
-                },
+                }
             }}>
 
             <Tab.Screen name='HomeStack' component={HomeStack} 
                 options={{
-                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'home' : 'home-outline'} size={30} color={'white'}/>, 
+                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'home' : 'home-outline'} size={30} color={'#F3F5E8'}/>, 
                     tabBarShowLabel: false
                 }}
             />
 
             <Tab.Screen name='RutasStack' component={RoutesStack} 
                 options={{
-                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'map' : 'map-outline'} size={30} color={'white'}/> ,
+                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'map' : 'map-outline'} size={30} color={'#F3F5E8'}/> ,
+                    tabBarShowLabel: false
+                }}
+            />
+
+            <Tab.Screen name='CrearRutasStack' component={CrearRutasStack}
+                options={{
+                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'add-circle' : 'add-circle-outline'} size={30} color={'#F3F5E8'}/> ,
                     tabBarShowLabel: false
                 }}
             />
@@ -56,7 +65,7 @@ function PrincipalTabNavigation (){
 
             <Tab.Screen name='PerfilStack' component={ProfileStack} 
                 options={{
-                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'person' : 'person-outline'} size={30} color={'white'}/> ,
+                    tabBarIcon: ({focused})=> <Icon name={(focused) ? 'person' : 'person-outline'} size={30} color={'#F3F5E8'}/> ,
                     tabBarShowLabel: false
                 }}
             />
