@@ -62,6 +62,7 @@ const Home = ({navigation, route}:PropsHome) => {
         </View>
         
         <View style={styles.restoContenedor}>
+          
           <View style={[styles.underline]}/>
           
           <View  style={{flex: 1}}>

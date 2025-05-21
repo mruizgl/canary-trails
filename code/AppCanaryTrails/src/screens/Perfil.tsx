@@ -55,11 +55,14 @@ const Perfil = ({navigation, route}:PropsProfile) => {
           </TouchableHighlight>
         </View> */}
 
-        {/* <View style={styles.opcion}>
+        <View style={styles.opcion}>
         <TouchableHighlight onPress={()=> navigation.navigate('RutasFavoritas')}>
-            <Text>Rutas Favoritas</Text>
+            <View style={{flexDirection: 'row', marginLeft: 2}}>
+              <Icon name={'bookmark'} size={25}/>
+              <Text style={{marginTop: 4, marginLeft: 5}}>Rutas Favoritas</Text>
+            </View>
           </TouchableHighlight>
-        </View> */}
+        </View>
 
         {/* <View style={styles.opcionBottom}>
         <TouchableHighlight onPress={}>
@@ -75,6 +78,7 @@ const Perfil = ({navigation, route}:PropsProfile) => {
             </View>
           </TouchableHighlight>
         </View>
+
       </View>
 
       <View style={styles.bottomSpace}>
