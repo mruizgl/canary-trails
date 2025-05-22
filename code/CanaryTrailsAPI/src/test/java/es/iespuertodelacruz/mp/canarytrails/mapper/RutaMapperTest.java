@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -97,9 +98,11 @@ class RutaMapperTest {
 
     @Test
     void toEntityCreate_validInput_mapsCorrectly() {
+        CoordenadaEntradaCreate coordDto = new CoordenadaEntradaCreate(new BigDecimal("33.222222"), new BigDecimal("22.333333"));
+
         RutaEntradaCreateDto dto = new RutaEntradaCreateDto(
                 "Sendero", "Fácil", 1800L, 2000.0f, 120.0f, false,
-                1, List.of(2), List.of(3), List.of(4), List.of(5)
+                1, List.of(2), List.of(3), List.of(coordDto), List.of(5)
         );
 
         Ruta result = rutaMapper.toEntityCreate(dto);

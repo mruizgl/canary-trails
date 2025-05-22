@@ -13,7 +13,7 @@ public record RutaEntradaCreateDto (
         //List<Integer> comentarios,    //No hay comentarios en una recien creada
         List<Integer> faunas,
         List<Integer> floras,
-        List<Integer> coordenadas,
+        List<CoordenadaEntradaCreate> coordenadas,
         List<Integer> municipios
 ){
 }

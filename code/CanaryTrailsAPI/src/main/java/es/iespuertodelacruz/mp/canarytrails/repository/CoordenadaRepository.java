@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 @Repository
 public interface CoordenadaRepository extends JpaRepository<Coordenada, Integer> {
 
@@ -28,4 +31,11 @@ public interface CoordenadaRepository extends JpaRepository<Coordenada, Integer>
             value="INSERT INTO coordenada_ruta (coordenada_id, ruta_id) VALUES (:coordenadaId, :rutaId)",
             nativeQuery = true)
     void addRutaCoordenadaRelation(@Param("coordenadaId") int coordenadaId, @Param("rutaId") int rutaId);
+
+    @Query(
+            value = "SELECT * FROM coordenadas WHERE latitud = :latitud AND longitud = :longitud",
+            nativeQuery = true
+    )
+    Optional<Coordenada> findByLatitudAndLongitud(@Param("latitud") BigDecimal latitud, @Param("longitud") BigDecimal longitud);
+
 }

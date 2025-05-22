@@ -7,7 +7,7 @@ import ProfileStack from './stack/ProfileStack';
 import RoutesStack from './stack/SearchRoutesStack';
 import EnciclopediaStack from './stack/EnciclopediaStack';
 import CrearRutas from '../screens/CrearRutas';
-import CrearRutasStack from './stack/CrearRutasStack';
+import CrearRutasStack from './stack/CrearStack';
 
 type Props = {
 
@@ -49,7 +49,7 @@ function PrincipalTabNavigation (){
                 }}
             />
 
-            <Tab.Screen name='CrearRutasStack' component={CrearRutasStack}
+            <Tab.Screen name='CrearStack' component={CrearRutasStack}
                 options={{
                     tabBarIcon: ({focused})=> <Icon name={(focused) ? 'add-circle' : 'add-circle-outline'} size={30} color={'#F3F5E8'}/> ,
                     tabBarShowLabel: false

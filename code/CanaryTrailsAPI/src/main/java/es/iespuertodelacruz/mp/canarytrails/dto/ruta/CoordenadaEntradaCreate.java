@@ -1,4 +1,9 @@
 package es.iespuertodelacruz.mp.canarytrails.dto.ruta;
 
-public record CoordenadaEntradaCreate() {
+import java.math.BigDecimal;
+
+public record CoordenadaEntradaCreate(
+        BigDecimal latitud,
+        BigDecimal longitud
+) {
 }

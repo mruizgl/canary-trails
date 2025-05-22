@@ -16,6 +16,10 @@ const useFauna = () => {
     useEffect(() => {
       getAllFaunas();
     }, [])
+
+    function doCreateFauna(fauna : Fauna){
+        crearFauna(fauna);
+    }
     
 
     async function getAllFaunas(){
@@ -42,6 +46,10 @@ const useFauna = () => {
         
         setAllFaunas(faunasAux);
         console.log("All faunas seteados");
+    }
+
+    async function crearFauna(fauna : Fauna){
+
     }
 
     return {
