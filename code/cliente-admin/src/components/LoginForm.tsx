@@ -16,28 +16,30 @@ const LoginForm: React.FC = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 
-
-
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     try {
-        const token = await loginUsuario(form);
+      const token = await loginUsuario(form);
 
-        const decoded = jwtDecode<{ role: string }>(token);
-        console.log(decoded.role);
-        console.log("Token:", token);
-        if (!decoded.role?.includes("ADMIN")) {
-            setError("Acceso restringido solo a administradores.");
-            return;
-        }
+      const decoded = jwtDecode<{ role: string }>(token);
 
-        login(token);
-        navigate("/dashboard");
-        } catch (err) {
+      console.log(decoded.role);
+      console.log("Token:", token);
+
+      if (!decoded.role?.includes("ADMIN")) {
+        setError("Acceso restringido solo a administradores.");
+        return;
+      }
+
+      login(token);
+      navigate("/dashboard");
+
+      } catch (err) {
         setError("Usuario o contraseña incorrectos.");
-        }
-    };
+    }
+  };
 
 
   return (

@@ -3,6 +3,7 @@ import { UsuarioLoginDto } from "../types/UsuarioTypes";
 const API_URL = "http://localhost:8080/api/v1";
 
 export const loginUsuario = async (credenciales: UsuarioLoginDto): Promise<string> => {
+  
   const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: {

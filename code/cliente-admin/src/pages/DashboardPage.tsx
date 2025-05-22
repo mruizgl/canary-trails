@@ -4,9 +4,26 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 
-interface Flora { id: number; nombre: string; descripcion: string; aprobada: boolean; }
-interface Fauna { id: number; nombre: string; descripcion: string; aprobada: boolean; }
-interface Ruta { id: number; nombre: string; descripcion?: string; aprobada: boolean; }
+interface Flora { 
+    id: number;
+    nombre: string; 
+    descripcion: string; 
+    aprobada: boolean; 
+}
+
+interface Fauna { 
+    id: number; 
+    nombre: string; 
+    descripcion: string; 
+    aprobada: boolean; 
+}
+
+interface Ruta { 
+    id: number; 
+    nombre: string; 
+    descripcion?: string; 
+    aprobada: boolean; 
+}
 
 const DashboardPage: React.FC = () => {
     const [floras, setFloras] = useState<Flora[]>([]);
@@ -35,6 +52,7 @@ const DashboardPage: React.FC = () => {
     };
 
     const aprobarFlora = async (flora: any) => {
+
         const payload = {
             id: flora.id,
             nombre: flora.nombre,
@@ -58,6 +76,7 @@ const DashboardPage: React.FC = () => {
     };
 
     const aprobarFauna = async (fauna: any) => {
+
         const payload = {
             id: fauna.id,
             nombre: fauna.nombre,
@@ -100,10 +119,6 @@ const DashboardPage: React.FC = () => {
 
         fetchAll();
     };
-
-
-
-
 
     const rechazar = async (tipo: "flora" | "fauna" | "ruta", id: number) => {
         await authFetch(`http://localhost:8080/api/v3/${tipo}s/delete/${id}`, {
