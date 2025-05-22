@@ -9,99 +9,161 @@ interface Fauna { id: number; nombre: string; descripcion: string; aprobada: boo
 interface Ruta { id: number; nombre: string; descripcion?: string; aprobada: boolean; }
 
 const DashboardPage: React.FC = () => {
-  const [floras, setFloras] = useState<Flora[]>([]);
-  const [faunas, setFaunas] = useState<Fauna[]>([]);
-  const [rutas, setRutas] = useState<Ruta[]>([]);
+    const [floras, setFloras] = useState<Flora[]>([]);
+    const [faunas, setFaunas] = useState<Fauna[]>([]);
+    const [rutas, setRutas] = useState<Ruta[]>([]);
 
-  const { logout } = useContext(AuthContext);
-  const navigate = useNavigate();
+    const { logout } = useContext(AuthContext);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchAll();
-  }, []);
+    useEffect(() => {
+        fetchAll();
+    }, []);
 
-  const fetchAll = async () => {
-    const floraRes = await authFetch("http://localhost:8080/api/v3/floras");
-    const faunaRes = await authFetch("http://localhost:8080/api/v3/faunas");
-    const rutaRes = await authFetch("http://localhost:8080/api/v3/rutas");
+    const fetchAll = async () => {
+        const floraRes = await authFetch("http://localhost:8080/api/v3/floras");
+        const faunaRes = await authFetch("http://localhost:8080/api/v3/faunas");
+        const rutaRes = await authFetch("http://localhost:8080/api/v3/rutas");
 
-    const floraData = await floraRes.json();
-    const faunaData = await faunaRes.json();
-    const rutaData = await rutaRes.json();
+        const floraData = await floraRes.json();
+        const faunaData = await faunaRes.json();
+        const rutaData = await rutaRes.json();
 
-    setFloras(floraData.filter((f: Flora) => !f.aprobada));
-    setFaunas(faunaData.filter((f: Fauna) => !f.aprobada));
-    setRutas(rutaData.filter((r: Ruta) => !r.aprobada));
-  };
+        setFloras(floraData.filter((f: Flora) => !f.aprobada));
+        setFaunas(faunaData.filter((f: Fauna) => !f.aprobada));
+        setRutas(rutaData.filter((r: Ruta) => !r.aprobada));
+    };
 
-  const aprobar = async (tipo: "flora" | "fauna" | "ruta", item: any) => {
-    const endpoint = `http://localhost:8080/api/v3/${tipo}s/update`;
-    await authFetch(endpoint, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...item, aprobada: true }),
-    });
-    fetchAll();
-  };
+    const aprobarFlora = async (flora: any) => {
+        const payload = {
+            id: flora.id,
+            nombre: flora.nombre,
+            descripcion: flora.descripcion,
+            especie: flora.especie,
+            tipoHoja: flora.tipoHoja,
+            salidaFlor: flora.salidaFlor,
+            caidaFlor: flora.caidaFlor,
+            aprobada: true,
+            usuario: flora.usuario?.id || flora.usuario,
+            rutas: flora.rutas?.map((r: any) => r.id) || [],
+        };
 
-  const rechazar = async (tipo: "flora" | "fauna" | "ruta", id: number) => {
-    await authFetch(`http://localhost:8080/api/v3/${tipo}s/delete/${id}`, {
-      method: "DELETE",
-    });
-    fetchAll();
-  };
+        await authFetch("http://localhost:8080/api/v3/floras/update", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
 
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
+        fetchAll();
+    };
 
-  return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Panel de Administración</h1>
+    const aprobarFauna = async (fauna: any) => {
+        const payload = {
+            id: fauna.id,
+            nombre: fauna.nombre,
+            descripcion: fauna.descripcion,
+            aprobada: true,
+            usuario: fauna.usuario?.id || fauna.usuario,
+            rutas: fauna.rutas?.map((r: any) => r.id) || [],
+        };
 
-      <section>
-        <h2>Flora pendiente</h2>
-        <ul>
-          {floras.map((f) => (
-            <li key={f.id}>
-              {f.nombre} - {f.descripcion}
-              <button onClick={() => aprobar("flora", f)}>Aprobar</button>
-              <button onClick={() => rechazar("flora", f.id)}>Rechazar</button>
-            </li>
-          ))}
-        </ul>
-      </section>
+        await authFetch("http://localhost:8080/api/v3/faunas/update", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
 
-      <section>
-        <h2>Fauna pendiente</h2>
-        <ul>
-          {faunas.map((f) => (
-            <li key={f.id}>
-              {f.nombre} - {f.descripcion}
-              <button onClick={() => aprobar("fauna", f)}>Aprobar</button>
-              <button onClick={() => rechazar("fauna", f.id)}>Rechazar</button>
-            </li>
-          ))}
-        </ul>
-      </section>
+        fetchAll();
+    };
 
-      <section>
-        <h2>Rutas pendientes</h2>
-        <ul>
-          {rutas.map((r) => (
-            <li key={r.id}>
-              {r.nombre} - {r.descripcion || "sin descripción"}
-              <button onClick={() => aprobar("ruta", r)}>Aprobar</button>
-              <button onClick={() => rechazar("ruta", r.id)}>Rechazar</button>
-            </li>
-          ))}
-        </ul>
-      </section>
+    const aprobarRuta = async (ruta: any) => {
+        const payload = {
+            id: ruta.id,
+            nombre: ruta.nombre,
+            dificultad: ruta.dificultad,
+            tiempoDuracion: ruta.tiempoDuracion,
+            distanciaMetros: ruta.distanciaMetros,
+            desnivel: ruta.desnivel,
+            aprobada: true,
+            usuario: ruta.usuario?.id || ruta.usuario,
+            faunas: ruta.faunas?.map((f: any) => f.id) || [],
+            floras: ruta.floras?.map((f: any) => f.id) || [],
+            coordenadas: ruta.coordenadas?.map((c: any) => c.id) || [],
+            municipios: ruta.municipios?.map((m: any) => m.id) || [],
+        };
 
-      <button onClick={handleLogout}>Cerrar sesión</button>
-    </div>
-  );
+        await authFetch("http://localhost:8080/api/v3/rutas/update", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
+
+        fetchAll();
+    };
+
+
+
+
+
+    const rechazar = async (tipo: "flora" | "fauna" | "ruta", id: number) => {
+        await authFetch(`http://localhost:8080/api/v3/${tipo}s/delete/${id}`, {
+            method: "DELETE",
+        });
+        fetchAll();
+    };
+
+    const handleLogout = () => {
+        logout();
+        navigate("/");
+    };
+
+    return (
+        <div style={{ padding: "2rem" }}>
+            <h1>Panel de Administración</h1>
+
+            <section>
+                <h2>Flora pendiente</h2>
+                <ul>
+                    {floras.map((f) => (
+                        <li key={f.id}>
+                            {f.nombre} - {f.descripcion}
+                            <button onClick={() => aprobarFlora(f)}>Aprobar</button>
+                            <button onClick={() => rechazar("flora", f.id)}>Rechazar</button>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+
+            <section>
+                <h2>Fauna pendiente</h2>
+                <ul>
+                    {faunas.map((f) => (
+                        <li key={f.id}>
+                            {f.nombre} - {f.descripcion}
+                            <button onClick={() => aprobarFauna(f)}>Aprobar</button>
+                            <button onClick={() => rechazar("fauna", f.id)}>Rechazar</button>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+
+            <section>
+                <h2>Rutas pendientes</h2>
+                <ul>
+                    {rutas.map((r) => (
+                        <li key={r.id}>
+                            {r.nombre} - {r.descripcion || "sin descripción"}
+                            <button onClick={() => aprobarRuta(r)}>Aprobar</button>
+                            <button onClick={() => rechazar("ruta", r.id)}>Rechazar</button>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+
+            <button onClick={handleLogout}>Cerrar sesión</button>
+        </div>
+    );
+
 };
 
 export default DashboardPage;
