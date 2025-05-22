@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "jwt-decode": "^4.0.0",
-    "react-router-dom": "^7.6.0"
-  },
-  "devDependencies": {
-    "@types/react-router-dom": "^5.3.3"
-  }
-}
