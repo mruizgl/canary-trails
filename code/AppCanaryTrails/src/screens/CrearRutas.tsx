@@ -571,9 +571,9 @@ const styles = StyleSheet.create({
 
     borderWidth: 2,
     borderRadius: 10,
-    borderColor: '#D9BF68',
+    borderColor: '#e4d49c',
 
-    backgroundColor: '#D9BF68',
+    backgroundColor: '#e4d49c',
     
   },
 
