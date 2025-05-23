@@ -23,7 +23,7 @@ const Perfil = ({navigation, route}:PropsProfile) => {
   const {usuarioLogueado, rutasFavoritasByUsuario, esFavoritaDeUser} = useUsuario();
   
   return (
-    <View style={{flex:1, backgroundColor: '#889584'}}>
+    <View style={{flex:1, backgroundColor: '#889584', justifyContent: 'center'}}>
 
       <View style={styles.contenedorFoto}>
         <View style={styles.foto}>
@@ -58,17 +58,20 @@ const Perfil = ({navigation, route}:PropsProfile) => {
         <View style={styles.opcion}>
         <TouchableHighlight onPress={()=> navigation.navigate('RutasFavoritas')}>
             <View style={{flexDirection: 'row', marginLeft: 2}}>
-              <Icon name={'bookmark'} size={25}/>
+              <Icon name={'heart'} size={25}/>
               <Text style={{marginTop: 4, marginLeft: 5}}>Rutas Favoritas</Text>
             </View>
           </TouchableHighlight>
         </View>
 
-        {/* <View style={styles.opcionBottom}>
-        <TouchableHighlight onPress={}>
-            <Text>Otro</Text>
+        <View style={styles.opcion}>
+          <TouchableHighlight onPress={()=> navigation.navigate('Creaciones')}>
+            <View style={{flexDirection: 'row', marginLeft: 2}}>
+              <Icon name={'reader'} size={25}/>
+              <Text style={{marginTop: 4, marginLeft: 5}}>Creaciones</Text>
+            </View>
           </TouchableHighlight>
-        </View> */}
+        </View>
 
         <View style={styles.opcionBottom}>
           <TouchableHighlight onPress={()=> Linking.openURL('https://github.com/mruizgl/canary-trails')}>
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
 
     backgroundColor: 'white',
     margin: 10,
-    marginTop: 60,
+    marginBottom: 30,
 
     height: 100,
     width: 100,
@@ -124,7 +127,8 @@ const styles = StyleSheet.create({
 
   opciones:{
 
-    flex: 1,
+    // flex: 1,
+    height: 300,
     alignSelf: 'center',
     
     backgroundColor: '#F3F5E8',
@@ -176,7 +180,7 @@ const styles = StyleSheet.create({
   },
 
   bottomSpace:{
-    flex: 2,
+    // flex: 2,
     //backgroundColor: 'yellow'
   },
 

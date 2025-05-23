@@ -3,10 +3,10 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Perfil from '../../screens/Perfil';
 import InfoPerfil from '../../screens/InfoPerfil';
-import EditPerfil from '../../screens/EditPerfil';
 import RutasFavoritas from '../../screens/RutasFavoritas';
 import { RutaType, Usuario } from '../../globals/Types';
 import InfoRuta from '../../screens/InfoRuta';
+import Creaciones from '../../screens/Creaciones';
 
 type Props = {}
 
@@ -15,7 +15,8 @@ export type ProfileStackParamList = {
   InfoPerfil: {usuario: Usuario},
   EditPerfil: {usuario: Usuario},
   RutasFavoritas: undefined,
-  InfoRuta: {ruta: RutaType}
+  InfoRuta: {ruta: RutaType},
+  Creaciones: undefined,
 };
 
 const Stack = createNativeStackNavigator<ProfileStackParamList>();
@@ -29,10 +30,10 @@ const ProfileStack = (props: Props) => {
       >      
       <Stack.Screen name="Perfil" component={Perfil} />
       <Stack.Screen name="InfoPerfil" component={InfoPerfil} />
-      <Stack.Screen name="EditPerfil" component={EditPerfil} />
+      {/* <Stack.Screen name="EditPerfil" component={EditPerfil} /> */}
       <Stack.Screen name="RutasFavoritas" component={RutasFavoritas} />
       <Stack.Screen name="InfoRuta" component={InfoRuta} />
-
+      <Stack.Screen name="Creaciones" component={Creaciones} />
   </Stack.Navigator>
   )
 }
