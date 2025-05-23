@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Flora, tokenPlayload } from '../globals/Types';
+import { Flora, FloraCreate, tokenPlayload } from '../globals/Types';
 import { useJwt } from 'react-jwt';
 import { useAppContext } from '../context/AppContext';
 import axios from 'axios';
@@ -15,16 +15,7 @@ const useFlora = () => {
     useEffect(() => {
       getAllFloras();
     }, [])
-    
-    function doCreateFlora(flora : Flora) : boolean{
 
-        if(crearFlora(flora)){
-            return true;
-        } else {
-            return false;
-        }
-
-    }
 
     async function getAllFloras(){
         
@@ -52,9 +43,9 @@ const useFlora = () => {
         console.log("All floras seteados");
     }
 
-    async function crearFlora(flora: Flora) : Promise<boolean>{
+    async function crearFlora(flora: FloraCreate){
 
-        let floraAux : Flora;
+        let floraAux : FloraCreate;
 
         try{
 
@@ -68,12 +59,9 @@ const useFlora = () => {
             );
 
             floraAux = response.data;
+            
+            return floraAux;
 
-            if(floraAux !== null){
-                return true;
-            } else {
-                return false;
-            }
 
         } catch (error) {
             console.log("An error has occurred aqui" +error.message);
@@ -81,7 +69,8 @@ const useFlora = () => {
     }   
 
     return {
-        allFloras
+        allFloras,
+        crearFlora
     }
 }
 

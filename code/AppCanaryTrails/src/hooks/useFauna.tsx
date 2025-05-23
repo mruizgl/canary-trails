@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useAppContext } from '../context/AppContext';
 import { useJwt } from 'react-jwt';
-import { Fauna, tokenPlayload } from '../globals/Types';
+import { Fauna, FaunaCreate, tokenPlayload } from '../globals/Types';
 import axios, { all } from 'axios';
 
 
@@ -16,10 +16,6 @@ const useFauna = () => {
     useEffect(() => {
       getAllFaunas();
     }, [])
-
-    function doCreateFauna(fauna : Fauna){
-        crearFauna(fauna);
-    }
     
 
     async function getAllFaunas(){
@@ -48,12 +44,33 @@ const useFauna = () => {
         console.log("All faunas seteados");
     }
 
-    async function crearFauna(fauna : Fauna){
+    async function crearFauna(fauna : FaunaCreate){
 
-    }
+        let faunaAux : FaunaCreate;
+
+        try{
+
+            const response = await axios.post(`http://10.0.2.2:8080/api/v2/faunas/add`, fauna,
+            {
+                headers: {
+                'Authorization': `Bearer ${context.token}`, // Token JWT
+                'Content-Type': 'application/json', // Tipo de contenido
+                }
+            }
+            );
+
+            faunaAux = response.data;
+
+            return faunaAux;
+
+        } catch (error) {
+            console.log("An error has occurred aqui" +error.message);
+        }
+    } 
 
     return {
-        allFaunas
+        allFaunas,
+        crearFauna
     }
 }
 

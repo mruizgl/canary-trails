@@ -63,6 +63,7 @@ const CrearRutas = (props: Props) => {
       return;
 
     }
+    
     const faunasAux = faunas.map(fauna => fauna.id);
     const florasAux = floras.map(flora => flora.id);
     const municipiosAux = municipios.map(municipio => municipio.id);

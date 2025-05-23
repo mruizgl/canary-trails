@@ -1,10 +1,41 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { TextInput } from 'react-native-gesture-handler'
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
+import Icon from 'react-native-vector-icons/Ionicons';
+import useFauna from '../hooks/useFauna';
+import useUsuario from '../hooks/useUsuario';
 
 type Props = {}
 
 const CrearFauna = (props: Props) => {
+
+    const [nombre, setNombre] = useState("")
+    const [descripcion, setDescripcion] = useState("")
+    const {crearFauna} = useFauna();
+    const {usuarioLogueado} = useUsuario();
+
+    function createFauna(){
+
+        if(!nombre || !descripcion){
+            Alert.alert(
+                "Error al crear la fauna",
+                "Por favor, rellene todos los campos obligatorios.",
+                [{ text: "Ok" }],
+                { cancelable: false }
+            );
+            return;
+        }
+
+        const newFauna = {
+            nombre: nombre,
+            descripcion: descripcion,
+            aprobada: false,
+            usuario: usuarioLogueado.id
+        }
+
+        const faunaCreada = crearFauna(newFauna);
+        console.log(faunaCreada);
+    }
+
   return (
     <View style={{flex: 1, backgroundColor: '#889584'}}>
 
@@ -14,54 +45,27 @@ const CrearFauna = (props: Props) => {
                 <Text style={{fontSize: 22, fontWeight: 'bold', alignSelf: 'center'}}>Crear Fauna</Text>
             </View>
 
-            {/* <Text style={{marginLeft: 5, marginTop: 25}}>Nombre: </Text>
+            <Text style={{marginLeft: 5, marginTop: 25}}>Nombre: </Text>
             <View style={[styles.inputContainer]}>
-                <TextInput placeholder='Ruta de ...' onChangeText={(texto) => setTitulo(texto)} />
+                <TextInput placeholder='Nombre....' onChangeText={(texto) => setNombre(texto)} />
             </View>
 
-            <View style={{flexDirection: 'row'}}>
-                <Text style={{marginLeft: 5, marginTop: 20, width: 167}}>Distancia (m) : </Text>
-                <Text style={{marginLeft: 5, marginTop: 20}}>Duracion (min): </Text>
+            <Text style={{marginLeft: 5, marginTop: 25}}>Descripcion: </Text>
+            <View style={[styles.inputContainer]}>
+                <TextInput 
+                    placeholder='Descripcion...' 
+                    onChangeText={(texto) => setDescripcion(texto)} 
+                    multiline={true}
+                    numberOfLines={5}
+                />
             </View>
 
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <View style={[styles.inputContainer, {width: 150}]}>
-                <TextInput placeholder='Distancia' keyboardType="numeric" onChangeText={(texto) => setdistancia(parseInt(texto))} />
+            <TouchableOpacity onPress={createFauna}>
+                <View style={styles.createRuta}>
+                    <Icon name={'archive-outline'} size={25} color={'white'}/> 
                 </View>
-
-                <View style={[styles.inputContainer, {width: 150}]}>
-                <TextInput placeholder='Duracion' keyboardType="numeric" onChangeText={(texto) => setduracion(parseInt(texto))} />
-                </View>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-                <Text style={{marginLeft: 5, marginTop: 20, width: 216}}>Dificultad: </Text>
-                <Text style={{marginLeft: 5, marginTop: 20}}>Desnivel (m): </Text>
-            </View>
-
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                
-                <View style={[styles.inputContainer, {width: 200}]}>
-                    <Dropdown
-                        style={{paddingTop: 10, paddingHorizontal: 5}}
-                        renderItem={renderItem}
-                        data={data}
-                        maxHeight={300}
-                        labelField="label"
-                        valueField="value"
-                        placeholder={'Elija la dificultad'}
-                        value={value}
-                        onChange={item => {
-                        setValue(item.value);
-                        }}
-                    />
-                </View>
-
-                <View style={[styles.inputContainer, {width: 100, height: 45}]}>
-                    <TextInput placeholder='Desnivel' keyboardType="numeric" onChangeText={(texto) => setdesnivel(parseInt(texto))} />
-                </View>
-            </View> */}
-
+            </TouchableOpacity>
+            
         </View>
     </View>
   )
@@ -72,7 +76,6 @@ export default CrearFauna
 const styles = StyleSheet.create({
 
     crearFauna:{
-        flex: 1,
         
         backgroundColor: '#F3F5E8',
     
@@ -85,5 +88,33 @@ const styles = StyleSheet.create({
         overflow: 'scroll',
     
         elevation: 20,
+    },
+
+    inputContainer:{
+        marginTop: 10,
+
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: '#D9BF68',
+
+        backgroundColor: '#D9BF68',
+    },
+
+    createRuta:{
+        alignItems: 'center', 
+        alignSelf: 'center',
+    
+        borderWidth: 2, 
+        borderRadius: 10, 
+        borderColor: '#D9BF68',
+        backgroundColor: '#D9BF68',
+    
+        width: 150,
+        height: 50,
+    
+        paddingVertical: 10,
+    
+        marginTop: 30,
+    
     },
 })
