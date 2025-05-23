@@ -85,5 +85,5 @@ const styles = StyleSheet.create({
         overflow: 'scroll',
     
         elevation: 20,
-      },
+    },
 })

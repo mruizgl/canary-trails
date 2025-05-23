@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { RutaType, tokenPlayload, Usuario } from '../globals/Types';
 import { useAppContext } from '../context/AppContext';
@@ -23,10 +23,10 @@ const Home = ({navigation, route}:PropsHome) => {
 
   return (
     <>
-      <View style={{flex: 1, backgroundColor: '#889584'}}>
+      <ScrollView style={{flex: 1, backgroundColor: '#889584'}}>
 
         <View style={styles.titulo}>
-          <Text style={{fontSize: 20}}>Canary Trails</Text>
+          <Text style={{fontSize: 25, color: 'white'}}>Canary Trails</Text>
           <View style={styles.underline}/>
         </View>
 
@@ -67,35 +67,30 @@ const Home = ({navigation, route}:PropsHome) => {
           
           <View  style={{flex: 1}}>
             <View style={{marginLeft: 10, marginTop: 10}}>
-              <Text style={{fontSize: 18}}>Rutas Recomendadas</Text>
+              <Text style={{fontSize: 20, color: 'white'}}>Rutas Recomendadas:</Text>
             </View>
 
             <View style={{}}>
-                <FlatList 
-                  data={rutasPopulares}
-                  renderItem={({ item, index }) => {
-                      return (
-                      <View style={{alignSelf: 'center', marginVertical: 10}}>
-                          <TouchableOpacity onPress={()=> navigation.navigate('InfoRuta', {ruta: item})}>
-                              <RutaCardSmall 
-                                nombre={item.nombre} 
-                                distancia={item.distanciaMetros}
-                                dificultad={item.dificultad}
-                                tiempo={item.tiempoDuracion}
-                                desnivel={item.desnivel}
-                                fotos={item.fotos}
-                                municipios={item.municipios}
-                              />
-                          </TouchableOpacity>
-                      </View>
-                      )
-                  }}
-                  keyExtractor={(item, index) => 'partida ' + index}
-                />
+              {rutasPopulares.map((ruta, index) => (
+                <View key={index} style={{alignSelf: 'center', marginVertical: 10}}>
+                  <TouchableOpacity onPress={()=> navigation.navigate('InfoRuta', {ruta: ruta})}>
+                      <RutaCardSmall 
+                        nombre={ruta.nombre} 
+                        distancia={ruta.distanciaMetros}
+                        dificultad={ruta.dificultad}
+                        tiempo={ruta.tiempoDuracion}
+                        desnivel={ruta.desnivel}
+                        fotos={ruta.fotos}
+                        municipios={ruta.municipios}
+                      />
+                  </TouchableOpacity>
+                </View>   
+              ))}
             </View>
+
           </View>
         </View>
-      </View>
+      </ScrollView>
     </>
   )
 }
@@ -121,11 +116,11 @@ const styles = StyleSheet.create({
   titulo:{
     //flex: 1,
     alignItems: 'center',
-    padding: 10,
+    padding: 10
   },
 
   underline: {
-    marginTop: 2,
+    marginTop: 10,
     height: 2,
     width: '100%', // ancho de la raya
     backgroundColor: 'white',

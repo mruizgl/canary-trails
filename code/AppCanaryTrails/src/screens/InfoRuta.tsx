@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { Comentario, Coordenada, CoordenadaMaps, Fauna, Flora, Municipio, RutaType, tokenPlayload, Usuario } from '../globals/Types'
 import { useFocusEffect, useRoute } from '@react-navigation/native'
@@ -131,7 +131,7 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
   
 
   return (
-    <View style={{flex:1, backgroundColor: '#889584'}}>
+    <ScrollView style={{flex:1, backgroundColor: '#889584'}}>
       {
         (rutasFavoritasByUsuario === null) ?
         <View>
@@ -186,12 +186,24 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
               
               <View>
                 <Text>Distancia: </Text>
-                <Text>{distanciaKm} km</Text>
+                {
+                  (distanciaKm > 1) ?
+                  <Text>{distanciaKm} km</Text>
+                  :
+                  <Text>{ruta.distanciaMetros} m</Text>
+                }
               </View>
 
               <View>
                 <Text>Duracion: </Text>
-                <Text>{horas}h {minutos} min </Text>
+                {
+                  (horas > 0) &&
+                  <Text>{horas}h</Text>
+                }
+                {
+                  (minutos > 0) &&
+                  <Text>{minutos} min </Text>
+                }
               </View>
 
               <View>
@@ -229,9 +241,22 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
               ))}
             </MapView>
           </View>
-          
+
           <View style={{flex: 1, marginTop: 20}}>
-            <Text style={{fontSize: 16, fontWeight: 'bold'}}>Fauna: </Text>
+
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>Fauna: </Text>
+
+            <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10}}>
+              {ruta.municipios.map((municipio, index) => (
+                <View key={index} style={styles.elmentCard}>
+                  <Text style={{color: 'white', fontSize: 16}}>{municipio.nombre}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+          
+          <View style={{flex: 1, marginTop: 5}}>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>Fauna: </Text>
 
             <View>
               <FlatList 
@@ -240,11 +265,12 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
                     return (
                     <View style={{marginVertical: 10}}>
                         <TouchableOpacity>
-                          <View>
+                          <View style={styles.itemCargadoCard}>
                             <Image  
                               source={{ uri: 'http://10.0.2.2:8080/api/v1/imagenes/fauna/' + item.foto }}
                               style={{ width: 100, height: 80}}
                             />
+                            <Text style={{color: 'white', fontSize: 16, marginTop: 2}}>{item.nombre}</Text>
                           </View>
                         </TouchableOpacity>
                     </View>
@@ -257,35 +283,39 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
             </View>
           </View>
 
-          <View style={{flex: 1, marginTop: 30}}>
-            <Text style={{fontSize: 16, fontWeight: 'bold'}}>Flora: </Text>
+          {
+            (ruta.floras.length > 0) &&
+            <View style={{flex: 1, marginTop: 10}}>
+              <Text style={{fontSize: 20, fontWeight: 'bold'}}>Flora: </Text>
 
-            <View>
-              <FlatList 
-                data={ruta.floras}
-                renderItem={({ item, index }) => {
-                    return (
-                      <View style={{marginVertical: 10}}>
-                          <TouchableOpacity>
-                              <View>
-                                <Image  
-                                  source={{ uri: 'http://10.0.2.2:8080/api/v1/imagenes/flora/' + item.foto }}
-                                  style={{ width: 100, height: 80}}
-                                />
-                              </View>
-                          </TouchableOpacity>
-                      </View>
-                    )
-                }}
-                keyExtractor={(item, index) => 'fauna ' + index}
-                horizontal={true}
-              />  
+              <View>
+                <FlatList 
+                  data={ruta.floras}
+                  renderItem={({ item, index }) => {
+                      return (
+                        <View style={{marginVertical: 10}}>
+                            <TouchableOpacity>
+                                <View style={styles.itemCargadoCard}>
+                                  <Image  
+                                    source={{ uri: 'http://10.0.2.2:8080/api/v1/imagenes/flora/' + item.foto }}
+                                    style={{ width: 100, height: 80}}
+                                  />
+                                  <Text style={{fontSize: 16, color: 'white', marginTop: 2}}>{item.nombre}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                      )
+                  }}
+                  keyExtractor={(item, index) => 'fauna ' + index}
+                  horizontal={true}
+                />  
+              </View>
             </View>
-          </View>
+          }
           
         </View>
       }
-    </View>
+    </ScrollView>
   )
 }
 
@@ -305,7 +335,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3F5E8',
 
     margin: 30,
-    //marginBottom: 0,
+    // marginBottom: 0,
     padding: 15,
     borderRadius: 10,
     overflow: 'scroll'
@@ -348,10 +378,30 @@ const styles = StyleSheet.create({
     
   },
 
-  comentario:{
-    padding: 10,
-    borderStyle: 'solid',
-    borderWidth: 2,
-    borderRadius: 5
-  }
+  itemCargadoCard:{
+    backgroundColor: '#00A676',
+    borderRadius: 10, 
+    padding: 10, 
+    paddingBottom: 5,
+    alignItems: 'center'
+  },
+
+  elmentCard:{
+
+    alignSelf: 'flex-start',
+
+    marginVertical: 10,
+    marginRight: 15,
+    paddingHorizontal: 10,
+
+    borderWidth: 2, 
+    borderRadius: 5,
+    borderColor: '#00A676',
+    backgroundColor: '#00A676',
+
+    // width: 200,
+    height: 50, 
+
+    justifyContent: 'center',
+  },
 })
