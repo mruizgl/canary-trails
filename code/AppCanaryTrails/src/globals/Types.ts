@@ -42,11 +42,29 @@ export type Fauna ={
   foto: string
 }
 
+export type FaunaCreate ={
+  nombre: string,
+  descripcion: string,
+  aprobada: boolean,
+  usuario: number
+}
+
 export type Flora ={
   id: number,
   nombre: string,
   descripcion: string,
   foto: string
+}
+
+export type FloraCreate ={
+  nombre: string,
+  especie: string,
+  tipoHoja: string,
+  salidaFlor: string,
+  caidaFlor: string,
+  descripcion: string,
+  aprobada: boolean,
+  usuario: number
 }
 
 export type Coordenada ={

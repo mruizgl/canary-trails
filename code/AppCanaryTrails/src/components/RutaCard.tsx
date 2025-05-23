@@ -60,19 +60,31 @@ const RutaCard = (props: Props) => {
       <View style={styles.stats}>
         <View>
           <Text>Distancia: </Text>
-          <Text>{distanciaKm} km</Text>
+          {
+            (distanciaKm > 1) ?
+            <Text>{distanciaKm} km</Text>
+            :
+            <Text>{props.distancia} m</Text>
+          }
         </View>
 
+        <View>
+          <Text>Tiempo: </Text>
+          {
+            (horas > 0) &&
+            <Text>{horas}h</Text>
+          }
+          {
+            (minutos > 0) &&
+            <Text>{minutos} min </Text>
+          }
+        </View>
+        
         <View>
           <Text>Desnivel: </Text>
           <Text>{props.desnivel} m</Text>
         </View>
 
-        <View>
-          <Text>Tiempo: </Text>
-          <Text>{horas}h {minutos}min</Text>
-        </View>
-        
       </View>
     </View>
   )

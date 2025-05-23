@@ -51,7 +51,7 @@ const Register = ({navigation, route}:PropsHome) => {
     }
 
     return (
-        <View style={{flex:1, backgroundColor: '#9D8DF1'}}>
+        <View style={{flex:1, backgroundColor: '#889584'}}>
             <View style={styles.estiloFormulario}>
 
                 <View style={{alignSelf: 'center'}}>
@@ -89,7 +89,7 @@ export default Register
 const styles = StyleSheet.create({
 
     estiloFormulario:{
-        backgroundColor: '#B8CDF8',
+        backgroundColor: '#F3F5E8',
 
         margin: 30,
         //marginBottom: 0,
@@ -106,14 +106,17 @@ const styles = StyleSheet.create({
     input:{
         borderWidth: 2,
         borderRadius: 5,
+
+        borderColor: '#D9BF68',
+        backgroundColor: '#D9BF68',
     },
 
     button:{
         marginTop: 30, 
         borderWidth: 2, 
 
-        borderColor: '#4E4187' , 
-        backgroundColor: '#4E4187',
+        borderColor: '#00A676' , 
+        backgroundColor: '#00A676',
         borderRadius: 5,
 
         margin: 10, 

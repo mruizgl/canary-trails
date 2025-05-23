@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'center',
     
-    backgroundColor: '#B8CDF8',
+    backgroundColor: '#F3F5E8',
 
     justifyContent: 'space-between',
     width: 360,

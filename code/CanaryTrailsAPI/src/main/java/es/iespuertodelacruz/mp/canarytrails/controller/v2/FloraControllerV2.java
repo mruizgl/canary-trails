@@ -89,10 +89,12 @@ public class FloraControllerV2 {
         Usuario usuario = usuarioService.findByUserName(username);
         flora.setUsuario(usuario);
 
-        for( int id : dto.rutas()){
-            Ruta ruta = rutaService.findById(id);
-            if(ruta != null && !flora.getRutas().contains(ruta)){
-                flora.getRutas().add(ruta);
+        if(dto.rutas() != null){
+            for( int id : dto.rutas()){
+                Ruta ruta = rutaService.findById(id);
+                if(ruta != null && !flora.getRutas().contains(ruta)){
+                    flora.getRutas().add(ruta);
+                }
             }
         }
 

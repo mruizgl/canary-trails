@@ -93,10 +93,12 @@ public class FaunaControllerV3 {
 
         fauna.setUsuario(usuario);
 
-        for( int id : dto.rutas()){
-            Ruta ruta = rutaService.findById(id);
-            if(ruta != null && !fauna.getRutas().contains(ruta)){
-                fauna.getRutas().add(ruta);
+        if(dto.rutas() != null){
+            for( int id : dto.rutas()){
+                Ruta ruta = rutaService.findById(id);
+                if(ruta != null && !fauna.getRutas().contains(ruta)){
+                    fauna.getRutas().add(ruta);
+                }
             }
         }
 
