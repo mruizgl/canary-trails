@@ -121,11 +121,25 @@ const DashboardPage: React.FC = () => {
     };
 
     const rechazar = async (tipo: "flora" | "fauna" | "ruta", id: number) => {
-        await authFetch(`http://localhost:8080/api/v3/${tipo}s/delete/${id}`, {
-            method: "DELETE",
-        });
-        fetchAll();
+        const confirmar = window.confirm("¿Estás seguro de que deseas rechazar esta propuesta?");
+        if (!confirmar) return;
+
+        try {
+            const res = await authFetch(`http://localhost:8080/api/v3/${tipo}s/delete/${id}`, {
+                method: "DELETE",
+            });
+            if (res.ok) {
+                alert("Eliminado correctamente.");
+                fetchAll();
+            } else {
+                alert("Error al eliminar.");
+            }
+        } catch (error) {
+            alert("Ocurrió un error al rechazar.");
+            console.error(error);
+        }
     };
+
 
     const handleLogout = () => {
         logout();
