@@ -1,4 +1,4 @@
-import { FlatList, Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, FlatList, Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { Dropdown } from 'react-native-element-dropdown';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -14,7 +14,7 @@ type Props = {}
 
 const CrearRutas = (props: Props) => {
 
-  const [value, setValue] = useState(null);
+  const [valueDificultad, setValue] = useState(null);
 
   const data = [
     {label: 'Fácil', value: 'Fácil'},
@@ -49,16 +49,27 @@ const CrearRutas = (props: Props) => {
   const {crearRuta} = useRutas();
   const {usuarioLogueado} = useUsuario();
 
+  //Manda la señal de crear la ruta
   function createRuta(){
 
+    if (!titulo || !valueDificultad || !distancia || !duracion || !desnivel || allCoordenadas.length < 2) {
+
+      Alert.alert(
+        "Error al crear la ruta",
+        "Por favor, rellene todos los campos obligatorios y añada al menos dos coordenada.",
+        [{ text: "Ok" }],
+        { cancelable: false }
+      );
+      return;
+
+    }
     const faunasAux = faunas.map(fauna => fauna.id);
     const florasAux = floras.map(flora => flora.id);
     const municipiosAux = municipios.map(municipio => municipio.id);
 
-
     const rutaNueva = {
       nombre: titulo,
-      dificultad: value,
+      dificultad: valueDificultad,
       tiempoDuracion: duracion,
       distanciaMetros: distancia,
       desnivel: desnivel,
@@ -75,14 +86,19 @@ const CrearRutas = (props: Props) => {
     console.log(rutaCreada);
   }
 
+  //Añade marcador a la lista
   function addMarker(){
+
+    if (!marker) {
+      return;
+    }
 
     let latitude = marker.latitude.toFixed(6)
     let longitude = marker.longitude.toFixed(6)
 
     const coordenada : CoordenadaCreateRuta = {
-      latitud: latitude,
-      longitud: longitude
+      latitud: parseFloat(latitude),
+      longitud: parseFloat(longitude)
     }
 
     // Verificar si ya existe una coordenada igual
@@ -101,19 +117,24 @@ const CrearRutas = (props: Props) => {
     setcontador(contador+1);
   }
 
+  //Elimina coordenada añadida al array
+  function removeCoordenada(coordenadaEliminar : CoordenadaCreateRuta){
+
+    const nuevasCoordenadas = allCoordenadas.filter(coord =>
+      !(coord.latitud === coordenadaEliminar.latitud && coord.longitud === coordenadaEliminar.longitud)
+    );
+
+    setAllCoordenadas(nuevasCoordenadas);
+  }
+
+  //Controla el colocar un marcador en el mapa y aparezca la coordenada
   const handleMapPress = (event) => {
     const { coordinate } = event.nativeEvent;
     setMarker(coordinate);
   };
 
-  const renderItem = item => {
-    return (
-      <View style={{backgroundColor: '', height: 50, justifyContent: 'center', marginLeft: 10}}>
-        <Text style={{}}>{item.label}</Text>
-      </View>
-    );
-  };
 
+  //Controla opciones a añadir
   const handleOptionMunicipiosPress = (municipioNuevo) => {
     console.log('Seleccionaste:', municipioNuevo);
     if(!municipios.includes(municipioNuevo)){
@@ -121,6 +142,14 @@ const CrearRutas = (props: Props) => {
     }
     setmunicipiosModalVisible(false);
   };
+
+  function removeMunicipio(municipioRemove){
+    const nuevosMunicipios = municipios.filter(municipio =>
+      !(municipio === municipioRemove)
+    );
+
+    setmunicipios(nuevosMunicipios);
+  }
 
   const handleOptionFaunasPress = (faunaNueva) => {
     console.log('Seleccionaste:', faunaNueva);
@@ -130,12 +159,38 @@ const CrearRutas = (props: Props) => {
     setFaunasModalVisible(false);
   };
 
+  function removeFauna(faunaRemove){
+    const nuevasFaunas = faunas.filter(fauna =>
+      !(fauna === faunaRemove)
+    );
+
+    setfaunas(nuevasFaunas);
+  }
+
   const handleOptionFlorasPress = (floraNueva) => {
     console.log('Seleccionaste:', floraNueva);
     if(!floras.includes(floraNueva)){
       setfloras([...floras, floraNueva])
     }
     setFlorasModalVisible(false);
+  };
+
+  function removeFlora(floraRemove){
+    const nuevasFloras = floras.filter(flora =>
+      !(flora === floraRemove)
+    );
+
+    setfloras(nuevasFloras);
+  }
+
+
+  //Item del Modal del dropdown
+  const renderItem = item => {
+    return (
+      <View style={{backgroundColor: '', height: 50, justifyContent: 'center', marginLeft: 10}}>
+        <Text style={{}}>{item.label}</Text>
+      </View>
+    );
   };
 
   return (
@@ -183,7 +238,7 @@ const CrearRutas = (props: Props) => {
                 labelField="label"
                 valueField="value"
                 placeholder={'Elija la dificultad'}
-                value={value}
+                value={valueDificultad}
                 onChange={item => {
                   setValue(item.value);
                 }}
@@ -199,12 +254,13 @@ const CrearRutas = (props: Props) => {
           <View style={styles.container}>
             <MapView
               style={styles.map}
+              ref={mapRef}
               onPress={handleMapPress}
               initialRegion={{
                 latitude: 28.2789829,
                 longitude: -16.5523792,
-                latitudeDelta: 5.0,
-                longitudeDelta: 5.0,
+                latitudeDelta: 0.5,
+                longitudeDelta: 0.5,
               }}
             >
               {marker && (
@@ -233,11 +289,32 @@ const CrearRutas = (props: Props) => {
               <View key={index} style={styles.coordAniadidas}>
 
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View>
-                    <Text style={{color: 'white', fontSize: 16}}>{coordenada.latitud}</Text>
-                    <Text style={{color: 'white', fontSize: 16}}>{coordenada.longitud}</Text>
-                  </View>
-                  <TouchableOpacity>
+                  <TouchableOpacity 
+                    onPress={() => {
+
+                      const region = {
+                        latitude: coordenada.latitud,
+                        longitude: coordenada.longitud,
+                        latitudeDelta: 0.05,
+                        longitudeDelta: 0.05,
+                      };
+
+                      const rememberMarker = {
+                        latitude: coordenada.latitud,
+                        longitude: coordenada.longitud,
+                      }
+                    
+                      setMarker(rememberMarker);
+                    
+                      mapRef.current?.animateToRegion(region, 1000); //Mueve el mapa suavemente hacia la región de la coordenada
+                    }}
+                  >
+                    <View>
+                      <Text style={{color: 'white', fontSize: 16}}>{coordenada.latitud}</Text>
+                      <Text style={{color: 'white', fontSize: 16}}>{coordenada.longitud}</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={()=>removeCoordenada(coordenada)}>
                     <View style={{marginLeft: 10}}>
                       <Icon name={'close-circle-outline'} size={30} color={'red'} />
                     </View>
@@ -291,7 +368,7 @@ const CrearRutas = (props: Props) => {
                         </TouchableOpacity>
                         )
                     }}
-                    keyExtractor={(item, index) => 'fauna ' + index}
+                    keyExtractor={(item, index) => 'municipio ' + index}
                   />
                 </View>
   
@@ -299,10 +376,10 @@ const CrearRutas = (props: Props) => {
             </Modal>
 
             <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-              {municipios.map((option, index) => (
+              {municipios.map((municipio, index) => (
                 <View key={index} style={styles.elmentCard}>
-                  <TouchableOpacity>
-                      <Text style={{color: 'white', fontSize: 16}}>{option.nombre}</Text>
+                  <TouchableOpacity onPress={()=> removeMunicipio(municipio)}>
+                      <Text style={{color: 'white', fontSize: 16}}>{municipio.nombre}</Text>
                   </TouchableOpacity>
                 </View>
               ))}
@@ -351,7 +428,7 @@ const CrearRutas = (props: Props) => {
                         </TouchableOpacity>
                         )
                     }}
-                    keyExtractor={(item, index) => 'fauna ' + index}
+                    keyExtractor={(item, index) => 'faunaItem ' + index}
                   />
                 </View>
   
@@ -364,7 +441,7 @@ const CrearRutas = (props: Props) => {
               renderItem={({ item, index }) => {
                   return (
                   <View style={styles.cardFaunaFlora}>
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={()=>removeFauna(item)}>
                         <Image  
                             source={{ uri: 'http://10.0.2.2:8080/api/v1/imagenes/fauna/' + item.foto }}
                             style={{ width: 100, height: 80, alignSelf: 'center', borderRadius: 5}}
@@ -424,7 +501,7 @@ const CrearRutas = (props: Props) => {
                         </TouchableOpacity>
                         )
                     }}
-                    keyExtractor={(item, index) => 'fauna ' + index}
+                    keyExtractor={(item, index) => 'floraItem ' + index}
                   />
                 </View>
   
@@ -437,7 +514,7 @@ const CrearRutas = (props: Props) => {
               renderItem={({ item, index }) => {
                   return (
                     <View style={styles.cardFaunaFlora}>
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={()=>removeFlora(item)}>
                         <Image  
                           source={{ uri: 'http://10.0.2.2:8080/api/v1/imagenes/flora/' + item.foto }}
                           style={{ width: 100, height: 80, alignSelf: 'center', borderRadius: 5}}
@@ -449,7 +526,7 @@ const CrearRutas = (props: Props) => {
                 </View>
                   )
               }}
-              keyExtractor={(item, index) => 'fauna ' + index}
+              keyExtractor={(item, index) => 'flora ' + index}
               horizontal={true}
             />
           </View>
