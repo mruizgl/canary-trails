@@ -1,5 +1,6 @@
 package es.iespuertodelacruz.mp.canarytrails.controller.v3;
 
+import es.iespuertodelacruz.mp.canarytrails.dto.ruta.CoordenadaEntradaCreate;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDto;
@@ -15,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -235,9 +237,11 @@ public class RutaControllerV3Test {
         ruta.setCoordenadas(new ArrayList<>(List.of(coordenada)));
         ruta.setMunicipios(new ArrayList<>(List.of(municipio)));
 
+        CoordenadaEntradaCreate coordDto = new CoordenadaEntradaCreate(new BigDecimal("33.222222"), new BigDecimal("22.333333"));
+
         RutaEntradaCreateDto dto = new RutaEntradaCreateDto(
                 "Ruta Duplicada", "baja", 60, 2.0f, 150f, false, 1,
-                List.of(1), List.of(2), List.of(3), List.of(4)
+                List.of(1), List.of(2), List.of(coordDto), List.of(4)
         );
 
         when(rutaMapper.toEntityCreate(dto)).thenReturn(ruta);
@@ -261,12 +265,15 @@ public class RutaControllerV3Test {
     }
     @Test
     void testCreateRuta_AgregaElementosUnicos_NoDuplicados() {
+
+        CoordenadaEntradaCreate coordDto = new CoordenadaEntradaCreate(new BigDecimal("33.222222"), new BigDecimal("22.333333"));
+
         // DTO con ids simulados
         RutaEntradaCreateDto dto = new RutaEntradaCreateDto(
                 "Ruta test", "media", 120, 5.5f, 300f, false, 1,
                 List.of(1, 2), // faunas
                 List.of(3),    // floras
-                List.of(4),    // coordenadas
+                List.of(coordDto),    // coordenadas
                 List.of(5)     // municipios
         );
 

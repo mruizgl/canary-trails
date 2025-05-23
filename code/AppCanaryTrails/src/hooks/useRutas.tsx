@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { RutaType, tokenPlayload } from '../globals/Types'
+import { RutaCreateType, RutaType, tokenPlayload } from '../globals/Types'
 import axios from 'axios'
 import { useAppContext } from '../context/AppContext'
 import { useJwt } from 'react-jwt'
@@ -85,6 +85,35 @@ const useRutas = () => {
         setRutasPopulares(rutasAux);
     }
 
+    async function crearRuta(ruta : RutaCreateType){
+
+        let rutaAux : RutaType;
+
+        try{
+
+            const response = await axios.post(`http://10.0.2.2:8080/api/v2/rutas/add`, ruta,
+            {
+                headers: {
+                'Authorization': `Bearer ${context.token}`, // Token JWT
+                'Content-Type': 'application/json', // Tipo de contenido
+                }
+            }
+            );
+
+            rutaAux = response.data;
+
+            // if(floraAux !== null){
+            //     return true;
+            // } else {
+            //     return false;
+            // }
+
+            return rutaAux;
+
+        } catch (error) {
+            console.log("An error has occurred aqui" +error.message);
+        }
+    }   
     
     
 
@@ -92,6 +121,7 @@ const useRutas = () => {
     allRutas,
     rutasPopulares,
     rutasRandom,
+    crearRuta,
   }
 }
 

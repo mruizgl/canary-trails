@@ -131,7 +131,7 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
   
 
   return (
-    <View style={{flex:1, backgroundColor: '#9D8DF1'}}>
+    <View style={{flex:1, backgroundColor: '#889584'}}>
       {
         (rutasFavoritasByUsuario === null) ?
         <View>
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
   rutaInfo:{
     flex: 1,
     
-    backgroundColor: '#B8CDF8',
+    backgroundColor: '#F3F5E8',
 
     margin: 30,
     //marginBottom: 0,

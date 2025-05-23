@@ -1,5 +1,6 @@
 package es.iespuertodelacruz.mp.canarytrails.controller.v3;
 
+import es.iespuertodelacruz.mp.canarytrails.dto.ruta.CoordenadaEntradaCreate;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDto;
@@ -108,9 +109,20 @@ public class RutaControllerV3 {
             }
         }
 
-        for( int id : dto.coordenadas()){
-            Coordenada coordenada = coordenadaService.findById(id);
-            if(coordenada != null && !ruta.getCoordenadas().contains(coordenada)){
+        for( CoordenadaEntradaCreate coordCreate : dto.coordenadas()){
+
+            Coordenada coordenada = coordenadaService.findByData(coordCreate.latitud(), coordCreate.longitud());
+
+            if (coordenada == null) {
+
+                coordenada = new Coordenada();
+                coordenada.setLatitud(coordCreate.latitud());
+                coordenada.setLongitud(coordCreate.longitud());
+
+                coordenada = coordenadaService.save(coordenada); // guarda en la BBDD
+            }
+
+            if (!ruta.getCoordenadas().contains(coordenada)) {
                 ruta.getCoordenadas().add(coordenada);
             }
         }

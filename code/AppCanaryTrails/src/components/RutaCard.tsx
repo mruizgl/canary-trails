@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
 
     overflow: 'hidden',
-    backgroundColor: '#EAEAEA',
+    backgroundColor: '#F3F5E8',
 
     padding: 15,
     justifyContent: 'space-between'

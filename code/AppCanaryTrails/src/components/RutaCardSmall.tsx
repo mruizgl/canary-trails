@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Municipio } from '../../globals/Types'
+import { Municipio } from '../globals/Types'
 
 
 type Props = {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
 
     //overflow: 'hidden',
-    backgroundColor: '#EAEAEA',
+    backgroundColor: '#F3F5E8',
 
     padding: 15,
     justifyContent: 'space-between'

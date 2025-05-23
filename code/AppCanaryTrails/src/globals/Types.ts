@@ -76,3 +76,22 @@ export type RutaType = {
   municipios: Array<Municipio>,  //Municipio sin información adicional
   fotos: Array<string>
 }
+
+export type RutaCreateType = {
+  nombre: string,
+  dificultad: string,
+  tiempoDuracion: number,
+  distanciaMetros: number,
+  desnivel: number,
+  aprobada: boolean,
+  usuario: number,     //Usuario sin informacion adicional
+  faunas: Array<number>,
+  floras: Array<number>,
+  coordenadas: Array<CoordenadaCreateRuta>,
+  municipios: Array<number>
+}
+
+export type CoordenadaCreateRuta ={
+  latitud: number,
+  longitud: number
+}

@@ -23,7 +23,7 @@ const Perfil = ({navigation, route}:PropsProfile) => {
   const {usuarioLogueado, rutasFavoritasByUsuario, esFavoritaDeUser} = useUsuario();
   
   return (
-    <View style={{flex:1, backgroundColor: '#9D8DF1'}}>
+    <View style={{flex:1, backgroundColor: '#889584'}}>
 
       <View style={styles.contenedorFoto}>
         <View style={styles.foto}>

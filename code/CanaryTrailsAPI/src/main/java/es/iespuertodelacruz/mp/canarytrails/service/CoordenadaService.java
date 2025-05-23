@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,10 @@ public class CoordenadaService implements IServiceGeneric<Coordenada, Integer> {
     @Override
     public Coordenada findById(Integer id) {
         return coordenadaRepository.findById(id).orElse(null);
+    }
+
+    public Coordenada findByData(BigDecimal latitud, BigDecimal longitud){
+        return coordenadaRepository.findByLatitudAndLongitud(latitud, longitud).orElse(null);
     }
 
     @Override

@@ -23,7 +23,7 @@ const Home = ({navigation, route}:PropsHome) => {
 
   return (
     <>
-      <View style={{flex: 1, backgroundColor: '#9D8DF1'}}>
+      <View style={{flex: 1, backgroundColor: '#889584'}}>
 
         <View style={styles.titulo}>
           <Text style={{fontSize: 20}}>Canary Trails</Text>

@@ -82,8 +82,8 @@ public class RutaService implements IServiceGeneric<Ruta, Integer> {
             throw new RuntimeException("La ruta ha de tener al menos un municipio asociado");
         }
 
-        if(object.getCoordenadas() == null || object.getCoordenadas().size() < 5){
-            throw new RuntimeException("La ruta ha de tener al menos 5 coordenadas asociada");
+        if(object.getCoordenadas() == null || object.getCoordenadas().size() < 2){
+            throw new RuntimeException("La ruta ha de tener al menos dos coordenadas asociada");
         }
 
         Ruta guardada = rutaRepository.save(object);
