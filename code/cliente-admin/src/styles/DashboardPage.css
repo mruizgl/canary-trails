@@ -1,0 +1,77 @@
+.dashboard-page {
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #f8f9fb;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.dashboard-section {
+  margin-bottom: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+}
+
+.dashboard-section h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+.dashboard-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.dashboard-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.dashboard-item span {
+  flex: 1;
+}
+
+.dashboard-item button {
+  margin-left: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.approve-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.reject-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.logout-btn {
+  display: block;
+  margin: 2rem auto 0;
+  padding: 0.7rem 1.5rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

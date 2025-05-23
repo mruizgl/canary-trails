@@ -44,7 +44,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Iniciar sesión</h2>
+     
       <input name="nombre" placeholder="Nombre" onChange={handleChange} required />
       <input name="password" type="password" placeholder="Contraseña" onChange={handleChange} required />
       <button type="submit">Entrar</button>
