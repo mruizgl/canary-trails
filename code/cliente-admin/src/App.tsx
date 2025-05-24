@@ -4,6 +4,8 @@ import { AuthProvider } from "./context/AuthContext";
 import LoginPage from "./pages/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";
 import DashboardPage from "./pages/DashboardPage";
+import FloraAdminPage from "./pages/FloraAdminPage";
+import FaunaAdminPage from "./pages/FaunaAdminPage";
 
 function App() {
   return (
@@ -15,6 +17,15 @@ function App() {
             element={
               <PrivateRoute>
                 <DashboardPage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/admin/floras" element={<PrivateRoute><FloraAdminPage /></PrivateRoute>} />
+          <Route
+            path="/admin/faunas"
+            element={
+              <PrivateRoute>
+                <FaunaAdminPage />
               </PrivateRoute>
             }
           />

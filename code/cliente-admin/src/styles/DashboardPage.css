@@ -70,6 +70,19 @@
   font-weight: 500;
 }
 
+.view-all-btn {
+  background-color: #007f5f;
+  color: white;
+  padding: 8px 12px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.view-all-btn:hover {
+  background-color: #005f43;
+}
+
+
 .logout-btn {
   display: block;
   margin: 2rem auto 0;
