@@ -6,6 +6,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import DashboardPage from "./pages/DashboardPage";
 import FloraAdminPage from "./pages/FloraAdminPage";
 import FaunaAdminPage from "./pages/FaunaAdminPage";
+import RutaAdminPage from "./pages/RutaAdminPage";
+import CrearRutaPage from "./pages/CrearRutaPage";
 
 function App() {
   return (
@@ -29,6 +31,9 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="/admin/rutas" element={<PrivateRoute><RutaAdminPage /></PrivateRoute>} />
+          <Route path="/admin/rutas/crear" element={<CrearRutaPage />} />
+
         </Routes>
       </Router>
     </AuthProvider>
