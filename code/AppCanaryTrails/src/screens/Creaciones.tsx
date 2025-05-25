@@ -11,7 +11,7 @@ type PropsProfile = NativeStackScreenProps<ProfileStackParamList, 'Creaciones'>
 
 const Creaciones = ({navigation, route}:PropsProfile) => {
 
-  const {usuarioLogueado} = useUsuario();
+  const {usuarioLogueado, rutasDelUsuario} = useUsuario();
 
   return (
     <ScrollView style={{flex:1, backgroundColor: '#889584'}}>
@@ -29,7 +29,7 @@ const Creaciones = ({navigation, route}:PropsProfile) => {
       {
         (usuarioLogueado !== null) &&
         <View style={{}}>
-          {usuarioLogueado?.rutas?.map((ruta, index) => (
+          {rutasDelUsuario.map((ruta, index) => (
             <View key={index} style={{alignSelf: 'center', marginVertical: 10}}>
               <TouchableOpacity onPress={()=> navigation.navigate('InfoRuta', {ruta: ruta})}>
                   <RutaCardSmall
@@ -47,13 +47,14 @@ const Creaciones = ({navigation, route}:PropsProfile) => {
         </View>
       }
 
-      <View style={{margin: 20, marginLeft: 18,}}>
+      {/* <View style={{margin: 20, marginLeft: 18,}}>
         <Text style={{fontSize: 20, color: 'white', fontWeight: 'bold'}}>Faunas:</Text>
+        
       </View>
 
       <View style={{margin: 20, marginLeft: 18,}}>
         <Text style={{fontSize: 20, color: 'white', fontWeight: 'bold'}}>Flora:</Text>
-      </View>
+      </View> */}
       
 
     </ScrollView>

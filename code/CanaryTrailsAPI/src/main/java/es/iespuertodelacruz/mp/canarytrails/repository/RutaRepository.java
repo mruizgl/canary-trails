@@ -41,8 +41,8 @@ public interface RutaRepository extends JpaRepository<Ruta, Integer> {
         """, nativeQuery = true)
     List<Ruta> findRutasConMasDe10Favoritos();
 
-
-
+    @Query(value = "SELECT * FROM rutas WHERE usuario_id = :usuarioId", nativeQuery = true)
+    List<Ruta> findCreadasByUsuarioId(@Param("usuarioId") Integer usuarioId);
 
     /**
      * Borrar sin devolver void

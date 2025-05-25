@@ -22,6 +22,10 @@ public class FaunaService implements IServiceGeneric<Fauna, Integer> {
         return faunaRepository.findAll();
     }
 
+    public List<Fauna> findAllByCreadorId(Integer id){
+        return faunaRepository.findCreadasByUsuarioId(id);
+    }
+
     @Override
     public Fauna findById(Integer id) {
         return faunaRepository.findById(id).orElse(null);

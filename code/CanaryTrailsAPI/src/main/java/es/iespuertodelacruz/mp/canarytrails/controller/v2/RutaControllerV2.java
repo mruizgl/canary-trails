@@ -63,6 +63,17 @@ public class RutaControllerV2 {
         return ResponseEntity.ok(rutasSalidasDto);
     }
 
+    @GetMapping("/creador/{id}")
+    public ResponseEntity<?> findRutasByUsuarioId(@PathVariable Integer id){
+
+        List<Ruta> rutas = rutaService.findAllByCreadorId(id);
+        List<RutaSalidaDto> rutasSalidasDto = rutas.stream()
+                .map(rutaMapper::toDto)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(rutasSalidasDto);
+    }
+
     /**
      * Endpoint que devuelve una ruta segun la id
      * @param id de la ruta
@@ -79,6 +90,8 @@ public class RutaControllerV2 {
 
         return ResponseEntity.ok(rutaMapper.toDto(ruta));
     }
+
+
 
     /**
      * Endpoint que crea una ruta en la bbdd
