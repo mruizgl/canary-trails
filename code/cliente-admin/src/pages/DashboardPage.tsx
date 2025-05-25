@@ -291,6 +291,10 @@ const DashboardPage: React.FC = () => {
                     ))}
                 </ul>
             </section>
+            <button className="view-all-btn" onClick={() => navigate("/admin/rutas")}>
+                Ver todas las rutas
+            </button>
+
 
             <button className="logout-btn" onClick={handleLogout}>Cerrar sesión</button>
         </div>
