@@ -13,6 +13,7 @@ import EditarFaunaPage from "./pages/EditarFaunaPage";
 import EditarRutaPage from "./pages/EditarRutaPage";
 import CrearFloraPage from "./pages/CrearFloraPage";
 import EditarFloraPage from "./pages/EditarFloraPage";
+import EstadisticasPage from "./pages/EstadisticasPage";
 
 function App() {
   return (
@@ -43,6 +44,8 @@ function App() {
           <Route path="/admin/rutas/editar/:id" element={<EditarRutaPage />} />
           <Route path="/admin/floras/crear" element={<CrearFloraPage />} />
           <Route path="/admin/floras/editar/:id" element={<EditarFloraPage />} />
+          <Route path="/admin/estadisticas" element={<EstadisticasPage />} />
+
 
 
         </Routes>

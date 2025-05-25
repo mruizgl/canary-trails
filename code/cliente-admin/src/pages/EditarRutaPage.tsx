@@ -8,6 +8,8 @@ const EditarRutaPage: React.FC = () => {
 
   const [ruta, setRuta] = useState<any>(null);
   const [fotoArchivo, setFotoArchivo] = useState<File | null>(null);
+  const [todasFloras, setTodasFloras] = useState<any[]>([]);
+  const [todasFaunas, setTodasFaunas] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchRuta = async () => {
@@ -15,7 +17,16 @@ const EditarRutaPage: React.FC = () => {
       const data = await res.json();
       setRuta(data);
     };
+
+    const fetchExtras = async () => {
+      const florasRes = await authFetch("http://localhost:8080/api/v3/floras");
+      const faunasRes = await authFetch("http://localhost:8080/api/v3/faunas");
+      setTodasFloras(await florasRes.json());
+      setTodasFaunas(await faunasRes.json());
+    };
+
     fetchRuta();
+    fetchExtras();
   }, [id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -97,6 +108,41 @@ const EditarRutaPage: React.FC = () => {
             onChange={e => setRuta({ ...ruta, desnivel: parseFloat(e.target.value) })}
             placeholder="Desnivel (m)"
           />
+
+          <div className="form-group">
+            <label>Flora asociada</label>
+            <select
+              multiple
+              value={ruta.floras.map((f: any) => f.id)}
+              onChange={e => {
+                const seleccionadas = Array.from(e.target.selectedOptions, o => Number(o.value));
+                const nuevas = todasFloras.filter(f => seleccionadas.includes(f.id));
+                setRuta({ ...ruta, floras: nuevas });
+              }}
+            >
+              {todasFloras.map(f => (
+                <option key={f.id} value={f.id}>{f.nombre}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>Fauna asociada</label>
+            <select
+              multiple
+              value={ruta.faunas.map((f: any) => f.id)}
+              onChange={e => {
+                const seleccionadas = Array.from(e.target.selectedOptions, o => Number(o.value));
+                const nuevas = todasFaunas.filter(f => seleccionadas.includes(f.id));
+                setRuta({ ...ruta, faunas: nuevas });
+              }}
+            >
+              {todasFaunas.map(f => (
+                <option key={f.id} value={f.id}>{f.nombre}</option>
+              ))}
+            </select>
+          </div>
+
           <input
             type="file"
             accept="image/*"

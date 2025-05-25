@@ -127,11 +127,7 @@ const RutaAdminPage: React.FC = () => {
                                         <p><strong>Municipios:</strong> {r.municipios.map(m => m.nombre).join(", ")}</p>
                                         <p><strong>Coordenadas:</strong> {r.coordenadas.map(c => `[${c.latitud}, ${c.longitud}]`).join(", ")}</p>
                                     </div>
-                                    {r.fotos?.[0] && (
-                                        <div className="dashboard-detail-image">
-                                            <img src={`http://localhost:8080/api/v1/imagenes/ruta/${r.fotos[0]}`} alt={`Foto de ${r.nombre}`} />
-                                        </div>
-                                    )}
+                                    
                                 </div>
                             </div>
                         )}

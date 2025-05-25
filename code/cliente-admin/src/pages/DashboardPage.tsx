@@ -158,12 +158,23 @@ const DashboardPage: React.FC = () => {
         logout();
         navigate("/");
     };
+    const handleVerEstadisticas = () => {
+        navigate("/admin/estadisticas");
+    };
 
     return (
         <div className="dashboard-page">
             <h1 className="dashboard-title">Panel de Administración</h1>
+            <br></br>
+            <div>
+                <div className="dashboard-actions" style={{ display: "flex",  marginBottom: "1rem" }}>
+                <button className="view-all-btn" onClick={handleVerEstadisticas}>ESTADÍSTICAS</button>
+            </div>
+            </div>
+            
 
             <section className="dashboard-section">
+                
                 <h2>Flora pendiente</h2>
                 <ul className="dashboard-list">
                     {paginar(floras, paginaFlora).map((f) => (
