@@ -10,6 +10,7 @@ import RutaAdminPage from "./pages/RutaAdminPage";
 import CrearRutaPage from "./pages/CrearRutaPage";
 import CrearFaunaPage from "./pages/CrearFaunaPage";
 import EditarFaunaPage from "./pages/EditarFaunaPage";
+import EditarRutaPage from "./pages/EditarRutaPage";
 
 function App() {
   return (
@@ -37,6 +38,9 @@ function App() {
           <Route path="/admin/rutas/crear" element={<CrearRutaPage />} />
           <Route path="/admin/faunas/crear" element={<CrearFaunaPage />} />
           <Route path="/admin/faunas/editar/:id" element={<EditarFaunaPage />} />
+          <Route path="/admin/rutas/editar/:id" element={<EditarRutaPage />} />
+          <Route path="/admin/rutas/editar/:id" element={<EditarRutaPage />} />
+
 
         </Routes>
       </Router>

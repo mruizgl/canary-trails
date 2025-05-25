@@ -60,6 +60,16 @@ const RutaAdminPage: React.FC = () => {
 
     const handleNuevaRuta = () => navigate("/admin/rutas/crear");
 
+    const handleEditar = (id: number) => navigate(`/admin/rutas/editar/${id}`);
+
+    const handleEliminar = async (id: number) => {
+        if (!window.confirm("¿Seguro que deseas eliminar esta ruta?")) return;
+        await authFetch(`http://localhost:8080/api/v3/rutas/delete/${id}`, { method: "DELETE" });
+        const res = await authFetch("http://localhost:8080/api/v3/rutas");
+        const data = await res.json();
+        setRutas(data);
+    };
+
     return (
         <div className="dashboard-page">
             <h1 className="dashboard-title">Todas las Rutas</h1>
@@ -97,6 +107,10 @@ const RutaAdminPage: React.FC = () => {
                             <div className="dashboard-content-left">
                                 <span>{r.nombre}{r.descripcion ? ` - ${r.descripcion}` : ""}</span>
                             </div>
+                            <div className="dashboard-buttons" onClick={(e) => e.stopPropagation()}>
+                                <button className="approve-btn" onClick={() => handleEditar(r.id)}>Editar</button>
+                                <button className="reject-btn" onClick={() => handleEliminar(r.id)}>Eliminar</button>
+                            </div>
                         </div>
 
                         {detalleVisible === r.id && (
@@ -115,7 +129,7 @@ const RutaAdminPage: React.FC = () => {
                                     </div>
                                     {r.fotos?.[0] && (
                                         <div className="dashboard-detail-image">
-                                            <img src={`http://localhost:8080/api/v3/fotos/ruta/${r.fotos[0]}`} alt={`Foto de ${r.nombre}`} />
+                                            <img src={`http://localhost:8080/api/v1/imagenes/ruta/${r.fotos[0]}`} alt={`Foto de ${r.nombre}`} />
                                         </div>
                                     )}
                                 </div>
@@ -145,9 +159,6 @@ const RutaAdminPage: React.FC = () => {
                 <button className="approve-btn" onClick={handleNuevaRuta}>Crear nueva ruta</button>
                 <button className="back-btn" onClick={() => navigate("/dashboard")}>← Volver al panel</button>
             </div>
-
-
-
         </div>
     );
 };

@@ -188,9 +188,13 @@ const CrearRutaPage: React.FC = () => {
             ))}
           </MapContainer>
         </div>
+        
 
         <button type="submit" className="approve-btn">Crear ruta</button>
+        <button className="back-btn" onClick={() => navigate("/admin/rutas")}>← Volver a rutas</button>
       </form>
+       
+            
     </div>
   );
 };
