@@ -23,7 +23,7 @@ const Creaciones = ({navigation, route}:PropsProfile) => {
       <View style={styles.underline}/>
 
       <View style={{margin: 20, marginLeft: 18,}}>
-        <Text style={{fontSize: 20, color: 'white', fontWeight: 'bold'}}>Rutas:</Text>
+        <Text style={{fontSize: 20, color: 'white', fontWeight: 'bold'}}>Rutas no verificadas:</Text>
       </View>
 
       {
@@ -48,7 +48,7 @@ const Creaciones = ({navigation, route}:PropsProfile) => {
       }
 
       <View style={{margin: 20, marginLeft: 18,}}>
-        <Text style={{fontSize: 20, color: 'white', fontWeight: 'bold'}}>Faunas:</Text>
+        <Text style={{fontSize: 20, color: 'white', fontWeight: 'bold'}}>Faunas no verificadas:</Text>
         
         {
           (usuarioLogueado !== null) &&
@@ -67,7 +67,7 @@ const Creaciones = ({navigation, route}:PropsProfile) => {
       </View>
 
       <View style={{margin: 20, marginLeft: 18,}}>
-        <Text style={{fontSize: 20, color: 'white', fontWeight: 'bold'}}>Flora:</Text>
+        <Text style={{fontSize: 20, color: 'white', fontWeight: 'bold'}}>Flora no verificadas:</Text>
 
         {
           (usuarioLogueado !== null) &&

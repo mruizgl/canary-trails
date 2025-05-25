@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Flora, FloraCreate, tokenPlayload } from '../globals/Types';
+import { Flora, FloraCreate, FloraDetailed, tokenPlayload } from '../globals/Types';
 import { useJwt } from 'react-jwt';
 import { useAppContext } from '../context/AppContext';
 import axios from 'axios';
@@ -33,6 +33,8 @@ const useFlora = () => {
             );
 
             florasAux = response.data;
+            florasAux = florasAux.filter((ruta: FloraDetailed) => ruta.aprobada === true);
+            
 
         } catch (error) {
             console.log("An error has occurred aqui" +error.message);
