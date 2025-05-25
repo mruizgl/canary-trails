@@ -8,6 +8,8 @@ import FloraAdminPage from "./pages/FloraAdminPage";
 import FaunaAdminPage from "./pages/FaunaAdminPage";
 import RutaAdminPage from "./pages/RutaAdminPage";
 import CrearRutaPage from "./pages/CrearRutaPage";
+import CrearFaunaPage from "./pages/CrearFaunaPage";
+import EditarFaunaPage from "./pages/EditarFaunaPage";
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
           />
           <Route path="/admin/rutas" element={<PrivateRoute><RutaAdminPage /></PrivateRoute>} />
           <Route path="/admin/rutas/crear" element={<CrearRutaPage />} />
+          <Route path="/admin/faunas/crear" element={<CrearFaunaPage />} />
+          <Route path="/admin/faunas/editar/:id" element={<EditarFaunaPage />} />
 
         </Routes>
       </Router>
