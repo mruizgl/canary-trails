@@ -54,6 +54,11 @@ const DashboardPage: React.FC = () => {
     const { logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    const [paginaFlora, setPaginaFlora] = useState(1);
+    const [paginaFauna, setPaginaFauna] = useState(1);
+    const [paginaRuta, setPaginaRuta] = useState(1);
+    const porPagina = 5;
+
     useEffect(() => { fetchAll(); }, []);
 
     const fetchAll = async () => {
@@ -69,8 +74,20 @@ const DashboardPage: React.FC = () => {
         setDetalleVisible(prev => (prev?.tipo === tipo && prev?.id === id ? null : { tipo, id }));
     };
 
+    const paginar = <T,>(array: T[], pagina: number) => array.slice((pagina - 1) * porPagina, pagina * porPagina);
+
+    const renderPagination = (total: number, actual: number, cambiar: (p: number) => void) => {
+        const totalPaginas = Math.ceil(total / porPagina);
+        return totalPaginas > 1 && (
+            <div className="pagination">
+                <button onClick={() => cambiar(actual - 1)} disabled={actual === 1}>Anterior</button>
+                <span>Página {actual} de {totalPaginas}</span>
+                <button onClick={() => cambiar(actual + 1)} disabled={actual === totalPaginas}>Siguiente</button>
+            </div>
+        );
+    };
+
     const aprobarFlora = async (flora: Flora) => {
-        console.log("Aprobando flora:", flora);
         const payload = {
             id: flora.id,
             nombre: flora.nombre,
@@ -83,22 +100,15 @@ const DashboardPage: React.FC = () => {
             usuario: flora.usuario.id,
             rutas: flora.rutas.map(r => r.id),
         };
-        console.log("Payload flora:", payload);
-        const res = await authFetch("http://localhost:8080/api/v3/floras/update", {
+        await authFetch("http://localhost:8080/api/v3/floras/update", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
-        if (res.ok) {
-            console.log("Flora aprobada correctamente");
-        } else {
-            console.error("Error al aprobar flora:", await res.text());
-        }
         fetchAll();
     };
 
     const aprobarFauna = async (fauna: Fauna) => {
-        console.log("Aprobando fauna:", fauna);
         const payload = {
             id: fauna.id,
             nombre: fauna.nombre,
@@ -107,22 +117,15 @@ const DashboardPage: React.FC = () => {
             usuario: fauna.usuario.id,
             rutas: fauna.rutas.map(r => r.id),
         };
-        console.log("Payload fauna:", payload);
-        const res = await authFetch("http://localhost:8080/api/v3/faunas/update", {
+        await authFetch("http://localhost:8080/api/v3/faunas/update", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
-        if (res.ok) {
-            console.log("Fauna aprobada correctamente");
-        } else {
-            console.error("Error al aprobar fauna:", await res.text());
-        }
         fetchAll();
     };
 
     const aprobarRuta = async (ruta: Ruta) => {
-        console.log("Aprobando ruta:", ruta);
         const payload = {
             id: ruta.id,
             nombre: ruta.nombre,
@@ -137,17 +140,11 @@ const DashboardPage: React.FC = () => {
             coordenadas: ruta.coordenadas.map(c => c.id),
             municipios: ruta.municipios.map(m => m.id),
         };
-        console.log("Payload ruta:", payload);
-        const res = await authFetch("http://localhost:8080/api/v3/rutas/update", {
+        await authFetch("http://localhost:8080/api/v3/rutas/update", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
-        if (res.ok) {
-            console.log("Ruta aprobada correctamente");
-        } else {
-            console.error("Error al aprobar ruta:", await res.text());
-        }
         fetchAll();
     };
 
@@ -161,18 +158,26 @@ const DashboardPage: React.FC = () => {
         logout();
         navigate("/");
     };
+    const handleVerEstadisticas = () => {
+        navigate("/admin/estadisticas");
+    };
 
     return (
         <div className="dashboard-page">
             <h1 className="dashboard-title">Panel de Administración</h1>
-
-
-
+            <br></br>
+            <div>
+                <div className="dashboard-actions" style={{ display: "flex",  marginBottom: "1rem" }}>
+                <button className="view-all-btn" onClick={handleVerEstadisticas}>ESTADÍSTICAS</button>
+            </div>
+            </div>
+            
 
             <section className="dashboard-section">
+                
                 <h2>Flora pendiente</h2>
                 <ul className="dashboard-list">
-                    {floras.map((f) => (
+                    {paginar(floras, paginaFlora).map((f) => (
                         <li key={f.id} className="dashboard-item" onClick={() => toggleDetalle("flora", f.id)}>
                             <div className="dashboard-row">
                                 <div className="dashboard-content-left">
@@ -195,7 +200,7 @@ const DashboardPage: React.FC = () => {
                                         </div>
                                         {f.foto && (
                                             <div className="dashboard-detail-image">
-                                                <img src={`http://localhost:8080/api/v3/fotos/flora/${f.foto}`} alt={`Foto de ${f.nombre}`} />
+                                                <img src={`http://localhost:8080/api/v1/imagenes/flora/${f.foto}`} alt={`Foto de ${f.nombre}`} />
                                             </div>
                                         )}
                                     </div>
@@ -204,17 +209,16 @@ const DashboardPage: React.FC = () => {
                         </li>
                     ))}
                 </ul>
+                {renderPagination(floras.length, paginaFlora, setPaginaFlora)}
+                <div className="dashboard-actions">
+                    <button className="view-all-btn" onClick={() => navigate("/admin/floras")}>Ver todas las floras</button>
+                </div>
             </section>
-            <div className="dashboard-actions">
-                <button className="view-all-btn" onClick={() => navigate("/admin/floras")}>
-                    Ver todas las floras
-                </button>
-            </div>
 
             <section className="dashboard-section">
                 <h2>Fauna pendiente</h2>
                 <ul className="dashboard-list">
-                    {faunas.map((f) => (
+                    {paginar(faunas, paginaFauna).map((f) => (
                         <li key={f.id} className="dashboard-item" onClick={() => toggleDetalle("fauna", f.id)}>
                             <div className="dashboard-row">
                                 <div className="dashboard-content-left">
@@ -234,7 +238,7 @@ const DashboardPage: React.FC = () => {
                                         </div>
                                         {f.foto && (
                                             <div className="dashboard-detail-image">
-                                                <img src={`http://localhost:8080/api/v3/fotos/fauna/${f.foto}`} alt={`Foto de ${f.nombre}`} />
+                                                <img src={`http://localhost:8080/api/v1/imagenes/fauna/${f.foto}`} alt={`Foto de ${f.nombre}`} />
                                             </div>
                                         )}
                                     </div>
@@ -243,19 +247,16 @@ const DashboardPage: React.FC = () => {
                         </li>
                     ))}
                 </ul>
+                {renderPagination(faunas.length, paginaFauna, setPaginaFauna)}
+                <div className="dashboard-actions">
+                    <button className="view-all-btn" onClick={() => navigate("/admin/faunas")}>Ver toda la fauna</button>
+                </div>
             </section>
-            <div className="dashboard-actions">
-                <button className="view-all-btn" onClick={() => navigate("/admin/faunas")}>
-                    Ver toda la fauna
-                </button>
-            </div>
-
-
 
             <section className="dashboard-section">
                 <h2>Rutas pendientes</h2>
                 <ul className="dashboard-list">
-                    {rutas.map((r) => (
+                    {paginar(rutas, paginaRuta).map((r) => (
                         <li key={r.id} className="dashboard-item" onClick={() => toggleDetalle("ruta", r.id)}>
                             <div className="dashboard-row">
                                 <div className="dashboard-content-left">
@@ -281,7 +282,7 @@ const DashboardPage: React.FC = () => {
                                         </div>
                                         {r.fotos?.[0] && (
                                             <div className="dashboard-detail-image">
-                                                <img src={`http://localhost:8080/api/v3/fotos/ruta/${r.fotos[0]}`} alt={`Foto de ${r.nombre}`} />
+                                                <img src={`http://localhost:8080/api/v1/imagenes/ruta/${r.fotos[0]}`} alt={`Foto de ${r.nombre}`} />
                                             </div>
                                         )}
                                     </div>
@@ -290,11 +291,11 @@ const DashboardPage: React.FC = () => {
                         </li>
                     ))}
                 </ul>
+                {renderPagination(rutas.length, paginaRuta, setPaginaRuta)}
+                <div className="dashboard-actions">
+                    <button className="view-all-btn" onClick={() => navigate("/admin/rutas")}>Ver todas las rutas</button>
+                </div>
             </section>
-            <button className="view-all-btn" onClick={() => navigate("/admin/rutas")}>
-                Ver todas las rutas
-            </button>
-
 
             <button className="logout-btn" onClick={handleLogout}>Cerrar sesión</button>
         </div>
