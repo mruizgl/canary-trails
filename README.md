@@ -3,7 +3,7 @@
 __Autores: Melissa Ruiz González y Pedro Martín Escuela__
 
 <div align=center>
-    <img src="./documentation/designs/resources/portada-cc.jpg">
+    <img src="./documentation/resources/portada-cc.jpg">
 </div>
 
 <br>
@@ -20,17 +20,20 @@ El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil
 
     - [Anteproyecto](./documentation/anteproyecto/)
 
-    - [Documentacion de Diseño](./documentation/documentacion-de-diseno.MD)
+    - [Documentacion de Diseño](./documentation/documentacion-de-diseno.md)
 
-    - [Documentacion del Codigo](./documentation/documentacion-de-codigo.MD)
+    - [Documentacion del Codigo](./documentation/documentacion-de-codigo.md)
 
-        - [Api REST](./code/CanaryTrailsAPI/)
+    - [Manual de Uso y Configuracion](./documentation/manual-de-uso.md)
 
-        - [App React Native](./code/AppCanaryTrails/)
+    - [Manual de Usuario](./documentation/manual-de-usuario.md)
 
-        - [Sistema de Gestion Administrador](#gestion)
+- [Api REST](./code/CanaryTrailsAPI/)
 
-- [Manual de Uso y Configuracion](./documentation/manual-de-uso.MD)
+- [App React Native](./code/AppCanaryTrails/)
+
+- [Sistema de Gestion Administrador](./code/cliente-admin/)
+
 
 
 ## Tecnologías
@@ -60,6 +63,4 @@ El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil
 
 ### Defensa 
 
- [Presentacion](https://www.canva.com/design/DAGn-FRTmpU/3zMiY411fqLNJxM5h_uR5Q/edit?utm_content=DAGn-FRTmpU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
-
-
+ [Presentacion para la exposición](https://www.canva.com/design/DAGn-FRTmpU/3zMiY411fqLNJxM5h_uR5Q/edit?utm_content=DAGn-FRTmpU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)

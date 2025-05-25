@@ -19,9 +19,10 @@
 - `security`: Configuración de autenticación/autorización con JWT.
 
 ### Seguridad
-- Autenticación con tokens JWT.
+- Autenticación con token JWT.
 - Control de acceso por rol (`ROLE_ADMIN`, `ROLE_USER`).
 - Filtros personalizados (`JwtFilter`, `SecurityConfig`).
+- Verificación de cuentas por correo (`Mail Sender`).
 
 ### Testing
 - JUnit 5 y Mockito para tests de:
@@ -32,7 +33,7 @@
 
 Cuenta con una cobertura de código del 89% generada por JaCoCo  
   
-![alt text](../documentation/designs/cobertura.png)
+![alt text](./assets/cobertura.png)
 
 ---
 
@@ -44,32 +45,19 @@ Cuenta con una cobertura de código del 89% generada por JaCoCo
 - `react-navigation` → Navegación por pantallas.
 - `axios` → Llamadas a la API.
 - `react-native-maps` → Visualización de rutas.
-- `redux` (opcional) → Gestión de estado.
-- `i18n` → Multilenguaje.
 - `expo-file-system` y `async-storage` → Modo offline.
 
 ### 📲 Pantallas principales
 - Registro / Login
 - Explorar rutas
-- Ficha de ruta
-- Mapa GPS en tiempo real
-- Subir ruta
+- Información de ruta
+- Buscar ruta
+- Traking en tiempo real (configurable)
+- Crear ruta / fauna / flora
 - Flora / Fauna asociada
-- Perfil
-
----
-
-## Sistema Administrativo – Dolibarr
-
-**Propósito:** Gestión de la empresa que comercializa la app.  
-**Configuraciones básicas:**
-- Gestión de clientes y proveedores.
-- Productos/servicios (ej. planes premium o merchandising).
-- Presupuestos, facturación y pedidos.
-- Logotipo y diseño personalizado.
-
-**Ruta recomendada de acceso:**  
-`http://localhost/dolibarr/` o `/var/www/html/dolibarr/`
+- Informacion Perfil
+- Rutas Favoritas
+- Creaciones
 
 ---
 
@@ -92,7 +80,7 @@ En el futuro:
 
 ## Observaciones Técnicas
 
-- Se utiliza una tabla polimórfica `fotos` para manejar imágenes de rutas, fauna y flora.
+- Se exponen las fotos desde local a diferentes endpoints mediante un webconfig y `Resources Handler`
 - Todas las relaciones están correctamente modeladas con claves foráneas y tablas intermedias.
 - Controladores REST siguen convención RESTful: `GET`, `POST`, `PUT`, `DELETE`.
 
@@ -135,18 +123,16 @@ AppCanaryTrails/
 └── package.json
 ```
 
-
 ---
 
-### Comunicación con el Backend
+## Sistema Administrativo – Dolibarr
 
-- Se usa **Axios** como cliente HTTP (`/src/api/api.js`).
-- Las rutas de la API están centralizadas en un archivo para facilitar su gestión y multientorno.
-- La variable `API_BASE_URL` se carga desde `.env`.
+**Propósito:** Gestión de la empresa que comercializa la app.  
+**Configuraciones básicas:**
+- Gestión de clientes y proveedores.
+- Productos/servicios (ej. planes premium o merchandising).
+- Presupuestos, facturación y pedidos.
+- Logotipo y diseño personalizado.
 
-```js
-import axios from "axios";
-const API = axios.create({
-  baseURL: process.env.API_BASE_URL || "http://localhost:8080/api/",
-});
-
+**Ruta recomendada de acceso:**  
+`http://localhost/dolibarr/` o `/var/www/html/dolibarr/`

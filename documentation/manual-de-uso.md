@@ -25,38 +25,32 @@ Este documento detalla los pasos necesarios para instalar, configurar y ejecutar
 ### Configuración local
 
 1. Clona el repositorio:
+
    ```bash
    git clone https://github.com/mruizgl/canary-trails.git
    cd canary-trails/code/CanaryTrailsAPI
     ```
 
-2. Crea una base de datos en MySQL:
+2. Crea la base de datos en MySQL a partir del [canary_trais.sql](../code/CanaryTrailsAPI/src/main/resources/canary_trails.sql) de la API
 
+3. Configura `application.properties` con tus datos de la Base de Datos:
     ```
-    CREATE DATABASE canarytrails CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-    ```
-
-3. Configura application.properties:
-    ```
-    spring.datasource.url=jdbc:mysql://localhost:3306/canarytrails
+    spring.datasource.url=jdbc:mysql://localhost:3306/nombre_bbdd
     spring.datasource.username=tu_usuario
     spring.datasource.password=tu_contraseña
-
-    spring.jpa.hibernate.ddl-auto=update
-    jwt.secret=clave-secreta
     ```
 
 4. Ejecuta la API: 
     ```
-    mvn spring-boot:run
+    mvn clean spring-boot:run
     ```
 
 5. Accede a la API:
-    * Swagger UI: `http://localhost:8080/swagger-ui.html`
+    * Swagger UI: `http://localhost:8080/swagger-ui/index.html`
 
-    `V1` Es la parte común de autenticación  
-    `V2` Es para los endpoints de usuario  
-    `V3` Los endpoints de administrador
+    `V1` Es la parte __publica__ para autenticación  
+    `V2` Securizado para los endpoints de __usuario registrados__
+    `V3` Los endpoints securizados específicamente para __usuarios registrados__ con __rol de administrador__
 
 
 ## 3. App Móvil – React Native
@@ -71,19 +65,34 @@ Este documento detalla los pasos necesarios para instalar, configurar y ejecutar
     ```
     npm install
     ```
+3. Abre el emulador de android (por ejemplo uno de __Android Studio__)
 
-3. Ejecuta en android (emulador o dispositivo):
-     ```
+4. Ejecuta el proyecto mediante Metro:
+
+    ```
     npm run start
-    npx react-native run-android
     ```
 
-## 4. Base de Datos
+    Y elige lanzarlo en android (elegir la `a`):
 
-El proyecto incluye script de creación completo en `/documentation/sql/canary_trails.sql`
+    ```bash
 
-## 5. Testing
-- Ejecuta desde el Backend:
+                  Welcome to Metro v0.81.0
+                Fast - Scalable - Integrated
+
+
+    info Dev server ready
+
+    i - run on iOS
+    a - run on Android
+    r - reload app
+    d - open Dev Menu
+    j - open DevTools
+    ```
+
+## 4. Testing
+
+- Ejecuta desde raiz de la __API__:
     ```
     mvn clean install
     ````

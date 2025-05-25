@@ -12,7 +12,6 @@
 ### Inicio de Sesión
 1. Introduce tu correo y contraseña en la pantalla de inicio.
 2. Pulsa **“Entrar”**.
-3. Si olvidaste tu contraseña, selecciona **“¿Has olvidado tu contraseña?”** para recuperarla.
 
 ---
 
@@ -27,80 +26,64 @@ Desde la pantalla principal podrás:
 
 ### Guardar Rutas Favoritas
 
-1. En la ficha de una ruta, pulsa el icono de **estrella ⭐** para marcarla como favorita.
-2. Consulta tus rutas guardadas desde el menú de usuario en **“Rutas favoritas”**.
+1. En la ficha de una ruta, pulsa el icono de **corazón ❤️** para marcarla como favorita.
+2. Consulta tu lista de favoritas desde el menú de usuario en **“Rutas favoritas”**.
 
 ---
 
-## 4. Modo Offline
+## 3. Creación de Rutas
 
-1. En cada ruta selecciona **“Descargar para usar sin conexión”**.
-2. Se guardarán el trazado, imágenes y datos de fauna/flora.
-3. Accede a estas rutas desde **“Modo Offline”**, sin necesidad de cobertura.
+1. Ve al menú de creación y elige **"Crear Ruta"**.
 
----
-
-## 5. Subida de Rutas
-
-1. Pulsa el botón **“Añadir ruta”** en el menú.
 2. Introduce:
    - Nombre, descripción, nivel de dificultad.
    - Tiempo estimado y distancia.
-   - Coordenadas GPS o mapa trazado.
-   - Imágenes de la ruta.
+   - Haz click en el pama para colocar una serie de coordenadas (mínimo 2).
+   - Asóciale mínimo un múnicipio donde se situe
+   - Puedes añadir Fauna y Flora que encontrarás en ella, pero no es necesario
+
 3. Tu propuesta será revisada y aprobada por el equipo de administración.
 
 ---
 
-## 6. Comentarios y Valoraciones
-
-- Comparte tu experiencia escribiendo comentarios en las rutas.
-- Incluye un título y una descripción útil para otros senderistas.
-- Valora las rutas con estrellas para ayudar a la comunidad.
-
----
-
-## 7. Fauna y Flora
+## 4. Fauna y Flora
 
 ### 🔎 Ver fauna y flora
 - Cada ruta incluye especies típicas que podrás encontrar durante el recorrido.
 - Visualiza imágenes, descripciones, hábitat y época de floración (en el caso de flora).
 
 ### ➕ Añadir nueva especie
-1. Desde el menú, accede a **“Proponer fauna/flora”**.
+1. Desde el menú de creacion, accede a **“Crear fauna/flora”**.
 2. Completa la ficha con:
    - Nombre y descripción.
-   - Fotos.
    - Datos técnicos (tipo, hoja, floración...).
 3. El contenido se someterá a revisión y aprobación por el administrador.
 
 ---
 
-## 8. Navegación GPS
+## 5. Navegación GPS
 
-1. Pulsa **“Iniciar ruta”** desde la ficha.
-2. Concede permisos de ubicación.
-3. La app mostrará tu posición en tiempo real y el trazado a seguir.
+1. En la propia información de la ruta se mostrarán las coordenadas que la componen
+2. Busca las zonas que se encuentran cerca de donde estés para localizarla 
+3. La implementación de traking por ubicación se implementará en un futuro próximo
 
 ---
 
-## 9. Perfil de Usuario
+## 6. Perfil de Usuario
 
 Desde el menú de perfil podrás:
 
 - Ver tus datos personales.
 - Consultar tus rutas favoritas y aportaciones.
-- Editar tu nombre, correo y contraseña.
+- Visitar el repositorio de los creadores para estár al tanto de sus novedades y actualizaciones de la app.
 - Cerrar sesión.
 
----
+## 7. Panel de Administrador
 
-## 10. Idiomas
+Desde el panel de administrador web, los usuarios con rol de administrador podrán accede y:
 
-CanaryTrails está disponible en:
+- Aprobar la creacion de Rutas / Fauna / Flora
 
-- 🇪🇸 Español
-- 🇬🇧 Inglés
+- Crear Rutas / Fauna / Flora
 
-Puedes cambiar el idioma en **Configuración > Idioma**.
-
+- Subir actualizar su información y subir fortos a cada uno

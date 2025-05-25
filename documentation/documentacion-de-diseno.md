@@ -16,15 +16,15 @@ La estética y experiencia de usuario de CanaryTrails se ha inspirado en tres pi
 
 ## 2. Paleta de Colores
 
-![alt text](../documentation/designs/paleta.png)
+![alt text](./assets/paleta-2.png)
 
 | Color     | Uso sugerido                        | Hex      |
-|-----------|--------------------------------------|----------|
-| Verde menta brillante   | Botones principales / elementos activos | `#57E389` |
-| Verde bosque            | Íconos, botones secundarios             | `#33D17A` |
-| Gris oscuro pizarra     | Texto, fondo de tarjetas o navbar       | `#41463D` |
-| Lila claro               | Fondos suaves, UI decorativa            | `#9D8DF1` |
-| Azul pastel              | Fondos secundarios o etiquetas          | `#B8CDF8` |
+|-----------|-------------------------------------|----------|
+| Ecru White | Colores de resalte o tarjetas | `#F3F5E8` |
+| Lunar Green | Color del tab-nab | `#41463D` |
+| Apache | Color de los input | `#D9BF68` |
+| Spanish Green | Fondos suaves | `#889584` |
+| Mountain Meadow | Color de resalte y botones | `#00A676` |
 
 Esta combinación mantiene un equilibrio entre lo natural y lo moderno, alineándose con el espíritu de exploración y la identidad visual de la app.
 
@@ -33,16 +33,16 @@ Esta combinación mantiene un equilibrio entre lo natural y lo moderno, alineán
 ## 3. Tipografía
 
 - **Fuente principal**: `Poppins` (Google Fonts)
+
 - **Pesos utilizados**:
   - `Regular` para textos.
-  - `SemiBold` para botones y títulos.
   - `Bold` para encabezados y secciones destacadas.
 
 ---
 
 ## 4. Iconografía
 
-Se utiliza una iconografía limpia basada en vectores (Material Icons / Lucide React), manteniendo coherencia en estilo y grosor. Los íconos ayudan a facilitar la navegación en:
+Se utiliza una iconografía limpia basada en vectores ([Ionicicons](https://ionic.io/ionicons)), manteniendo coherencia en estilo y grosor. Los íconos ayudan a facilitar la navegación en:
 
 - Menús.
 - Favoritos.
@@ -59,18 +59,17 @@ Se utiliza una iconografía limpia basada en vectores (Material Icons / Lucide R
 | **Mapa interactivo** | Visualiza el trazado de la ruta y tu posición GPS. |
 | **Tarjetas de ruta** | Vista previa de rutas, con datos clave y botón de favorito. |
 | **Ficha detallada** | Información completa sobre cada ruta: dificultad, duración, flora, fauna, mapa, comentarios. |
-| **Vista de fauna/flora** | Muestra las especies asociadas a una ruta o buscables por categoría. |
+| **Vista del perfil** | Muestra la información de usuario, las rutas favoritas, las creaciones no aprobadas, etc. |
 
 ---
 
 ## 6. Experiencia de Usuario (UX)
 
-- Interacción intuitiva desde la primera pantalla.
-- Adaptación para **modo offline** con notificación visual cuando no hay conexión.
-- Multilingüe: español e inglés seleccionables desde configuración.
-- Navegación real con GPS y estado de progreso visible.
-- Facilidad para subir rutas con imágenes desde galería o cámara.
-
+- Interacción __intuitiva__ desde la primera pantalla.
+- Colores e iconos __suaves__ y __agradables__ a la vista
+- Creación de elementos __sencilla__ y __asequible__.
+- Sistema de creación por __verificación__ (el usuario crea, el administrador desde el panel verifica y sube fotos)
+- Como está __administrado__ por los __usuarios con permisos__, es una __app segura__ y no se permite la creación de elementos NSFW ni de cualquier indole ilegal
 ---
 
 ## 7. Accesibilidad
@@ -87,31 +86,29 @@ Se utiliza una iconografía limpia basada en vectores (Material Icons / Lucide R
 Protipo de Figma
 - Login y register en Figma
 
-![alt text](<../documentation/designs/figma.png>)
-
-
+![Login y Register Figma](<./assets/figma.png>)
 
 Wireframes
+
 - Home   
 
-![alt text](<../documentation/designs/Home.png>)  
+![Home Wireframe](<./assets/wireframe/Home.png>)  
 
-- Profile 
+- Perfil 
 
-![alt text](<../documentation/designs/Profile.jpeg>)
+![Perfil Wireframe](<./assets/wireframe/Profile.jpeg>)
 
-- Routes and games 
+- Rutas y Juegos
 
-![alt text](<../documentation/designs/Routes&Games.jpeg>)
+![Rutas y Juegos Wireframe](<./assets/wireframe/Routes&Games.jpeg>)
 
 
 Los wireframes contemplan:
 
 - Pantalla de inicio / login.
 - Explorador de rutas.
-- Ficha de ruta.
 - Mapa en tiempo real.
-- Subida de rutas/fauna/flora.
+- Pantalla de minijuegos (idea no implementada).
 - Perfil de usuario.
 
 ---
@@ -129,6 +126,7 @@ El diseño visual busca reforzar la identidad de marca:
 
 - Agregar modo oscuro.
 - Personalización del perfil (foto, descripción).
-- Sistema de logros o medallas por avistamientos o rutas completadas.
+- Sistema de traking en tiempo real (ubicacion)
+- Sistema de logros o medallas por avistamientos o rutas completadas (minijuegis).
 
 ---
