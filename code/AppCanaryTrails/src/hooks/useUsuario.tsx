@@ -241,7 +241,7 @@ const useUsuario = () => {
 
         try{
 
-            const response = await axios.get(`http://10.0.2.2:8080/api/v2/rutas/floras/${usuarioLogueado.id}`,
+            const response = await axios.get(`http://10.0.2.2:8080/api/v2/floras/creador/${usuarioLogueado.id}`,
 
                 {
                     headers: {
@@ -252,7 +252,7 @@ const useUsuario = () => {
             );
 
             florasAux = response.data;
-            florasAux = florasAux.filter((ruta: FaunaDetailed) => ruta.aprobada !== true); //Filtrado si la ruta esá aprobada se muestra
+            florasAux = florasAux.filter((flora: FloraDetailed) => flora.aprobada !== true); //Filtrado si la ruta esá aprobada se muestra
             setFlorasDelUsuario(florasAux);
             
             console.log("Setteadas rutas favoritas del usuario logueado");
