@@ -18,6 +18,63 @@
 - `mapper`: Conversores entre entidades y DTOs (MapStruct).
 - `security`: Configuración de autenticación/autorización con JWT.
 
+### Endpoints
+
+__V3__:
+
+- Rutas:
+
+  - `/rutas` : Get All
+  - `/rutas/{id}`: Get By Id 
+  - `/rutas/add`: POST para crear rutas
+  - `/rutas/update`: PUT para editar rutas
+  - `/rutas/delete/{id}`: DELETE para borrar rutas
+
+-- El resto de Endpoints siguen el mismo formato --
+
+__Excepciones:__
+
+- Rutas Favoritas:
+
+  - `/rutas_favoritas/{id}`: encuentra las rutas favoritas del usuario con esa `id`
+  - `/rutas_favoritas/populares`: da una lista con las rutas que tienene más de 5 favoritos
+  - `/rutas_favoritas/add`: añade una ruta favorita a partir de la `id` de ruta y la de usuario
+  - `/rutas_favoritas/delete`: elimina una ruta favorita a partir de la `id` de ruta y de usuario
+
+__V2__:
+
+- Los usuarios solo pueden hacer `Get All`, y `GetByI`
+  __Excepciones__: 
+    - `/usuarios` que solo se puede obtener el registrado, su propio usuario.
+
+Cambios:
+
+- Los usuarios solo pueden hacer un `PUT` y `DELETE` de las fotos de las rutas / faunas / floras que ellos hayan creado y no estén verificadas.
+
+- Los usuarios solo pueden ejecutar cambios en las rutas favoritas si es sobre el mismo.
+
+__V1__: 
+
+- Auth
+
+  - `/login`: inicia sesión con los datos de un usuario registrado y verificado.
+
+  - `/auth/register`: registra un usuario con un nombre y correo no existente en la bbdd, y le manda un correo de verificación.
+
+  - `/confirmación/correo=&token=`: recibe los datos del correo y el token de verificación en la url y verifica al usuario.
+
+__Fotos__:
+
+- `/imagenes`: accede a las imágenes según la categoría.
+
+  - `/fauna/nombre.extension`
+  - `/flora/nombre.extension`
+  - `/usuario/nombre.extension`
+  - `/ruta/nombre.extension`
+
+- `nombre.extension`: es como se guarda el campo foto en la bbdd.
+
+
 ### Seguridad
 - Autenticación con token JWT.
 - Control de acceso por rol (`ROLE_ADMIN`, `ROLE_USER`).
