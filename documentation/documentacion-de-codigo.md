@@ -28,6 +28,7 @@ __V3__:
   - `/rutas/{id}`: Get By Id 
   - `/rutas/add`: POST para crear rutas
   - `/rutas/update`: PUT para editar rutas
+  - `/rutas/upload`: PUT para añadir una foto a la ruta
   - `/rutas/delete/{id}`: DELETE para borrar rutas
 
 -- El resto de Endpoints siguen el mismo formato --
