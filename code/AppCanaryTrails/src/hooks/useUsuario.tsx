@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useAppContext } from '../context/AppContext';
 import { useJwt } from 'react-jwt';
-import { Fauna, Flora, RutaType, tokenPlayload, Usuario } from '../globals/Types';
+import { Fauna, FaunaDetailed, Flora, FloraDetailed, RutaType, tokenPlayload, Usuario } from '../globals/Types';
 import axios from 'axios';
 
 
@@ -14,6 +14,9 @@ const useUsuario = () => {
     const [usuarioLogueado, setUsuarioLogueado] = useState<Usuario>()
     const [rutasFavoritasByUsuario, setRutasFavoritasByUsuario] = useState<Array<RutaType>>([])
     const [rutasDelUsuario, setRutasDelUsuario] = useState<Array<RutaType>>([])
+    const [faunasDelUsuario, setFaunasDelUsuario] = useState<Array<FaunaDetailed>>([])
+    const [florasDelUsuario, setFlorasDelUsuario] = useState<Array<FloraDetailed>>([])
+
 
     useEffect(() => {
 
@@ -25,6 +28,8 @@ const useUsuario = () => {
 
         obtenerRutasFavoritasByUsuario();
         obtenerRutasCreadasByUsuario();
+        obtenerFaunasCreadasByUsuario();
+        obtenerFlorasCreadasByUsuario();
       
     }, [usuarioLogueado])
     
@@ -192,7 +197,64 @@ const useUsuario = () => {
             rutasAux = rutasAux.filter((ruta: RutaType) => ruta.aprobada !== true); //Filtrado si la ruta esá aprobada se muestra
             setRutasDelUsuario(rutasAux);
             
-            setRutasFavoritasByUsuario(rutasAux);
+        } catch (error) {
+          console.log("An error has occurred aqui" +error.message);
+        }
+    }
+
+    async function obtenerFaunasCreadasByUsuario(){
+
+        if(usuarioLogueado == null){
+            return;
+        }
+
+        let faunasAux : Array<FaunaDetailed> = [];
+
+        try{
+
+            const response = await axios.get(`http://10.0.2.2:8080/api/v2/faunas/creador/${usuarioLogueado.id}`,
+
+                {
+                    headers: {
+                        'Authorization': `Bearer ${context.token}`, // Token JWT
+                        'Content-Type': 'application/json', // Tipo de contenido
+                    }
+                }
+            );
+
+            faunasAux = response.data;
+            faunasAux = faunasAux.filter((fauna: FaunaDetailed) => fauna.aprobada !== true); //Filtrado si la ruta esá aprobada se muestra
+            setFaunasDelUsuario(faunasAux);
+
+        } catch (error) {
+          console.log("An error has occurred aqui" +error.message);
+        }
+    }
+
+    async function obtenerFlorasCreadasByUsuario(){
+
+        if(usuarioLogueado == null){
+            return;
+        }
+
+        let florasAux : Array<FloraDetailed> = [];
+
+        try{
+
+            const response = await axios.get(`http://10.0.2.2:8080/api/v2/rutas/floras/${usuarioLogueado.id}`,
+
+                {
+                    headers: {
+                        'Authorization': `Bearer ${context.token}`, // Token JWT
+                        'Content-Type': 'application/json', // Tipo de contenido
+                    }
+                }
+            );
+
+            florasAux = response.data;
+            florasAux = florasAux.filter((ruta: FaunaDetailed) => ruta.aprobada !== true); //Filtrado si la ruta esá aprobada se muestra
+            setFlorasDelUsuario(florasAux);
+            
             console.log("Setteadas rutas favoritas del usuario logueado");
 
         } catch (error) {
@@ -200,74 +262,12 @@ const useUsuario = () => {
         }
     }
 
-    // async function obtenerFaunasCreadasByUsuario(){
-
-    //     if(usuarioLogueado == null){
-    //         return;
-    //     }
-
-    //     let faunasAux : Array<Fauna> = [];
-
-    //     try{
-
-    //         const response = await axios.get(`http://10.0.2.2:8080/api/v2/faunas/creador/${usuarioLogueado.id}`,
-
-    //             {
-    //                 headers: {
-    //                     'Authorization': `Bearer ${context.token}`, // Token JWT
-    //                     'Content-Type': 'application/json', // Tipo de contenido
-    //                 }
-    //             }
-    //         );
-
-    //         faunasAux = response.data;
-    //         faunasAux = faunasAux.filter((fauna: Fauna) => fauna.verificada !== true); //Filtrado si la ruta esá aprobada se muestra
-    //         setRutasDelUsuario(rutasAux);
-            
-    //         setRutasFavoritasByUsuario(rutasAux);
-    //         console.log("Setteadas rutas favoritas del usuario logueado");
-
-    //     } catch (error) {
-    //       console.log("An error has occurred aqui" +error.message);
-    //     }
-    // }
-
-    // async function obtenerFlorasCreadasByUsuario(){
-
-    //     if(usuarioLogueado == null){
-    //         return;
-    //     }
-
-    //     let rutasAux : Array<Flora> = [];
-
-    //     try{
-
-    //         const response = await axios.get(`http://10.0.2.2:8080/api/v2/rutas/floras/${usuarioLogueado.id}`,
-
-    //             {
-    //                 headers: {
-    //                     'Authorization': `Bearer ${context.token}`, // Token JWT
-    //                     'Content-Type': 'application/json', // Tipo de contenido
-    //                 }
-    //             }
-    //         );
-
-    //         rutasAux = response.data;
-    //         rutasAux = rutasAux.filter((ruta: RutaType) => ruta.aprobada !== true); //Filtrado si la ruta esá aprobada se muestra
-    //         setRutasDelUsuario(rutasAux);
-            
-    //         setRutasFavoritasByUsuario(rutasAux);
-    //         console.log("Setteadas rutas favoritas del usuario logueado");
-
-    //     } catch (error) {
-    //       console.log("An error has occurred aqui" +error.message);
-    //     }
-    // }
-
     return {
         usuarioLogueado,
         rutasFavoritasByUsuario,
         rutasDelUsuario,
+        florasDelUsuario,
+        faunasDelUsuario,
         obtenerRutasFavoritasByUsuario,
         esFavoritaDeUser,
         actualizarRutaFavoritas,

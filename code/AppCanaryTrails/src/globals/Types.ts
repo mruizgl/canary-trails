@@ -42,6 +42,14 @@ export type Fauna ={
   foto: string
 }
 
+export type FaunaDetailed ={
+  id: number,
+  nombre: string,
+  descripcion: string,
+  aprobada: boolean,
+  foto: string
+}
+
 export type FaunaCreate ={
   nombre: string,
   descripcion: string,
@@ -53,6 +61,14 @@ export type Flora ={
   id: number,
   nombre: string,
   descripcion: string,
+  foto: string
+}
+
+export type FloraDetailed ={
+  id: number,
+  nombre: string,
+  descripcion: string,
+  aprobada: boolean,
   foto: string
 }
 
