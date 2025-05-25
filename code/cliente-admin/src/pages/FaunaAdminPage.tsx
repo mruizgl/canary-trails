@@ -124,7 +124,7 @@ const FaunaAdminPage: React.FC = () => {
                   </div>
                   {f.foto && (
                     <div className="dashboard-detail-image">
-                      <img src={`http://localhost:8080/api/v3/fotos/fauna/${f.foto}`} alt={`Foto de ${f.nombre}`} />
+                      <img src={`http://localhost:8080/api/v1/imagenes/fauna/${f.foto}`} alt={`Foto de ${f.nombre}`} />
                     </div>
                   )}
                 </div>

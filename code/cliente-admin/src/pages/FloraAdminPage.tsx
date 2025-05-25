@@ -1,10 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { authFetch } from "../utils/authFetch";
 import "../styles/DashboardPage.css";
+import { jwtDecode } from "jwt-decode";
+import {useAppContext } from "../context/AuthContext";
+import { tokenPlayload } from "../types/UsuarioTypes";
+import useUsuario from "../hooks/useUsuario";
+import { Navigate } from "react-router-dom";
 
-interface Usuario { id: number; nombre: string }
-interface RutaSimple { id: number; nombre: string }
+interface Usuario { 
+    id: number; 
+    nombre: string 
+}
+
+interface RutaSimple { 
+    id: number; 
+    nombre: string 
+}
+
 interface Flora {
+    id: number;
+    nombre: string;
+    especie: string;
+    tipoHoja: string;
+    salidaFlor: string;
+    caidaFlor: string;
+    descripcion: string;
+    aprobada: boolean;
+    usuario: number;
+    foto?: string;
+}
+
+interface FloraSalida {
     id: number;
     nombre: string;
     especie: string;
@@ -19,10 +45,12 @@ interface Flora {
 }
 
 const FloraAdminPage: React.FC = () => {
-    const [floras, setFloras] = useState<Flora[]>([]);
+    const [floras, setFloras] = useState<FloraSalida[]>([]);
     const [form, setForm] = useState<Flora | null>(null);
     const [fotoArchivo, setFotoArchivo] = useState<File | null>(null);
     const [detalleId, setDetalleId] = useState<number | null>(null);
+
+    const {usuarioLogueado} = useUsuario();
 
     useEffect(() => {
         fetchFloras();
@@ -34,12 +62,32 @@ const FloraAdminPage: React.FC = () => {
         setFloras(data);
     };
 
-    const handleEdit = (flora: Flora) => {
-        setForm(flora);
+    const handleEdit = (flora: FloraSalida) => {
+        const floraAux : Flora = {
+            id: flora.id,
+            nombre: flora.nombre,
+            especie: "",
+            tipoHoja: "",
+            salidaFlor: "",
+            caidaFlor: "",
+            descripcion: flora.descripcion,
+            aprobada: flora.aprobada,
+            usuario: flora.usuario.id,
+            foto: "",
+        }
+
+        setForm(floraAux);
         setFotoArchivo(null);
     };
 
     const handleNew = () => {
+
+        if(!usuarioLogueado){
+            return <Navigate to="/" />;
+        }
+
+        const idUsuario = usuarioLogueado.id;
+
         setForm({
             id: 0,
             nombre: "",
@@ -49,8 +97,7 @@ const FloraAdminPage: React.FC = () => {
             caidaFlor: "",
             descripcion: "",
             aprobada: true,
-            usuario: { id: 1, nombre: "Admin" },
-            rutas: []
+            usuario: idUsuario,
         });
         setFotoArchivo(null);
     };
@@ -62,7 +109,12 @@ const FloraAdminPage: React.FC = () => {
     };
 
     const handleSubmit = async () => {
+
         if (!form) return;
+
+        if(!form.nombre || !form.descripcion){
+
+        }
 
         const isEdit = form.id !== 0;
         const method = isEdit ? "PUT" : "POST";
@@ -75,14 +127,13 @@ const FloraAdminPage: React.FC = () => {
             ? {
                 id: form.id,
                 nombre: form.nombre,
-                especie: form.especie,
-                tipoHoja: form.tipoHoja,
-                salidaFlor: form.salidaFlor,
-                caidaFlor: form.caidaFlor,
+                especie: null,
+                tipoHoja: null,
+                salidaFlor: null,
+                caidaFlor: null,
                 descripcion: form.descripcion,
-                aprobada: form.aprobada,
-                usuario: form.usuario.id,
-                rutas: form.rutas.map(r => r.id),
+                aprobada: true,
+                usuario: form.usuario,
             }
             : {
                 nombre: form.nombre,
@@ -92,8 +143,7 @@ const FloraAdminPage: React.FC = () => {
                 caidaFlor: form.caidaFlor,
                 descripcion: form.descripcion,
                 aprobada: form.aprobada,
-                usuario: form.usuario.id,
-                rutas: form.rutas.map(r => r.id),
+                usuario: form.usuario,
             };
 
         const res = await authFetch(url, {
@@ -120,13 +170,8 @@ const FloraAdminPage: React.FC = () => {
             });
 
             if (resUpload.ok) {
-                const updatedFlora = await resUpload.json();
-
-               
-                setFloras(prev => prev.map(f => (f.id === updatedFlora.id ? updatedFlora : f)));
-
-               
-                setForm(prev => (prev && prev.id === updatedFlora.id ? updatedFlora : prev));
+                // No hay JSON, así que recargamos toda la lista para asegurarnos
+                await fetchFloras();
             }
         } else {
             fetchFloras(); 
@@ -177,7 +222,7 @@ const FloraAdminPage: React.FC = () => {
                                     </div>
                                     {f.foto && (
                                         <div className="dashboard-detail-image">
-                                            <img src={`http://localhost:8080/api/v3/fotos/flora/${f.foto}`} alt={`Foto de ${f.nombre}`} />
+                                            <img src={`http://localhost:8080/api/v1/imagenes/flora/${f.foto}`} alt={`Foto de ${f.nombre}`} />
                                         </div>
                                     )}
                                 </div>
@@ -192,21 +237,21 @@ const FloraAdminPage: React.FC = () => {
                     <h3>{form.id && form.id !== 0 ? "Editar Flora" : "Nueva Flora"}</h3>
 
                     <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange} />
-                    <input name="especie" placeholder="Especie" value={form.especie} onChange={handleChange} />
+                    {/* <input name="especie" placeholder="Especie" value={form.especie} onChange={handleChange} />
                     <input name="tipoHoja" placeholder="Tipo Hoja" value={form.tipoHoja} onChange={handleChange} />
                     <input name="salidaFlor" placeholder="Salida Flor" value={form.salidaFlor} onChange={handleChange} />
-                    <input name="caidaFlor" placeholder="Caída Flor" value={form.caidaFlor} onChange={handleChange} />
+                    <input name="caidaFlor" placeholder="Caída Flor" value={form.caidaFlor} onChange={handleChange} /> */}
                     <textarea name="descripcion" placeholder="Descripción" value={form.descripcion} onChange={handleChange} />
 
-                    {form.foto && (
+                    {/* {form.foto && (
                         <div className="mb-2">
                             <img
-                                src={`http://localhost:8080/api/v3/fotos/flora/${form.foto}`}
+                                src={`http://localhost:8080/api/v1/imagenes/flora/${form.foto}`}
                                 alt="Foto actual"
                                 style={{ maxWidth: "150px", borderRadius: "4px" }}
                             />
                         </div>
-                    )}
+                    )} */}
 
                     <input
                         type="file"

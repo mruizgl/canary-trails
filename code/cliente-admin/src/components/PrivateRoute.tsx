@@ -1,6 +1,6 @@
-import React, { JSX, useContext } from "react";
+import React, { JSX } from "react";
 import { Navigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { useAppContext } from "../context/AuthContext";
 import { jwtDecode } from "jwt-decode";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 const PrivateRoute: React.FC<Props> = ({ children }) => {
 
-  const { token } = useContext(AuthContext);
+  const { token } = useAppContext();
 
   if (!token) {
 

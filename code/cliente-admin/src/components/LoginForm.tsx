@@ -1,16 +1,23 @@
-import React, { useState, useContext, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUsuario } from "../api/authApi";
-import { AuthContext } from "../context/AuthContext";
 import { UsuarioLoginDto } from "../types/UsuarioTypes";
 import { jwtDecode } from "jwt-decode";
+import { useAppContext } from "../context/AuthContext";
 
 
 const LoginForm: React.FC = () => {
   const [form, setForm] = useState<UsuarioLoginDto>({ nombre: "", password: "" });
   const [error, setError] = useState<string>("");
-  const { login } = useContext(AuthContext);
+  const { token, login } = useAppContext();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(token !== ""){
+      
+    }
+  }, [])
+  
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,6 +26,10 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 
     e.preventDefault();
+
+    if(token){
+      navigate("/dashboard");
+    }
 
     try {
       const token = await loginUsuario(form);

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { authFetch } from "../utils/authFetch";
-import { AuthContext } from "../context/AuthContext";
+import { useAppContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/DashboardPage.css";
 
@@ -51,7 +51,7 @@ const DashboardPage: React.FC = () => {
     const [faunas, setFaunas] = useState<Fauna[]>([]);
     const [rutas, setRutas] = useState<Ruta[]>([]);
     const [detalleVisible, setDetalleVisible] = useState<{ tipo: string; id: number } | null>(null);
-    const { logout } = useContext(AuthContext);
+    const { logout } = useAppContext();
     const navigate = useNavigate();
 
     useEffect(() => { fetchAll(); }, []);
@@ -70,6 +70,7 @@ const DashboardPage: React.FC = () => {
     };
 
     const aprobarFlora = async (flora: Flora) => {
+
         console.log("Aprobando flora:", flora);
         const payload = {
             id: flora.id,
@@ -83,21 +84,25 @@ const DashboardPage: React.FC = () => {
             usuario: flora.usuario.id,
             rutas: flora.rutas.map(r => r.id),
         };
+
         console.log("Payload flora:", payload);
         const res = await authFetch("http://localhost:8080/api/v3/floras/update", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
+
         if (res.ok) {
             console.log("Flora aprobada correctamente");
         } else {
             console.error("Error al aprobar flora:", await res.text());
         }
+
         fetchAll();
     };
 
     const aprobarFauna = async (fauna: Fauna) => {
+
         console.log("Aprobando fauna:", fauna);
         const payload = {
             id: fauna.id,
@@ -107,17 +112,20 @@ const DashboardPage: React.FC = () => {
             usuario: fauna.usuario.id,
             rutas: fauna.rutas.map(r => r.id),
         };
+
         console.log("Payload fauna:", payload);
         const res = await authFetch("http://localhost:8080/api/v3/faunas/update", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
+
         if (res.ok) {
             console.log("Fauna aprobada correctamente");
         } else {
             console.error("Error al aprobar fauna:", await res.text());
         }
+
         fetchAll();
     };
 
@@ -137,17 +145,20 @@ const DashboardPage: React.FC = () => {
             coordenadas: ruta.coordenadas.map(c => c.id),
             municipios: ruta.municipios.map(m => m.id),
         };
+
         console.log("Payload ruta:", payload);
         const res = await authFetch("http://localhost:8080/api/v3/rutas/update", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
+
         if (res.ok) {
             console.log("Ruta aprobada correctamente");
         } else {
             console.error("Error al aprobar ruta:", await res.text());
         }
+        
         fetchAll();
     };
 

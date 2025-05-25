@@ -32,7 +32,7 @@ public class FotoManagementService {
 
             Files.copy(file.getInputStream(),filenameFree);
 
-            return categoria + "/" + filenameFree.getFileName().toString();
+            return filenameFree.getFileName().toString();
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("Ya existe un fichero llamado así");
