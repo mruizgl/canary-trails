@@ -124,7 +124,7 @@ const FaunaAdminPage: React.FC = () => {
                   </div>
                   {f.foto && (
                     <div className="dashboard-detail-image">
-                      <img src={`http://localhost:8080/api/v3/fotos/fauna/${f.foto}`} alt={`Foto de ${f.nombre}`} />
+                      <img src={`http://localhost:8080/api/v1/imagenes/fauna/${f.foto}`} alt={`Foto de ${f.nombre}`} />
                     </div>
                   )}
                 </div>
@@ -144,7 +144,7 @@ const FaunaAdminPage: React.FC = () => {
           {form.foto && (
             <div className="mb-2">
               <img
-                src={`http://localhost:8080/api/v3/fotos/fauna/${form.foto}`}
+                src={`http://localhost:8080/api/v1/imagenes/fauna/${form.foto}`}
                 alt="Foto actual"
                 style={{ maxWidth: "150px", borderRadius: "4px" }}
               />

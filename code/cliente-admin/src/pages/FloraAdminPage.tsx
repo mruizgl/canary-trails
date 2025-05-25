@@ -120,13 +120,10 @@ const FloraAdminPage: React.FC = () => {
             });
 
             if (resUpload.ok) {
-                const updatedFlora = await resUpload.json();
-
-               
-                setFloras(prev => prev.map(f => (f.id === updatedFlora.id ? updatedFlora : f)));
-
-               
-                setForm(prev => (prev && prev.id === updatedFlora.id ? updatedFlora : prev));
+                // const updatedFlora = await resUpload.json();
+                // setFloras(prev => prev.map(f => (f.id === updatedFlora.id ? updatedFlora : f)));
+                // setForm(prev => (prev && prev.id === updatedFlora.id ? updatedFlora : prev));
+                await fetchFloras(); 
             }
         } else {
             fetchFloras(); 
@@ -177,7 +174,7 @@ const FloraAdminPage: React.FC = () => {
                                     </div>
                                     {f.foto && (
                                         <div className="dashboard-detail-image">
-                                            <img src={`http://localhost:8080/api/v3/fotos/flora/${f.foto}`} alt={`Foto de ${f.nombre}`} />
+                                            <img src={`http://localhost:8080/api/v1/imagenes/flora/${f.foto}`} alt={`Foto de ${f.nombre}`} />
                                         </div>
                                     )}
                                 </div>
@@ -201,7 +198,7 @@ const FloraAdminPage: React.FC = () => {
                     {form.foto && (
                         <div className="mb-2">
                             <img
-                                src={`http://localhost:8080/api/v3/fotos/flora/${form.foto}`}
+                                src={`http://localhost:8080/api/v1/imagenes/flora/${form.foto}`}
                                 alt="Foto actual"
                                 style={{ maxWidth: "150px", borderRadius: "4px" }}
                             />
