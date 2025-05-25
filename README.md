@@ -12,9 +12,7 @@ En este repositorio realizaremos nuestro __Proyecto Final__ del __CFGS de Desarr
 
 El __objetivo__ de este proyecto es la __creación__ de una __aplicación móvil__ para __descubrir rutas de senderismo__ en __Canarias__, con __información detallada__ de los __senderos y la flora y fauna__ presente en cada zona. 
 
-## Índice 
-
-- [Manual del Usuario](./documentation/manual-de-usuario.MD)
+## Índice
 
 - [Documentacion](./documentation/)
 
