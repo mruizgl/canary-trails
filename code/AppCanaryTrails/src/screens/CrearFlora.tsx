@@ -38,6 +38,22 @@ const CrearFlora = (props: Props) => {
     
             const floraCreada = crearFlora(newFlora);
             console.log(floraCreada);
+
+            if(floraCreada){
+                Alert.alert(
+                "Se ha creado la flora",
+                "Espere a que un administrador la acepte. Podrá verla en 'Perfil > Creaciones' hasta que sea aceptada",
+                [{ text: "Ok" }],
+                { cancelable: false }
+                );
+            } else {
+                Alert.alert(
+                "Error al crear la flora",
+                "Inténtelo de nuevo",
+                [{ text: "Ok" }],
+                { cancelable: false }
+                );
+            }
         }
     
 
@@ -98,9 +114,8 @@ const styles = StyleSheet.create({
 
         borderWidth: 2,
         borderRadius: 10,
-        borderColor: '#D9BF68',
-
-        backgroundColor: '#D9BF68',
+        borderColor: '#e4d49c',
+        backgroundColor: '#e4d49c',
     },
 
     createRuta:{

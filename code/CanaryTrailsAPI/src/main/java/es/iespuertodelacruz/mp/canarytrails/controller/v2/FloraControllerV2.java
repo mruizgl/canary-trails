@@ -1,12 +1,10 @@
 package es.iespuertodelacruz.mp.canarytrails.controller.v2;
 
+import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.flora.FloraSalidaDto;
-import es.iespuertodelacruz.mp.canarytrails.entities.Comentario;
-import es.iespuertodelacruz.mp.canarytrails.entities.Flora;
-import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
-import es.iespuertodelacruz.mp.canarytrails.entities.Usuario;
+import es.iespuertodelacruz.mp.canarytrails.entities.*;
 import es.iespuertodelacruz.mp.canarytrails.mapper.FloraMapper;
 import es.iespuertodelacruz.mp.canarytrails.service.FloraService;
 import es.iespuertodelacruz.mp.canarytrails.service.FotoManagementService;
@@ -19,6 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -53,6 +54,12 @@ public class FloraControllerV2 {
     @GetMapping
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(floraMapper.toDTOList(floraService.findAll()));
+    }
+
+    @GetMapping("/creador/{id}")
+    public ResponseEntity<?> findFaunasByUsuarioId(@PathVariable Integer id){
+
+        return ResponseEntity.ok(floraMapper.toDTOList(floraService.findAllByCreadorId(id)));
     }
 
     /**

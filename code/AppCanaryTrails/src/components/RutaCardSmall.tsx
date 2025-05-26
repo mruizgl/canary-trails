@@ -38,7 +38,7 @@ const RutaCardSmall = (props: Props) => {
         <Text style={{fontSize: 25, fontWeight: 'bold'}}>{props.nombre}</Text>
         <View>
           {
-            (props.municipios.length > 1) ?
+            (props.municipios?.length > 1) ?
               props.municipios.map((municipio, index) => (
                 <div key={index}>
                   {municipio.nombre}

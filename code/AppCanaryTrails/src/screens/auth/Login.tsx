@@ -108,8 +108,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 5,
 
-    borderColor: '#D9BF68',
-    backgroundColor: '#D9BF68',
+    borderColor: '#e4d49c',
+    backgroundColor: '#e4d49c',
   },
 
   button:{

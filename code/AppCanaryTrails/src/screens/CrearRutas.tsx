@@ -85,6 +85,22 @@ const CrearRutas = (props: Props) => {
     console.log(rutaNueva);
     const rutaCreada  = crearRuta(rutaNueva);
     console.log(rutaCreada);
+
+    if(rutaCreada){
+      Alert.alert(
+        "Se ha creado la ruta",
+        "Espere a que un administrador la acepte. Podrá verla en 'Perfil > Creaciones' hasta que sea aceptada",
+        [{ text: "Ok" }],
+        { cancelable: false }
+      );
+    } else {
+      Alert.alert(
+        "Error al crear la ruta",
+        "Inténtelo de nuevo",
+        [{ text: "Ok" }],
+        { cancelable: false }
+      );
+    }
   }
 
   //Añade marcador a la lista
@@ -571,9 +587,8 @@ const styles = StyleSheet.create({
 
     borderWidth: 2,
     borderRadius: 10,
-    borderColor: '#D9BF68',
-
-    backgroundColor: '#D9BF68',
+    borderColor: '#e4d49c',
+    backgroundColor: '#e4d49c',
     
   },
 

@@ -22,6 +22,10 @@ public class FloraService implements IServiceGeneric<Flora, Integer> {
         return floraRepository.findAll();
     }
 
+    public List<Flora> findAllByCreadorId(Integer id){
+        return floraRepository.findCreadasByUsuarioId(id);
+    }
+
     @Override
     public Flora findById(Integer id) {
         return floraRepository.findById(id).orElse(null);

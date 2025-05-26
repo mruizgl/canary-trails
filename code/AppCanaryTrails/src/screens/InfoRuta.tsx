@@ -233,7 +233,7 @@ const InfoRuta = ({navigation, route}:PropsSearch) => {
               {coordenadasRuta.map((coord, index) => (
                   <Circle 
                     key={index}
-                    radius={5}
+                    radius={15}
                     center={{ latitude: coord.latitude, longitude: coord.longitude }} 
                     fillColor="rgba(132, 0, 255, 0.5)"
                     strokeColor="transparent"

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useAppContext } from '../context/AppContext';
 import { useJwt } from 'react-jwt';
-import { Fauna, FaunaCreate, tokenPlayload } from '../globals/Types';
+import { Fauna, FaunaCreate, FaunaDetailed, tokenPlayload } from '../globals/Types';
 import axios, { all } from 'axios';
 
 
@@ -34,6 +34,7 @@ const useFauna = () => {
             );
 
             faunasAux = response.data;
+            faunasAux = faunasAux.filter((ruta: FaunaDetailed) => ruta.aprobada === true);
 
         } catch (error) {
             console.log("An error has occurred aqui" +error.message);

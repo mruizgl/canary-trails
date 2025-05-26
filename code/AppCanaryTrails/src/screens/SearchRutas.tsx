@@ -8,6 +8,7 @@ import { useJwt } from 'react-jwt'
 import RutaCardSmall from '../components/RutaCardSmall'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RoutesStackParamList } from '../navigations/stack/SearchRoutesStack'
+import useRutas from '../hooks/useRutas'
 
 type Props = {}
 
@@ -20,32 +21,10 @@ const SearchRutas = ({navigation, route}:PropsSearch) => {
 
   const [busqueda, setbusqueda] = useState<string>("");
 
-  const [allRutas, setallRutas] = useState<Array<RutaType>>([]);
   const [rutasBuqueda, setrutasBuqueda] = useState<Array<RutaType>>([]);
 
-  useEffect(() => {
-    async function cargarTodasRutas(){
+  const {allRutas} = useRutas();
 
-      try{
-
-        const response = await axios.get(`http://10.0.2.2:8080/api/v2/rutas`,
-          {
-            headers: {
-              'Authorization': `Bearer ${context.token}`, // Token JWT
-              'Content-Type': 'application/json', // Tipo de contenido
-            }
-          }
-        );
-
-        setallRutas(response.data);
-
-      } catch (error) {
-        console.log("An error has occurred aqui" +error.message);
-      }
-    }
-
-    cargarTodasRutas();
-  }, [])
 
   function realizarBusqueda(texto: string){
 

@@ -3,6 +3,7 @@ package es.iespuertodelacruz.mp.canarytrails.controller.v2;
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaEntradaCreateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaEntradaUpdateDto;
 import es.iespuertodelacruz.mp.canarytrails.dto.fauna.FaunaSalidaDto;
+import es.iespuertodelacruz.mp.canarytrails.dto.ruta.RutaSalidaDto;
 import es.iespuertodelacruz.mp.canarytrails.entities.Comentario;
 import es.iespuertodelacruz.mp.canarytrails.entities.Fauna;
 import es.iespuertodelacruz.mp.canarytrails.entities.Ruta;
@@ -53,6 +54,17 @@ public class FaunaControllerV2 {
         //System.out.println("holaaaaaa estoy aqui");
 
         List<Fauna> faunas = faunaService.findAll();
+        List<FaunaSalidaDto> faunaSalidasDto = faunas.stream()
+                .map(faunaMapper::toDto)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(faunaSalidasDto);
+    }
+
+    @GetMapping("/creador/{id}")
+    public ResponseEntity<?> findFaunasByUsuarioId(@PathVariable Integer id){
+
+        List<Fauna> faunas = faunaService.findAllByCreadorId(id);
         List<FaunaSalidaDto> faunaSalidasDto = faunas.stream()
                 .map(faunaMapper::toDto)
                 .collect(Collectors.toList());
